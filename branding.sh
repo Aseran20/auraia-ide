@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 # ============================================================
-# Auraia IDE — Single source of truth for all branding values
+# Arclen IDE — Single source of truth for all branding values
 # Edit THIS file, then run: ./apply_branding.sh
 # ============================================================
 
 # ---- Identity ----
-export BRAND_APP_NAME="Auraia"
-export BRAND_BINARY_NAME="auraia"
-export BRAND_ORG_NAME="Auraia"
+export BRAND_APP_NAME="Arclen"
+export BRAND_BINARY_NAME="arclen"
+export BRAND_ORG_NAME="Arclen"
 export BRAND_GH_REPO="Aseran20/auraia-ide"
-export BRAND_DATA_FOLDER=".auraia"
-export BRAND_URL_PROTOCOL="auraia"
+export BRAND_DATA_FOLDER=".arclen"
+export BRAND_URL_PROTOCOL="arclen"
 
 # ---- URLs ----
 export BRAND_LICENSE_URL="https://github.com/Aseran20/auraia-ide/blob/master/LICENSE"

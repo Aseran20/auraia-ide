@@ -5,12 +5,12 @@
 # to run with Bash: "C:\Program Files\Git\bin\bash.exe" ./dev/build.sh
 ###
 
-export APP_NAME="Auraia"
+export APP_NAME="Arclen"
 export ASSETS_REPOSITORY="Aseran20/auraia-ide"
-export BINARY_NAME="auraia"
+export BINARY_NAME="arclen"
 export CI_BUILD="no"
 export GH_REPO_PATH="Aseran20/auraia-ide"
-export ORG_NAME="Auraia"
+export ORG_NAME="Arclen"
 export SHOULD_BUILD="yes"
 export SKIP_ASSETS="yes"
 export SKIP_BUILD="no"
