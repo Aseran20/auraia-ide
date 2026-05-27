@@ -683,6 +683,8 @@
     "debug.openDebug": "neverOpen",
     "testing.automaticallyOpenPeekView": "never",
     "scm.providerCountBadge": "hidden",
-    "workbench.welcomePage.walkthroughs.openOnInstall": false
+    "workbench.welcomePage.walkthroughs.openOnInstall": false,
+    "workbench.layoutControl.enabled": false,
+    "workbench.secondarySideBar.defaultVisibility": "hidden"
   }
 }
