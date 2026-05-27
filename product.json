@@ -678,6 +678,11 @@
     "scm.defaultViewMode": "list",
     "git.enabled": true,
     "git.decorations.enabled": false,
-    "git.showActionButton": { "commit": false, "publish": false, "sync": false }
+    "git.showActionButton": { "commit": false, "publish": false, "sync": false },
+    "debug.console.showInStatusBar": "never",
+    "debug.openDebug": "neverOpen",
+    "testing.automaticallyOpenPeekView": "never",
+    "scm.providerCountBadge": "hidden",
+    "workbench.welcomePage.walkthroughs.openOnInstall": false
   }
 }
