@@ -1,0 +1,31 @@
+diff --git a/src/vs/workbench/contrib/debug/browser/debug.contribution.ts b/src/vs/workbench/contrib/debug/browser/debug.contribution.ts
+index 6a10c81e6be..4c3dbac6527 100644
+--- a/src/vs/workbench/contrib/debug/browser/debug.contribution.ts
++++ b/src/vs/workbench/contrib/debug/browser/debug.contribution.ts
+@@ -256,17 +256,7 @@ if (isMacintosh) {
+ 
+ MenuRegistry.appendMenuItem(MenuId.EditorTitle, { submenu: MenuId.EditorTitleRun, isSplitButton: { togglePrimaryAction: true }, title: nls.localize2('run', "Run or Debug..."), icon: icons.debugRun, group: 'navigation', order: -1 });
+ 
+-// Debug menu
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+-	submenu: MenuId.MenubarDebugMenu,
+-	title: {
+-		...nls.localize2('runMenu', "Run"),
+-		mnemonicTitle: nls.localize({ key: 'mRun', comment: ['&& denotes a mnemonic'] }, "&&Run")
+-	},
+-	order: 6,
+-	when: IsSessionsWindowContext.negate()
+-});
++// Debug menu — Arclen: Run menu hidden (not relevant for M&A analysts)
+ 
+ MenuRegistry.appendMenuItem(MenuId.MenubarDebugMenu, {
+ 	group: '1_debug',
+@@ -462,6 +452,7 @@ const viewContainer = Registry.as<IViewContainersRegistry>(ViewExtensions.ViewCo
+ 	ctorDescriptor: new SyncDescriptor(DebugViewPaneContainer),
+ 	icon: icons.runViewIcon,
+ 	alwaysUseContainerInfo: true,
++	hideIfEmpty: true,
+ 	order: 3,
+ }, ViewContainerLocation.Sidebar);
+ 
