@@ -27,7 +27,7 @@ diff --git a/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStarte
 index 168a3d01b40..da6dc038166 100644
 --- a/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
 +++ b/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
-@@ -167,38 +167,5 @@ export const startEntries: GettingStartedStartEntryContent = [
+@@ -167,36 +167,3 @@ export const startEntries: GettingStartedStartEntryContent = [
  		}
  	},
 -	{
@@ -63,6 +63,4 @@ index 168a3d01b40..da6dc038166 100644
 -			command: 'command:workbench.action.remote.showMenu',
 -		}
 -	},
- 	{
- 		id: 'topLevelOpenTunnel',
- 		title: localize('gettingStarted.topLevelOpenTunnel.title', "Open Tunnel..."),
+ ];
