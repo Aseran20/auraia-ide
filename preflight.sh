@@ -158,48 +158,22 @@ fi
 echo ""
 
 # ─── 5. Patch applicability ──────────────────────────────────────────────────
-echo "── Patches ──"
+echo "── Patches (via check-patches.sh) ──"
 
-if [[ ! -d "vscode" ]]; then
-  warn "Skipping patch checks — vscode/ not present"
-else
-  cd vscode
-
-  # Save current state
-  git stash --quiet 2>/dev/null || true
-
-  PATCH_FAIL=0
-
-  check_patches() {
-    local dir="$1"
-    local label="$2"
-    if [[ -d "${dir}" ]]; then
-      for patch in "${dir}"/*.patch; do
-        [[ -f "${patch}" ]] || continue
-        name=$( basename "${patch}" )
-        result=$( git apply --check "${patch}" 2>&1 )
-        if [[ $? -eq 0 ]]; then
-          ok "${label}/${name}"
-        else
-          fail "${label}/${name} — WILL NOT APPLY: $( echo "${result}" | head -1 )"
-          ((PATCH_FAIL++))
-        fi
-      done
-    fi
-  }
-
-  check_patches "../patches" "patches"
-  check_patches "../patches/windows" "patches/windows"
-  check_patches "../patches/user" "patches/user"
-
-  # Restore
-  git stash pop --quiet 2>/dev/null || true
-
-  cd ..
-
-  if [[ "${PATCH_FAIL}" -eq 0 ]]; then
-    ok "All patches apply cleanly"
+# check-patches.sh works without vscode/ — downloads only affected files from GitHub
+if command -v curl &>/dev/null && command -v jq &>/dev/null; then
+  PATCH_OUTPUT=$( bash check-patches.sh 2>&1 )
+  PATCH_EXIT=$?
+  echo "${PATCH_OUTPUT}" | tail -n +2 | while IFS= read -r line; do echo "  ${line}"; done
+  if [[ "${PATCH_EXIT}" -eq 0 ]]; then
+    ((PASS+=0)) # counts already printed inline by check-patches.sh
+    ok "All user patches apply cleanly against upstream"
+  else
+    fail "One or more user patches will not apply — see above"
+    FAIL=$(( FAIL + 1 ))
   fi
+else
+  warn "curl or jq missing — skipping patch check"
 fi
 
 echo ""

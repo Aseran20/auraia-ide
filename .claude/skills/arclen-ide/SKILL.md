@@ -266,9 +266,32 @@ The `configurationDefaults` in product.json are tuned for M&A analysts, not deve
 - Git decorations and action buttons hidden (git works via Claude in terminal)
 - Walkthroughs disabled
 
+## Patch Health Check — The Most Important Tool
+
+**Run this before any build, before any push that touches patches, and whenever `upstream/stable.json` changes:**
+
+```bash
+"C:\Program Files\Git\bin\bash.exe" ./check-patches.sh
+```
+
+This script verifies that every patch in `patches/user/` applies cleanly against the pinned VS Code upstream — **without needing `vscode/` locally**. It works by downloading only the specific files each patch touches from GitHub (curl per file, ~5-10 seconds total).
+
+Why this matters: patch context drift is the #1 cause of CI failures on this repo. When VS Code upstream changes the lines *around* what we're patching (even by one line), `git apply` fails. This happened with `arclen-welcome-cleanup.patch` after VS Code modified the `topLevelOpenFolder` block, shifting the hunk context by one line. Three CI runs failed before we diagnosed it. `check-patches.sh` catches this in 30 seconds, on a fresh clone, with no prerequisites beyond `jq` and `curl`.
+
+**How patch context drift happens:** `git apply` needs the 2-3 lines of context *surrounding* the changed lines to match exactly. If upstream adds, removes, or modifies any nearby line, the hunk fails — even if the lines we're actually removing/adding are identical.
+
+**When patches break after upstream update:** 
+1. Run `check-patches.sh` to identify which patch(es) fail
+2. Fetch the target file from GitHub: `curl https://raw.githubusercontent.com/microsoft/vscode/<commit>/path/to/file.ts`
+3. Find the blocks we're patching, note their new line numbers and surrounding context
+4. Update the hunk header (`@@ -OLD,N +OLD,M @@`) and context lines to match
+5. Re-run `check-patches.sh` to confirm
+
+The lightweight CI workflow at `.github/workflows/check-patches.yml` runs this check automatically on every push that touches `patches/` or `upstream/stable.json`. It completes in ~1 minute vs 60 minutes for the full build.
+
 ## Preflight — Check Before Building
 
-**Always run preflight before a build** to catch blockers in 30 seconds instead of 60 minutes in.
+**Always run preflight before a full build** to catch blockers in 30 seconds.
 
 ```bash
 "C:\Program Files\Git\bin\bash.exe" ./preflight.sh
@@ -281,12 +304,10 @@ What it checks:
 - CLI tools: git, jq, curl, cargo, imagemagick
 - VS Build Tools 2022 + Spectre-mitigated libs (Windows)
 - `vscode/` commit matches `upstream/stable.json` (stale source = silent patch failures)
-- Every patch in `patches/`, `patches/windows/`, `patches/user/` applies cleanly via `git apply --check`
+- Calls `check-patches.sh` for patch applicability (works without `vscode/`)
 - `product.json` valid JSON
 
 Exit 0 = safe to build. Exit 1 = at least one blocker. Warnings are non-fatal.
-
-The patch check is the most valuable: if any `patches/user/` patch will fail to apply (e.g., after an upstream VS Code update changed the surrounding context), preflight tells you exactly which patch and which line, before you've wasted an hour.
 
 ## Common Pitfalls
 
