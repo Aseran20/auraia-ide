@@ -40,6 +40,19 @@ cd vscode && npm run watch       # Terminal 1, keep running
 5. If ready to verify end-to-end: `dev/build.sh -s`
 6. CI only when distributing
 
+## How to launch a build (Claude Code)
+
+Run via PowerShell tool with `run_in_background: true`, always pipe to `build.log`:
+
+```powershell
+$bash = "C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
+& $bash -c "cd '/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide' && ./dev/build.sh -s 2>&1 | tee build.log"
+```
+
+Then monitor with `Read` on `build.log` or `Bash tail build.log | head -30`.
+
+**Never use `Start-Process`** (detaches, no log). **Never use the Bash tool to call Windows `.exe` paths** (Bash tool runs under WSL).
+
 ## Key facts to remember
 
 - **Git Bash path:** `C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe` (user-level install)

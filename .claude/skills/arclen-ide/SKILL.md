@@ -93,23 +93,41 @@ rcedit "VSCode-win32-x64/arclen.exe" --set-icon src/stable/resources/win32/code.
 | Rust/Cargo | Latest stable | Native modules |
 | VS Build Tools 2022 | With C++ workload | node-gyp compilation |
 | Spectre-mitigated libs | v143 x64 | Required by VS Code's .vcxproj (install via VS Installer GUI → Individual Components → search "Spectre") |
+| **VS Build Tools 2022** | **With C++ workload** | **Not yet installed on this machine — build fails at `node build/npm/preinstall.ts` with "Invalid C/C++ Compiler Toolchain". Install from https://visualstudio.microsoft.com/visual-cpp-build-tools/ → select "Desktop development with C++"** |
 | ImageMagick | 7.x | Icon generation |
 | jq | Latest | JSON manipulation in build scripts |
 
 ### Build Commands
 
 ```bash
+# Git Bash path (user-level install on this machine):
+BASH="C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
+
 # Full build (first time, ~30-60 min)
-cd arclen-ide
-"C:\Program Files\Git\bin\bash.exe" ./dev/build.sh
+"$BASH" ./dev/build.sh 2>&1 | tee build.log
 
 # Rebuild reusing existing source (~10-15 min)
-"C:\Program Files\Git\bin\bash.exe" ./dev/build.sh -s
+"$BASH" ./dev/build.sh -s 2>&1 | tee build.log
 
 # The -s flag skips cloning VS Code — reuses the existing vscode/ folder.
 # Use it after branding/patch/icon changes. Only do a full build when
 # updating to a new VS Code upstream version.
 ```
+
+### How to launch a build and monitor it (Claude Code)
+
+Always run via PowerShell with `run_in_background: true`, piping to `build.log`. Then use `Read` on `build.log` to check progress without blocking.
+
+```powershell
+# Launch (PowerShell tool, run_in_background: true)
+$bash = "C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
+& $bash -c "cd '/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide' && ./dev/build.sh -s 2>&1 | tee build.log"
+
+# Monitor (Read tool on build.log, check tail periodically)
+# Or: Bash tail -f build.log | head -20
+```
+
+Do NOT use `Start-Process` — it opens a detached window with no log capture. Do NOT use the Bash tool to call `C:\...\bash.exe` — the Bash tool runs under WSL and can't resolve Windows paths.
 
 ### CI Build (GitHub Actions)
 
