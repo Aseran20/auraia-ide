@@ -1,6 +1,26 @@
 diff --git a/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts b/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
 --- a/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
 +++ b/src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
+@@ -10,7 +10,4 @@
+ import { Codicon } from '../../../../base/common/codicons.js';
+ import { ThemeIcon } from '../../../../base/common/themables.js';
+-import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js';
+-import { NotebookSetting } from '../../notebook/common/notebookCommon.js';
+-import { CONTEXT_ACCESSIBILITY_MODE_ENABLED } from '../../../../platform/accessibility/common/accessibility.js';
+ import { URI } from '../../../../base/common/uri.js';
+ import product from '../../../../platform/product/common/product.js';
+@@ -70,6 +70,4 @@
+ gettingStartedContentRegistry.registerProvider('vs/workbench/contrib/welcomeGettingStarted/common/media/empty', () => '');
+ 
+-const setupIcon = registerIcon('getting-started-setup', Codicon.zap, localize('getting-started-setup-icon', "Icon used for the setup category of welcome page"));
+-const beginnerIcon = registerIcon('getting-started-beginner', Codicon.lightbulb, localize('getting-started-beginner-icon', "Icon used for the beginner category of welcome page"));
+ 
+ export type BuiltinGettingStartedStep = {
+@@ -202,4 +202,3 @@
+ ];
+ 
+-const Button = (title: string, href: string) => `[${title}](${href})`;
+ 
 @@ -206,346 +206,1 @@
 -export const walkthroughs: GettingStartedWalkthroughContent = [
 -	{

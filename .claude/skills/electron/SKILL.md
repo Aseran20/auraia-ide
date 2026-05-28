@@ -12,12 +12,12 @@ Automate Arclen IDE (and any Electron app) using `agent-browser` CLI via Chrome 
 
 ```bash
 # OPTION A — QA the packaged distributable (production binary)
-"C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\VSCode-win32-x64\Arclen.exe" --remote-debugging-port=9222
+"<repo-root>\VSCode-win32-x64\Arclen.exe" --remote-debugging-port=9222
 
 # OPTION B — QA the dev runner (with hot reload via npm run watch)
 # In one terminal: cd vscode && npm run watch
 # In another:
-cmd /c "cd /d C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\vscode && scripts\code.bat --remote-debugging-port=9222"
+cmd /c "cd /d <repo-root>\vscode && scripts\code.bat --remote-debugging-port=9222"
 
 # Verify CDP is up
 curl -s http://localhost:9222/json/version
@@ -32,57 +32,39 @@ agent-browser screenshot dev/arclen-check.png     # visual
 agent-browser click @e5                           # interact
 ```
 
-**Important paths on this machine (not Adrian/Desktop/3-auraia — that's an old layout):**
-- Repo root: `C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\`
+**Key paths (substitute `<repo-root>` with this machine's actual repo path):**
+- Repo root: `<repo-root>\`
 - Production exe: `VSCode-win32-x64\Arclen.exe` (capital A)
 - Dev runner: `vscode\scripts\code.bat`
 - Before launching `code.bat` after a fresh `dev/build.sh`: run `cd vscode && node build/next/index.ts transpile` to populate `vscode/out/` (the dev runner needs `out/main.js` which the production build doesn't create).
 
 ## Core Workflow
 
-1. **Launch** the Electron app with `--remote-debugging-port=9333`
+1. **Launch** the Electron app with `--remote-debugging-port=9222`
 2. **Connect** agent-browser to the CDP port
 3. **Snapshot** to discover interactive elements (each gets a ref like @e1, @e2)
 4. **Interact** using element refs (click, fill, etc.)
 5. **Screenshot** to verify visual state
 6. **Re-snapshot** after navigation or state changes
 
-## Commands Reference
+## Command reference — load it dynamically
+
+Don't hard-code the command list here; it drifts from the installed CLI. Pull the
+always-current Electron workflow from agent-browser itself:
 
 ```bash
-# Connect (persists for subsequent commands)
-agent-browser connect 9333
+agent-browser skills get electron     # full command set, templates, troubleshooting
+```
 
-# Snapshot — discover UI elements
-agent-browser --cdp 9333 snapshot -i
+The essentials you'll use most (all assume `--cdp 9222`):
 
-# Screenshot
-agent-browser --cdp 9333 screenshot output.png
-agent-browser --cdp 9333 screenshot --annotate annotated.png  # numbered element boxes
-agent-browser --cdp 9333 screenshot --full full.png           # full page
-
-# Click
-agent-browser --cdp 9333 click @e5
-
-# Fill input
-agent-browser --cdp 9333 fill @e3 "search query"
-
-# Press key
-agent-browser --cdp 9333 press Enter
-
-# Get text from element
-agent-browser --cdp 9333 get text @e5
-
-# Tab management (Electron apps have multiple windows/webviews)
-agent-browser --cdp 9333 tab                    # list targets
-agent-browser --cdp 9333 tab 2                  # switch to tab 2
-agent-browser --cdp 9333 tab --url "*settings*" # switch by URL pattern
-
-# Wait
-agent-browser --cdp 9333 wait 1000
-
-# Export snapshot as JSON
-agent-browser --cdp 9333 snapshot --json > state.json
+```bash
+agent-browser connect 9222                     # connect (persists for later calls)
+agent-browser --cdp 9222 tab                   # list windows/webviews
+agent-browser --cdp 9222 snapshot -i           # a11y tree with @eN refs (text checks)
+agent-browser --cdp 9222 screenshot out.png    # visual check
+agent-browser --cdp 9222 click @e5             # interact via ref
+agent-browser --cdp 9222 press Ctrl+R          # reload (then reconnect — see troubleshooting)
 ```
 
 ## Visual Audit Workflow
@@ -91,7 +73,7 @@ After making changes to Arclen (icons, settings, branding):
 
 ```bash
 # Take screenshot
-agent-browser --cdp 9333 screenshot check.png
+agent-browser --cdp 9222 screenshot check.png
 
 # Read the image (Claude is multimodal)
 # Then compare against expected state
@@ -105,7 +87,7 @@ agent-browser --cdp 9333 screenshot check.png
 ## Multiple Apps Simultaneously
 
 ```bash
-agent-browser --session arclen connect 9333
+agent-browser --session arclen connect 9222
 agent-browser --session slack connect 9222
 
 agent-browser --session arclen screenshot arclen.png
@@ -114,7 +96,7 @@ agent-browser --session slack screenshot slack.png
 
 ## Troubleshooting
 
-- **"Connection refused"**: App must be launched with `--remote-debugging-port=9333`. If already running, quit and relaunch.
+- **"Connection refused"**: App must be launched with `--remote-debugging-port=9222`. If already running, quit and relaunch.
 - **`os error 10060` (timeout) right after `press Ctrl+R`**: the reload drops the CDP socket briefly. Reconnect with `agent-browser connect 9222` before the next call. This is the normal recovery — not a bug. Build it into any reload→screenshot sequence.
 - **Elements not found**: Use `agent-browser tab` to list targets, switch to the right webview.
 - **Cannot type**: Try `agent-browser keyboard type "text"` or `agent-browser keyboard inserttext "text"`.

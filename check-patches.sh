@@ -15,6 +15,12 @@ green='\033[0;32m'
 red='\033[0;31m'
 reset='\033[0m'
 
+# We cd into a scratch clone later; capture the invocation dir now so patch paths
+# (which are relative to it) survive that cd. Without this, git apply runs from the
+# clone and reports "can't open patch 'patches/user/X.patch'" when run from repo root.
+START_DIR="$(pwd)"
+abspath() { case "$1" in /*) printf '%s\n' "$1" ;; *) printf '%s/%s\n' "${START_DIR}" "$1" ;; esac; }
+
 COMMIT=$(jq -r '.commit' upstream/stable.json)
 TAG=$(jq -r '.tag'    upstream/stable.json)
 VSCODE_URL="https://github.com/microsoft/vscode.git"
@@ -38,7 +44,9 @@ fi
 
 # ─── Find base patches that overlap with user patch target files ──────────────
 
-USER_FILES=$(grep '^+++ b/' "${USER_PATCHES[@]}" | sed 's|^.*:+++ b/||' | sort -u)
+# -h: never prefix matches with the filename. Without it, a SINGLE patch arg yields
+# unprefixed lines that the old `s|^.*:+++ b/||` (needs a colon) failed to strip.
+USER_FILES=$(grep -h '^+++ b/' "${USER_PATCHES[@]}" | sed 's|^+++ b/||' | sort -u)
 
 PREREQ_PATCHES=()
 while IFS= read -r -d '' base; do
@@ -56,13 +64,17 @@ if [[ ${#PREREQ_PATCHES[@]} -gt 0 ]]; then
   echo ""
 fi
 
+# ─── Absolutize patch paths (we cd into the clone below) ──────────────────────
+for i in "${!USER_PATCHES[@]}";   do USER_PATCHES[$i]="$(abspath "${USER_PATCHES[$i]}")"; done
+for i in "${!PREREQ_PATCHES[@]}"; do PREREQ_PATCHES[$i]="$(abspath "${PREREQ_PATCHES[$i]}")"; done
+
 # ─── Collect all files to sparse-checkout ────────────────────────────────────
 
 ALL_FILES=$(
   {
-    grep '^+++ b/' "${USER_PATCHES[@]}"
-    [[ ${#PREREQ_PATCHES[@]} -gt 0 ]] && grep '^+++ b/' "${PREREQ_PATCHES[@]}"
-  } | sed 's|^.*:+++ b/||' | sort -u
+    grep -h '^+++ b/' "${USER_PATCHES[@]}"
+    [[ ${#PREREQ_PATCHES[@]} -gt 0 ]] && grep -h '^+++ b/' "${PREREQ_PATCHES[@]}"
+  } | sed 's|^+++ b/||' | sort -u
 )
 
 # ─── Sparse clone ────────────────────────────────────────────────────────────

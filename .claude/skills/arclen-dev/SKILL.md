@@ -1,9 +1,11 @@
 ---
-name: hook-development
-description: Orient a new Claude session for Arclen IDE development. Run at the start of any dev session to load the right mental model and avoid wasted CI builds. Triggers on "/hook-development" or when user says "let's work on Arclen", "start dev session", "where were we".
+name: arclen-dev
+description: Arclen IDE dev iteration runbook — the validated HOW-TO for editing the VS Code source and seeing changes. Covers the real edit→transpile→reload loop (npm run watch is a no-op here), generating user patches correctly (plain git diff does NOT work), cascade-delete dependency walks, the CRLF/Edit gotcha, QA scripts, and resuming a broken build. This is the source of truth for HOW to iterate; the sibling arclen-ide skill covers WHAT/WHERE (repo structure, branding, icons, build prerequisites). Use at the start of any Arclen dev session or when the user says "let's work on Arclen", "start dev session", "where were we", "iterate on a patch", "my change isn't showing up", or "the build won't apply".
 ---
 
-# Arclen IDE — Dev Session Orientation
+# Arclen IDE — Dev Iteration Runbook
+
+> **Scope:** this is the HOW (iterate, patch, debug the loop). For the WHAT/WHERE — repo structure, branding, icon generation, build prerequisites, modifying the packaged output — see the `arclen-ide` skill. The two are siblings; this one is authoritative on the iteration loop and patch generation.
 
 Run this at the start of any dev session. It loads the key constraints so you don't repeat past mistakes.
 
@@ -23,9 +25,11 @@ cd vscode && node build/next/index.ts transpile   # ~10s, full src/ → out/
 ```
 
 **Quel fichier édites-tu ?**
-- `vscode/src/...` → loop complet ci-dessous (transpile required)
+- `vscode/src/**/*.ts` → loop complet ci-dessous (transpile required, hot-reloads on Ctrl+R)
+- `vscode/src/**/*.css` → **transpile copies it, but Ctrl+R does NOT re-read CSS** — injected `<style>`/`document.fonts` persist across the soft reload. **You must fully relaunch** (`scripts/code.bat`) to see CSS/font changes. `document.fonts.check(...)` returns stale `true`, so don't trust it after a soft reload. (See "Theming & fonts" below.)
 - `vscode/extensions/*/package.json` ou `*.nls.json` → **skip transpile** (extension manifests are loaded directly, not compiled); just Ctrl+R via agent-browser
 - `vscode/extensions/*/src/*.ts` → run `npm run gulp compile-extension:<extName>` (heavier, ~30s) THEN Ctrl+R
+- `vscode/extensions/theme-*/themes/*.json` → theme data; reload via theme re-pick or relaunch
 - `vscode/product.json` → quit + relaunch `code.bat` (not picked up by reload)
 
 **Optimal loop per change** (~15s per iteration):
@@ -38,6 +42,30 @@ cd vscode && node build/next/index.ts transpile   # ~10s, full src/ → out/
 ```
 
 **When to also run `npm run watch` (optional):** for continuous type-check while you edit. Catches TS errors at save time instead of after the 10s transpile. **Known crash**: `watch-extensions` sometimes dies with `ERR_CHILD_PROCESS_STDIO_MAXBUFFER` on `watch-extension-media`. Non-fatal for workbench iteration — just run `watch-client` alone if it bothers you: `npm run gulp watch-client`.
+
+## Theming & fonts — single source of truth + 2 gotchas (validated 2026-05-28)
+
+The **Arclen Dark** theme + IBM Plex fonts are the IDE defaults. **All colour/font values live in ONE file: `branding/arclen-tokens.json`.** Never hand-edit the theme JSON or the splash colours — they're generated.
+
+**To change a colour or a font default:**
+```bash
+# 1. edit the palette / fonts in branding/arclen-tokens.json   (e.g. palette.accent)
+# 2. regenerate the theme + splash + product.json font defaults:
+node dev/gen-arclen-theme.mjs
+# 3. mirror into the live tree + relaunch to verify (CSS/theme need a FULL relaunch, not Ctrl+R)
+cp src/stable/extensions/theme-arclen/themes/arclen-dark.json vscode/extensions/theme-arclen/themes/
+cp src/stable/src/vs/workbench/services/themes/common/arclenInitialColors.ts vscode/src/vs/workbench/services/themes/common/
+cd vscode && node build/next/index.ts transpile   # only needed if the .ts splash changed
+```
+The generator (`dev/gen-arclen-theme.mjs`) expands token refs (`$accent`, `$accent/26` = token+alpha) into hex and writes: the theme JSON, `arclenInitialColors.ts` (the startup "splash", a strict subset of the theme → can't drift), and the font-family values in `product.json`. Theme structure (which workbench key → which token) also lives in `arclen-tokens.json` under `theme.workbench`.
+
+**Files:** source = `branding/arclen-tokens.json` + `dev/gen-arclen-theme.mjs`. Generated/shipped = `src/stable/extensions/theme-arclen/` (the theme, dir-scanned into builds), `src/stable/src/vs/.../arclenInitialColors.ts`, `patches/user/arclen-theme-default.patch` (sets default + re-exports the splash — **stable, doesn't change when colours change**), `patches/user/arclen-fonts.patch` (style.css `@font-face`/`--monaco-font`/`--monaco-monospace-font` + fonts.ts `DEFAULT_FONT_FAMILY`), `src/stable/src/vs/.../arclen-fonts/*.woff2` (bundled fonts). Swapping the whole font *family* (not just fallbacks) means editing `arclen-fonts.patch` + replacing the woff2.
+
+**Gotcha 1 — the default theme is NOT `configurationDefaults.workbench.colorTheme`.** That setting does not make a theme the default on a fresh profile (the theme service resolves its own default before extensions register, then doesn't switch). The real default is `ThemeSettingDefaults.COLOR_THEME_DARK` in `src/vs/workbench/services/themes/common/workbenchThemeService.ts` (patched to `'Arclen Dark'`). The neighbouring `COLOR_THEME_DARK_INITIAL_COLORS` is the pre-extension-load splash — leaving it un-themed flashes the old colours at launch.
+
+**Gotcha 2 — CSS changes need a FULL relaunch, not Ctrl+R** (see the file-type list above). TS hot-reloads; CSS/fonts do not.
+
+**Dev extension host is pathologically slow here** (~5 min, "Extension host did not start in 10 seconds") because built-in extensions' `out/` isn't compiled in this dev tree — unrelated to theming, the source-default theme applies regardless. `set VSCODE_SKIP_PRELAUNCH=1` speeds relaunch.
 
 ## Cold start (first time after `dev/build.sh`)
 
@@ -52,14 +80,14 @@ After this, the loop above works.
 
 ```bash
 # Verify patches are healthy (30s) — note: check-patches.sh has a known cwd bug, see below
-"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./check-patches.sh
+"C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe" ./check-patches.sh
 
 # If vscode/ does NOT exist — full build (30-60 min, one-time)
-"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./dev/build.sh
+"C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe" ./dev/build.sh
 
 # Reuse vscode/ with -s flag (~10-15 min, rebuilds binaries from current sources)
 # Only needed to verify the .exe — daily dev does NOT need this.
-"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./dev/build.sh -s
+"C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe" ./dev/build.sh -s
 ```
 
 ## When making a patch change
@@ -119,20 +147,78 @@ After this, the loop above works.
 
 ## How to launch a build (Claude Code)
 
-Run via PowerShell tool with `run_in_background: true`, always pipe to `build.log`:
+**Canonical entry = `dev/build-checked.sh` (NOT `dev/build.sh` directly).** It runs a 25s TS gate
+first (aborts before wasting ~16 min on a broken patch), tees to `build.log` itself, and exits with
+the REAL code (no `tee` masking). Run via PowerShell tool with `run_in_background: true` — and arm
+the Monitor (below) at the same time:
 
 ```powershell
-$bash = "C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
-& $bash -c "cd '/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide' && ./dev/build.sh -s 2>&1 | tee build.log"
+$bash = "C:\Program Files\Git\bin\bash.exe"   # <-- the REAL Git Bash. See trap below.
+& $bash -c "cd '/c/path/to/repo' && ./dev/build-checked.sh -s"   # tees + truthful exit internally
 ```
 
-Then monitor with `Read` on `build.log` or `Bash tail build.log | head -30`.
+**Fast standalone TS gate: `dev/check-ts.sh` (~25-70s).** Runs `tsgo --noEmit` on the patched tree.
+Catches noUnusedLocals (TS6133) / missing imports / type errors — the class that silently fails
+`vscode-min-prepack` at minute 16. Run it after editing source or a patch, before any full build.
+(Validated 2026-05-28: it catches an injected unused local in one pass.) `build-checked.sh` calls it
+automatically; `dev/sync-and-check.sh` (Tier 2, when built) chains reset→reapply-patches→transpile→check-ts
+for the post-pull case where the live tree is out of sync with the patch set.
+
+⚠️ **Git Bash path trap:** the exe location differs per machine and bare `bash` may be WSL.
+Resolve it first with PowerShell, not `which bash`:
+`(Test-Path "$env:LOCALAPPDATA\Programs\Git\bin\bash.exe"), (Test-Path "C:\Program Files\Git\bin\bash.exe")`.
+On the current PC it's the **system** install `C:\Program Files\Git\bin\bash.exe`; `bash` on PATH
+resolves to `C:\WINDOWS\system32\bash.exe` = WSL, which cannot run the Windows build.
 
 **Never use `Start-Process`** (detaches, no log). **Never use the Bash tool to call Windows `.exe` paths** (Bash tool runs under WSL).
 
+⚠️ **`| tee build.log` MASKS the real exit code.** The pipeline's exit status is `tee`'s (always 0),
+so a **failed** `dev/build.sh` reports **"completed exit 0"** to the background task. **Never trust the
+exit code** — confirm success by reading `build.log`: success = `Finished '...-min-packing'`; failure =
+`errored after` / `Finished compilation with [1-9] errors` / `Found N errors`. (Real incident 2026-05-28:
+build reported exit 0 but `vscode-min-prepack` had errored with 5 `noUnusedLocals` errors.) If you want
+the exit code to be truthful, launch with `set -o pipefail` or check `${PIPESTATUS[0]}`.
+
+### Attach a Monitor while it builds (do this every build)
+
+A 10-15 min build shouldn't be babysat by manual `Read`s. The moment you launch it,
+arm a `Monitor` on `build.log` so you get a predictable heartbeat AND an instant scream on
+failure (don't discover a TS error at minute 8). The build's own background-task notification
+covers final completion; the monitor adds progress + early-failure detection and self-exits on
+the gulp packing marker.
+
+```bash
+log=/c/path/to/repo/build.log
+# Catch the gulp compile-error SUMMARY, not "error TS" — VS Code prints noUnusedLocals/type
+# errors as "Error: path.ts(L,C): 'X' is declared but its value is never read." (NO "error TS" prefix).
+fail_re='Finished compilation with [1-9]|errored after|Found [0-9]+ error|JavaScript heap out of memory'
+done_re='Finished .*min-packing'          # build.sh ends with: npm run gulp vscode-win32-x64-min-packing
+while true; do
+  if grep -qaE "$done_re" "$log" 2>/dev/null; then echo "BUILD DONE - next: cold transpile to populate out/"; exit 0; fi
+  if grep -qaE "$fail_re" "$log" 2>/dev/null; then echo "BUILD FATAL (gulp compile / OOM):"; grep -haoE "$fail_re" "$log" | sort -u | tail -5; exit 1; fi
+  last=$(grep -avE '^\+|jsonTmp|setpath|applying patch:|sed -i|^MS_' "$log" 2>/dev/null | tail -1)
+  echo "[$(date +%H:%M:%S)] building... ${last:0:140}"
+  sleep 90
+done
+```
+
+Monitor settings: `persistent: false`, `timeout_ms: 1500000` (~25 min headroom). Heartbeat is
+90s so it stays well under the auto-stop volume cap.
+
+⚠️ **Hard-won lesson — keep `fail_re` NARROW.** During the native-module rebuild phase (npm ci /
+electron-rebuild of `@vscode/spdlog`, `node-addon-api`, etc.) the log emits **`gyp ERR! not ok`,
+`npm error gyp`, and `error MSB3491: ... being used by another process`** — and then **npm
+retries and the build continues fine.** A `fail_re` that matches `gyp ERR|npm ERR|MSB[0-9]` will
+**false-positive and exit while the build is still healthy.** `MSB3491` specifically is a transient
+.tlog file-lock (parallel msbuild race / AV), not a toolchain failure — do not kill the build on it.
+So the monitor matches only **gulp TypeScript errors and OOM**, which are never retried. For every
+other failure mode, trust the **background-task exit notification** (it fires when `dev/build.sh`
+exits non-zero) and THEN read `build.log` to diagnose — don't try to interpret mid-build errors live.
+If completion fires via the background task before the monitor's `done_re`, `TaskStop` the monitor.
+
 ## Key facts to remember
 
-- **Git Bash path:** `C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe` (user-level install)
+- **Git Bash path:** `C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe` (user-level install)
 - **Validated Windows toolchain (2026-05):** VS 2022 Community 17.14 + MSVC v143 (v14.44.35207) + Spectre v143 x64. **Do NOT install VS 2026** — node-gyp 11.x can't detect it and the workarounds (node-gyp swap, env override) diverge from CI.
 - **node-gyp:** stock npm-bundled 11.5 (no swap needed with VS 2022). If a previous Claude swapped to 12.x for 2026 support, restore from `node-gyp_11.5.0_bak` backup in `%ProgramFiles%\nodejs\node_modules\npm\node_modules\`.
 - **Patch application order:** `patches/*.patch` → `patches/windows/*.patch` → `patches/user/*.patch`. Base patches run first — user patch context must account for what base patches already removed.

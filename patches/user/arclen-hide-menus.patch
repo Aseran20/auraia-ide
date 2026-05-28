@@ -5,7 +5,7 @@ index 4794c30c9ec..30ae967311e 100644
 @@ -27,15 +27,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	order: 2
  });
-
+ 
 -MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
 -	submenu: MenuId.MenubarSelectionMenu,
 -	title: {
@@ -16,13 +16,13 @@ index 4794c30c9ec..30ae967311e 100644
 -	order: 3
 -});
 +// Arclen: Selection menu hidden — text-selection submenu not relevant for M&A analysts
-
+ 
  MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	submenu: MenuId.MenubarViewMenu,
 @@ -47,15 +39,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	order: 4
  });
-
+ 
 -MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
 -	submenu: MenuId.MenubarGoMenu,
 -	title: {
@@ -33,6 +33,6 @@ index 4794c30c9ec..30ae967311e 100644
 -	order: 5
 -});
 +// Arclen: Go menu hidden — code-navigation submenu not relevant for M&A analysts
-
+ 
  MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	submenu: MenuId.MenubarTerminalMenu,

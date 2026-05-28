@@ -22,7 +22,7 @@ The lightweight CI (`check-patches.yml`) runs automatically on push to `patches/
 
 **Python version:** skill previously said 3.11 required. VS Code 1.121.0 uses node-gyp 10.x which supports Python 3.13. Use whatever Python is available unless node-gyp fails, then fall back to 3.11.
 
-**Git Bash path (local machine):** `C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe` (user-level install, not `C:\Program Files\Git`)
+**Git Bash path (local machine):** `C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe` (user-level install, not `C:\Program Files\Git`)
 
 ## Repo Structure
 
@@ -100,7 +100,7 @@ rcedit "VSCode-win32-x64/arclen.exe" --set-icon src/stable/resources/win32/code.
 
 ```bash
 # Git Bash path (user-level install on this machine):
-BASH="C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
+BASH="C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe"
 
 # Full build (first time, ~30-60 min)
 "$BASH" ./dev/build.sh 2>&1 | tee build.log
@@ -119,8 +119,8 @@ Always run via PowerShell with `run_in_background: true`, piping to `build.log`.
 
 ```powershell
 # Launch (PowerShell tool, run_in_background: true)
-$bash = "C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe"
-& $bash -c "cd '/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide' && ./dev/build.sh -s 2>&1 | tee build.log"
+$bash = "C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe"
+& $bash -c "cd '/c/path/to/repo' && ./dev/build.sh -s 2>&1 | tee build.log"
 
 # Monitor (Read tool on build.log, check tail periodically)
 # Or: Bash tail -f build.log | head -20
@@ -143,55 +143,19 @@ gh run list --repo Aseran20/auraia-ide --limit 3
 gh run download <run-id> --repo Aseran20/auraia-ide
 ```
 
-## Development Workflow — Fast Iteration (No Rebuild)
+## Development Workflow — Fast Iteration
 
-For any change that touches TypeScript source (menus, UI, patches), the full rebuild cycle (30-60 min) is never needed during development. VS Code's watch mode gives a 5-second feedback loop.
+> ⚠️ The iteration loop lives in the **`arclen-dev`** skill (the runbook), not here.
+> **Do NOT rely on `npm run watch` to emit JS in this build** — `useEsbuildTranspile=false`
+> makes it a type-check-only no-op. The real emit is a one-shot:
+> `cd vscode && node build/next/index.ts transpile` (~10s), then `Ctrl+R` via agent-browser.
+> Full loop, ports, reconnect handling, and QA scripts: see `arclen-dev`.
 
-### Setup (one-time)
-
-The `vscode/` source directory must exist. If it doesn't (fresh clone), run a full build once to populate it. After that, the watch workflow below replaces all intermediate builds.
-
-### The watch loop
-
-```bash
-# Terminal 1 — incremental TypeScript compiler (keep running)
-cd vscode
-npm run watch
-
-# Terminal 2 — launch app from source (not from VSCode-win32-x64/)
-.\scripts\code.bat   # Windows
-```
-
-The `scripts/code.bat` launcher runs "Code - OSS" directly from compiled sources in `vscode/out/`. It has a distinct icon from the packaged build so you can tell them apart.
-
-**After each file change:**
-1. Watch terminal prints "Finished compilation" in ~3-5 seconds
-2. In the running app: `Ctrl+Shift+P` → `Developer: Reload Window` (or `Ctrl+R`)
-3. Change is live — no restart, no rebuild
-
-### What this covers
-
-| Change type | Watch + Reload | Rebuild needed |
-|---|---|---|
-| Hide/show menus (TypeScript) | Yes | No |
-| Welcome page content | Yes | No |
-| Activity bar items | Yes | No |
-| UI strings, labels | Yes | No |
-| product.json defaults | Restart app | No |
-| Icons, branding | No | Yes (or rcedit trick) |
-| New npm dependencies | No | Yes |
-
-### Convert to patch once verified
-
-When the change works in watch mode, convert it to a patch in `patches/user/` so it persists through future builds:
-
-```bash
-cd vscode
-git diff -- src/vs/path/to/file.ts > ../patches/user/arclen-my-change.patch
-git checkout -- src/vs/path/to/file.ts   # revert source, patch carries the change
-```
-
-The full rebuild only happens when producing a distributable `.exe`/`.msi`. All iteration happens in watch mode.
+When a change works, promote it to a patch in `patches/user/` so it survives rebuilds.
+**Generating the patch is NOT a plain `git diff`** — `vscode/`'s baseline is pristine upstream,
+so `git diff` returns base + windows + user patches + your edits combined. See the patch-generation
+section of the `arclen-dev` skill for the correct approaches (`.disabled` rename, hand-write, or
+post-base-patch state).
 
 ---
 
@@ -237,13 +201,16 @@ Current patches:
 
 ### Creating a new patch
 
-1. Make sure `vscode/` exists (from a previous build with `-s`)
-2. Edit the source file in `vscode/src/...`
-3. Generate the patch: `cd vscode && git diff -- path/to/file.ts > ../patches/user/arclen-my-change.patch`
-4. Revert: `git checkout -- path/to/file.ts`
-5. Test: `git apply --check ../patches/user/arclen-my-change.patch`
+⚠️ **A plain `git diff` does NOT produce a clean user patch** in this repo — `vscode/`'s git baseline
+is pristine upstream, so all base + windows + user patches show up as uncommitted modifications mixed
+with your edits. The correct methods (`.disabled` rename, hand-write from post-base-patch state, or
+programmatic generation for large deletions) are documented in the **`arclen-dev`** skill under
+"Generating user patches". Also remember: if a patch removes the only usage of an imported symbol,
+the import must be dropped in the same patch (`noUnusedLocals: true`) — `check-patches.sh` won't catch
+it, only a full compile will.
 
-Patches must apply cleanly against the current VS Code version pinned in `upstream/stable.json`.
+Patches must apply cleanly against the VS Code version pinned in `upstream/stable.json`. Verify with
+`check-patches.sh` (see "Patch Health Check" below).
 
 ## Visual Audit — Verifying Changes
 
@@ -305,7 +272,7 @@ The `configurationDefaults` in product.json are tuned for M&A analysts, not deve
 **Run this before any build, before any push that touches patches, and whenever `upstream/stable.json` changes:**
 
 ```bash
-"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./check-patches.sh
+"C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe" ./check-patches.sh
 ```
 
 This script verifies that every patch in `patches/user/` applies cleanly against the pinned VS Code upstream — **without needing `vscode/` locally**. It works by downloading only the specific files each patch touches from GitHub (curl per file, ~5-10 seconds total).
@@ -328,7 +295,7 @@ The lightweight CI workflow at `.github/workflows/check-patches.yml` runs this c
 **Always run preflight before a full build** to catch blockers in 30 seconds.
 
 ```bash
-"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./preflight.sh
+"C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe" ./preflight.sh
 ```
 
 What it checks:

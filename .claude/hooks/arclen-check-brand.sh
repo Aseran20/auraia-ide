@@ -34,7 +34,7 @@ if [ -z "$HIGH_HITS" ]; then
   exit 0
 fi
 
-REL_PATH="${FILE_PATH#*/auraia-ide/}"
+REL_PATH="${FILE_PATH#"$PROJECT_DIR"/}"
 MESSAGE="⚠ Arclen brand-leak (HIGH) in ${REL_PATH}:
 ${HIGH_HITS}
 
