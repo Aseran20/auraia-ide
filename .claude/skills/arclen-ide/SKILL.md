@@ -109,6 +109,58 @@ gh run list --repo Aseran20/auraia-ide --limit 3
 gh run download <run-id> --repo Aseran20/auraia-ide
 ```
 
+## Development Workflow — Fast Iteration (No Rebuild)
+
+For any change that touches TypeScript source (menus, UI, patches), the full rebuild cycle (30-60 min) is never needed during development. VS Code's watch mode gives a 5-second feedback loop.
+
+### Setup (one-time)
+
+The `vscode/` source directory must exist. If it doesn't (fresh clone), run a full build once to populate it. After that, the watch workflow below replaces all intermediate builds.
+
+### The watch loop
+
+```bash
+# Terminal 1 — incremental TypeScript compiler (keep running)
+cd vscode
+npm run watch
+
+# Terminal 2 — launch app from source (not from VSCode-win32-x64/)
+.\scripts\code.bat   # Windows
+```
+
+The `scripts/code.bat` launcher runs "Code - OSS" directly from compiled sources in `vscode/out/`. It has a distinct icon from the packaged build so you can tell them apart.
+
+**After each file change:**
+1. Watch terminal prints "Finished compilation" in ~3-5 seconds
+2. In the running app: `Ctrl+Shift+P` → `Developer: Reload Window` (or `Ctrl+R`)
+3. Change is live — no restart, no rebuild
+
+### What this covers
+
+| Change type | Watch + Reload | Rebuild needed |
+|---|---|---|
+| Hide/show menus (TypeScript) | Yes | No |
+| Welcome page content | Yes | No |
+| Activity bar items | Yes | No |
+| UI strings, labels | Yes | No |
+| product.json defaults | Restart app | No |
+| Icons, branding | No | Yes (or rcedit trick) |
+| New npm dependencies | No | Yes |
+
+### Convert to patch once verified
+
+When the change works in watch mode, convert it to a patch in `patches/user/` so it persists through future builds:
+
+```bash
+cd vscode
+git diff -- src/vs/path/to/file.ts > ../patches/user/arclen-my-change.patch
+git checkout -- src/vs/path/to/file.ts   # revert source, patch carries the change
+```
+
+The full rebuild only happens when producing a distributable `.exe`/`.msi`. All iteration happens in watch mode.
+
+---
+
 ## Modifying WITHOUT Rebuild
 
 Many changes can be applied directly to the build output (`VSCode-win32-x64/`). This is instant — no 15-minute rebuild needed.
@@ -213,6 +265,28 @@ The `configurationDefaults` in product.json are tuned for M&A analysts, not deve
 - Telemetry off, auto-update off
 - Git decorations and action buttons hidden (git works via Claude in terminal)
 - Walkthroughs disabled
+
+## Preflight — Check Before Building
+
+**Always run preflight before a build** to catch blockers in 30 seconds instead of 60 minutes in.
+
+```bash
+"C:\Program Files\Git\bin\bash.exe" ./preflight.sh
+```
+
+What it checks:
+- Node major version matches `.nvmrc` (currently 22.x)
+- npm < 11.2.0 (VS Code hard requirement)
+- Python 3.11 (node-gyp; 3.12+ breaks)
+- CLI tools: git, jq, curl, cargo, imagemagick
+- VS Build Tools 2022 + Spectre-mitigated libs (Windows)
+- `vscode/` commit matches `upstream/stable.json` (stale source = silent patch failures)
+- Every patch in `patches/`, `patches/windows/`, `patches/user/` applies cleanly via `git apply --check`
+- `product.json` valid JSON
+
+Exit 0 = safe to build. Exit 1 = at least one blocker. Warnings are non-fatal.
+
+The patch check is the most valuable: if any `patches/user/` patch will fail to apply (e.g., after an upstream VS Code update changed the surrounding context), preflight tells you exactly which patch and which line, before you've wasted an hour.
 
 ## Common Pitfalls
 
