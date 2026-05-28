@@ -146,6 +146,7 @@ Patches in `patches/user/` are applied LAST during the build, after VSCodium's o
 
 Current patches:
 - `arclen-hide-run-menu.patch` — Removes "Run" from menu bar + adds hideIfEmpty to Debug sidebar
+- `arclen-hide-menus.patch` — Removes Selection, View, Go, Help menus (keeps File, Edit, Terminal)
 - `arclen-welcome-cleanup.patch` — Removes Clone Git/Connect to.../Open Repository from Welcome page + changes tagline
 
 ### Creating a new patch
