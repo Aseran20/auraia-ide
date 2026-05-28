@@ -20,6 +20,5 @@ stores/snapcraft/stable/*.snap
 font-size/node_modules/
 font-size/generate-css.js
 build.log
-_exports/
 arclen-check.png
 skills-lock.json
