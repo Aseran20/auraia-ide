@@ -7,6 +7,23 @@ description: Build, customize, and audit Arclen IDE — a rebranded VS Code fork
 
 Arclen IDE is a rebranded VSCodium fork targeting M&A analysts. This skill covers the full lifecycle: branding, building, patching the VS Code source, modifying the build output without recompiling, and auditing changes visually.
 
+## Development Philosophy — Local First, CI for Distribution Only
+
+**Never trigger CI for development.** CI (`ci-build-windows.yml`) exists only to produce a distributable `.exe`/`.msi` at the end of a feature. All iteration happens locally.
+
+| Task | Where |
+|---|---|
+| Patch changes, UI tweaks, settings | Local only — `check-patches.sh` + watch mode |
+| Testing a change | Local — launch from `vscode/` with `scripts/code.bat` |
+| Verifying a full build locally | `dev/build.sh -s` (~10-15 min, reuses `vscode/`) |
+| Producing an installeur to distribute | CI — trigger manually via `gh workflow run` |
+
+The lightweight CI (`check-patches.yml`) runs automatically on push to `patches/` — that one is fine, it's a 1-min guard, not a full build.
+
+**Python version:** skill previously said 3.11 required. VS Code 1.121.0 uses node-gyp 10.x which supports Python 3.13. Use whatever Python is available unless node-gyp fails, then fall back to 3.11.
+
+**Git Bash path (local machine):** `C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe` (user-level install, not `C:\Program Files\Git`)
+
 ## Repo Structure
 
 ```
