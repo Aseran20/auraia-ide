@@ -1,0 +1,28 @@
+{
+	"name": "theme-arclen",
+	"displayName": "Arclen Theme",
+	"description": "Arclen Dark — the default Arclen color theme. Arctic accent on near-black surfaces, tuned for M&A deal execution.",
+	"categories": [
+		"Themes"
+	],
+	"version": "1.0.0",
+	"publisher": "arclen",
+	"license": "MIT",
+	"engines": {
+		"vscode": "*"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"id": "Arclen Dark",
+				"label": "Arclen Dark",
+				"uiTheme": "vs-dark",
+				"path": "./themes/arclen-dark.json"
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Aseran20/auraia-ide.git"
+	}
+}

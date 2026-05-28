@@ -1,0 +1,917 @@
+{
+	"$schema": "./arclen-tokens.schema (informal): edit palette/fonts/theme here, then run `node dev/gen-arclen-theme.mjs`",
+	"palette": {
+		"bg-base": "#09090B",
+		"bg-surface": "#111116",
+		"bg-elevated": "#18181F",
+		"bg-subtle": "#1F1F28",
+		"bg-inset": "#06060A",
+		"bg-statusbar": "#0C0C10",
+		"border-subtle": "#1C1C24",
+		"border": "#27272F",
+		"border-strong": "#3A3A46",
+		"fg-1": "#F0EEE9",
+		"fg-2": "#8C8A99",
+		"fg-3": "#50505A",
+		"fg-4": "#35353E",
+		"fg-sidebar": "#C9C7C2",
+		"accent": "#5AB8C4",
+		"accent-hover": "#46A4B0",
+		"accent-subtle": "#081618",
+		"accent-muted": "#3A8A94",
+		"accent-fg": "#7ACCD4",
+		"sel": "#173238",
+		"sel-inactive": "#16282B",
+		"green": "#46A878",
+		"green-fg": "#62C896",
+		"green-border": "#2C6B4E",
+		"green-subtle": "#0C1D16",
+		"red": "#C2504F",
+		"red-fg": "#E0726F",
+		"red-border": "#7A3434",
+		"red-subtle": "#220F10",
+		"yellow": "#C99A3C",
+		"yellow-fg": "#E0B85A",
+		"yellow-border": "#7A6020",
+		"yellow-subtle": "#1E1707",
+		"blue": "#6470C4",
+		"blue-fg": "#8A95DC",
+		"blue-border": "#3D4585",
+		"blue-subtle": "#12152A",
+		"neutral": "#6E6E7A",
+		"neutral-fg": "#9A9AA6",
+		"magenta": "#9A6BC4",
+		"magenta-fg": "#B58AD6",
+		"white": "#FFFFFF",
+		"black": "#000000"
+	},
+	"fonts": {
+		"uiFamily": "IBM Plex Sans",
+		"monoFamily": "IBM Plex Mono",
+		"editorFontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, 'Courier New', monospace",
+		"terminalFontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace",
+		"markdownPreviewFontFamily": "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+		"chatEditorFontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace"
+	},
+	"themeName": "Arclen Dark",
+	"theme": {
+		"type": "dark",
+		"semanticHighlighting": true,
+		"workbench": {
+			"foreground": "$fg-1",
+			"disabledForeground": "$fg-3",
+			"descriptionForeground": "$fg-2",
+			"errorForeground": "$red-fg",
+			"focusBorder": "$accent",
+			"icon.foreground": "$fg-2",
+			"selection.background": "$sel",
+			"widget.border": "$border",
+			"widget.shadow": "$black/66",
+			"sash.hoverBorder": "$accent",
+			"window.activeBorder": "$border",
+			"window.inactiveBorder": "$border-subtle",
+			"textLink.foreground": "$accent-fg",
+			"textLink.activeForeground": "$fg-1",
+			"textPreformat.foreground": "$accent-fg",
+			"textPreformat.background": "$bg-inset",
+			"textBlockQuote.background": "$bg-surface",
+			"textBlockQuote.border": "$border",
+			"textCodeBlock.background": "$bg-inset",
+			"textSeparator.foreground": "$border",
+			"button.background": "$accent",
+			"button.foreground": "$bg-base",
+			"button.hoverBackground": "$accent-hover",
+			"button.border": "$black/00",
+			"button.secondaryBackground": "$bg-elevated",
+			"button.secondaryForeground": "$fg-1",
+			"button.secondaryHoverBackground": "$bg-subtle",
+			"badge.background": "$accent",
+			"badge.foreground": "$bg-base",
+			"progressBar.background": "$accent",
+			"checkbox.background": "$bg-elevated",
+			"checkbox.border": "$border",
+			"checkbox.foreground": "$fg-1",
+			"input.background": "$bg-elevated",
+			"input.foreground": "$fg-1",
+			"input.border": "$border",
+			"input.placeholderForeground": "$fg-3",
+			"inputOption.activeBackground": "$accent/33",
+			"inputOption.activeBorder": "$accent",
+			"inputOption.activeForeground": "$fg-1",
+			"inputValidation.infoBackground": "$blue-subtle",
+			"inputValidation.infoBorder": "$blue-border",
+			"inputValidation.warningBackground": "$yellow-subtle",
+			"inputValidation.warningBorder": "$yellow-border",
+			"inputValidation.errorBackground": "$red-subtle",
+			"inputValidation.errorBorder": "$red-border",
+			"dropdown.background": "$bg-elevated",
+			"dropdown.listBackground": "$bg-elevated",
+			"dropdown.border": "$border",
+			"dropdown.foreground": "$fg-1",
+			"editor.background": "$bg-base",
+			"editor.foreground": "$fg-1",
+			"editorLineNumber.foreground": "$fg-3",
+			"editorLineNumber.activeForeground": "$fg-2",
+			"editorCursor.foreground": "$accent",
+			"editorCursor.background": "$bg-base",
+			"editor.selectionBackground": "$sel",
+			"editor.selectionHighlightBackground": "$accent/26",
+			"editor.inactiveSelectionBackground": "$sel-inactive",
+			"editor.wordHighlightBackground": "$white/12",
+			"editor.wordHighlightStrongBackground": "$accent/26",
+			"editor.findMatchBackground": "$accent/55",
+			"editor.findMatchHighlightBackground": "$accent/2A",
+			"editor.findRangeHighlightBackground": "$white/0D",
+			"editor.hoverHighlightBackground": "$accent/26",
+			"editor.lineHighlightBackground": "$bg-surface",
+			"editor.lineHighlightBorder": "$black/00",
+			"editor.rangeHighlightBackground": "$white/0A",
+			"editorWhitespace.foreground": "$border",
+			"editorIndentGuide.background1": "$border-subtle",
+			"editorIndentGuide.activeBackground1": "$border-strong",
+			"editorRuler.foreground": "$border-subtle",
+			"editorBracketMatch.background": "$accent/22",
+			"editorBracketMatch.border": "$accent/80",
+			"editorCodeLens.foreground": "$fg-3",
+			"editorLink.activeForeground": "$accent-fg",
+			"editorError.foreground": "$red-fg",
+			"editorWarning.foreground": "$yellow-fg",
+			"editorInfo.foreground": "$blue-fg",
+			"editorHint.foreground": "$accent",
+			"editorGutter.background": "$bg-base",
+			"editorGutter.addedBackground": "$green",
+			"editorGutter.deletedBackground": "$red",
+			"editorGutter.modifiedBackground": "$yellow",
+			"editorOverviewRuler.border": "$border-subtle",
+			"editorOverviewRuler.errorForeground": "$red",
+			"editorOverviewRuler.warningForeground": "$yellow",
+			"editorOverviewRuler.infoForeground": "$blue",
+			"editorOverviewRuler.addedForeground": "$green",
+			"editorOverviewRuler.deletedForeground": "$red",
+			"editorOverviewRuler.modifiedForeground": "$yellow",
+			"editorOverviewRuler.findMatchForeground": "$accent/55",
+			"editorWidget.background": "$bg-elevated",
+			"editorWidget.foreground": "$fg-1",
+			"editorWidget.border": "$border",
+			"editorSuggestWidget.background": "$bg-elevated",
+			"editorSuggestWidget.border": "$border",
+			"editorSuggestWidget.foreground": "$fg-1",
+			"editorSuggestWidget.highlightForeground": "$accent-fg",
+			"editorSuggestWidget.selectedBackground": "$bg-subtle",
+			"editorSuggestWidget.focusHighlightForeground": "$accent-fg",
+			"editorHoverWidget.background": "$bg-elevated",
+			"editorHoverWidget.border": "$border",
+			"editorHoverWidget.foreground": "$fg-1",
+			"editorGhostText.foreground": "$fg-3",
+			"peekView.border": "$accent",
+			"peekViewEditor.background": "$bg-inset",
+			"peekViewEditor.matchHighlightBackground": "$accent/55",
+			"peekViewResult.background": "$bg-surface",
+			"peekViewResult.foreground": "$fg-2",
+			"peekViewResult.selectionBackground": "$bg-subtle",
+			"peekViewResult.selectionForeground": "$fg-1",
+			"peekViewResult.matchHighlightBackground": "$accent/55",
+			"peekViewTitle.background": "$bg-surface",
+			"peekViewTitleDescription.foreground": "$fg-2",
+			"peekViewTitleLabel.foreground": "$fg-1",
+			"editorGroup.border": "$border-subtle",
+			"editorGroupHeader.tabsBackground": "$bg-surface",
+			"editorGroupHeader.tabsBorder": "$border-subtle",
+			"editorGroupHeader.noTabsBackground": "$bg-surface",
+			"editorGroupHeader.border": "$border-subtle",
+			"editorGroupEmptyBackground": "$bg-base",
+			"tab.activeBackground": "$bg-base",
+			"tab.activeForeground": "$fg-1",
+			"tab.activeBorder": "$bg-base",
+			"tab.activeBorderTop": "$accent",
+			"tab.selectedBorderTop": "$accent",
+			"tab.inactiveBackground": "$bg-surface",
+			"tab.inactiveForeground": "$fg-2",
+			"tab.border": "$border-subtle",
+			"tab.hoverBackground": "$bg-subtle",
+			"tab.unfocusedHoverBackground": "$bg-elevated",
+			"tab.unfocusedActiveBorderTop": "$border",
+			"tab.lastPinnedBorder": "$border",
+			"editorPane.background": "$bg-base",
+			"activityBar.background": "$bg-surface",
+			"activityBar.foreground": "$fg-1",
+			"activityBar.inactiveForeground": "$fg-3",
+			"activityBar.border": "$border-subtle",
+			"activityBar.activeBorder": "$accent",
+			"activityBar.activeBackground": "$black/00",
+			"activityBarBadge.background": "$accent",
+			"activityBarBadge.foreground": "$bg-base",
+			"sideBar.background": "$bg-surface",
+			"sideBar.foreground": "$fg-sidebar",
+			"sideBar.border": "$border-subtle",
+			"sideBarTitle.foreground": "$fg-2",
+			"sideBarSectionHeader.background": "$bg-surface",
+			"sideBarSectionHeader.foreground": "$fg-2",
+			"sideBarSectionHeader.border": "$border-subtle",
+			"list.activeSelectionBackground": "$bg-subtle",
+			"list.activeSelectionForeground": "$fg-1",
+			"list.activeSelectionIconForeground": "$accent",
+			"list.inactiveSelectionBackground": "$bg-elevated",
+			"list.inactiveSelectionForeground": "$fg-1",
+			"list.hoverBackground": "$bg-elevated",
+			"list.hoverForeground": "$fg-1",
+			"list.focusBackground": "$bg-subtle",
+			"list.focusForeground": "$fg-1",
+			"list.focusOutline": "$accent",
+			"list.highlightForeground": "$accent-fg",
+			"list.errorForeground": "$red-fg",
+			"list.warningForeground": "$yellow-fg",
+			"list.dropBackground": "$accent/22",
+			"listFilterWidget.background": "$bg-elevated",
+			"listFilterWidget.outline": "$accent",
+			"tree.indentGuidesStroke": "$border",
+			"tree.inactiveIndentGuidesStroke": "$border-subtle",
+			"menu.background": "$bg-elevated",
+			"menu.foreground": "$fg-1",
+			"menu.border": "$border",
+			"menu.selectionBackground": "$bg-subtle",
+			"menu.selectionForeground": "$fg-1",
+			"menu.separatorBackground": "$border",
+			"menubar.selectionBackground": "$bg-subtle",
+			"menubar.selectionForeground": "$fg-1",
+			"panel.background": "$bg-base",
+			"panel.border": "$border-subtle",
+			"panelTitle.activeForeground": "$fg-1",
+			"panelTitle.activeBorder": "$accent",
+			"panelTitle.inactiveForeground": "$fg-2",
+			"panelInput.border": "$border",
+			"panelSection.border": "$border-subtle",
+			"panelSectionHeader.background": "$bg-surface",
+			"statusBar.background": "$bg-statusbar",
+			"statusBar.foreground": "$fg-2",
+			"statusBar.border": "$border-subtle",
+			"statusBar.noFolderBackground": "$bg-statusbar",
+			"statusBar.noFolderForeground": "$fg-2",
+			"statusBar.debuggingBackground": "$yellow",
+			"statusBar.debuggingForeground": "$bg-base",
+			"statusBar.focusBorder": "$accent",
+			"statusBarItem.hoverBackground": "$bg-subtle",
+			"statusBarItem.hoverForeground": "$fg-1",
+			"statusBarItem.activeBackground": "$border",
+			"statusBarItem.focusBorder": "$accent",
+			"statusBarItem.prominentBackground": "$accent",
+			"statusBarItem.prominentForeground": "$bg-base",
+			"statusBarItem.remoteBackground": "$accent",
+			"statusBarItem.remoteForeground": "$bg-base",
+			"statusBarItem.errorBackground": "$red",
+			"statusBarItem.errorForeground": "$fg-1",
+			"statusBarItem.warningBackground": "$yellow",
+			"statusBarItem.warningForeground": "$bg-base",
+			"titleBar.activeBackground": "$bg-statusbar",
+			"titleBar.activeForeground": "$fg-sidebar",
+			"titleBar.inactiveBackground": "$bg-base",
+			"titleBar.inactiveForeground": "$fg-3",
+			"titleBar.border": "$border-subtle",
+			"commandCenter.background": "$bg-elevated",
+			"commandCenter.foreground": "$fg-2",
+			"commandCenter.activeForeground": "$fg-1",
+			"commandCenter.activeBackground": "$bg-subtle",
+			"commandCenter.border": "$border",
+			"commandCenter.inactiveForeground": "$fg-3",
+			"commandCenter.inactiveBorder": "$border-subtle",
+			"quickInput.background": "$bg-elevated",
+			"quickInput.foreground": "$fg-1",
+			"quickInputTitle.background": "$bg-elevated",
+			"pickerGroup.border": "$border",
+			"pickerGroup.foreground": "$accent-fg",
+			"quickInputList.focusBackground": "$bg-subtle",
+			"quickInputList.focusForeground": "$fg-1",
+			"quickInputList.focusIconForeground": "$accent",
+			"keybindingLabel.background": "$bg-elevated",
+			"keybindingLabel.foreground": "$fg-1",
+			"keybindingLabel.border": "$border",
+			"keybindingLabel.bottomBorder": "$border-subtle",
+			"notificationCenterHeader.background": "$bg-elevated",
+			"notificationCenterHeader.foreground": "$fg-1",
+			"notifications.background": "$bg-elevated",
+			"notifications.foreground": "$fg-1",
+			"notifications.border": "$border",
+			"notificationLink.foreground": "$accent-fg",
+			"notificationsErrorIcon.foreground": "$red-fg",
+			"notificationsWarningIcon.foreground": "$yellow-fg",
+			"notificationsInfoIcon.foreground": "$blue-fg",
+			"banner.background": "$bg-elevated",
+			"banner.foreground": "$fg-1",
+			"banner.iconForeground": "$accent",
+			"scrollbar.shadow": "$black/00",
+			"scrollbarSlider.background": "$border/80",
+			"scrollbarSlider.hoverBackground": "$border-strong/AA",
+			"scrollbarSlider.activeBackground": "$border-strong",
+			"editorOverviewRuler.bracketMatchForeground": "$accent/55",
+			"minimap.background": "$bg-base",
+			"minimap.selectionHighlight": "$accent",
+			"minimapSlider.background": "$border/40",
+			"minimapSlider.hoverBackground": "$border-strong/60",
+			"minimapSlider.activeBackground": "$border-strong/80",
+			"terminal.background": "$bg-base",
+			"terminal.foreground": "$fg-1",
+			"terminal.border": "$border-subtle",
+			"terminalCursor.foreground": "$accent",
+			"terminal.selectionBackground": "$sel",
+			"terminal.tab.activeBorder": "$accent",
+			"terminal.ansiBlack": "$bg-elevated",
+			"terminal.ansiBrightBlack": "$fg-3",
+			"terminal.ansiRed": "$red",
+			"terminal.ansiBrightRed": "$red-fg",
+			"terminal.ansiGreen": "$green",
+			"terminal.ansiBrightGreen": "$green-fg",
+			"terminal.ansiYellow": "$yellow",
+			"terminal.ansiBrightYellow": "$yellow-fg",
+			"terminal.ansiBlue": "$blue",
+			"terminal.ansiBrightBlue": "$blue-fg",
+			"terminal.ansiMagenta": "$magenta",
+			"terminal.ansiBrightMagenta": "$magenta-fg",
+			"terminal.ansiCyan": "$accent",
+			"terminal.ansiBrightCyan": "$accent-fg",
+			"terminal.ansiWhite": "$fg-2",
+			"terminal.ansiBrightWhite": "$fg-1",
+			"gitDecoration.addedResourceForeground": "$green-fg",
+			"gitDecoration.modifiedResourceForeground": "$yellow-fg",
+			"gitDecoration.deletedResourceForeground": "$red-fg",
+			"gitDecoration.untrackedResourceForeground": "$green",
+			"gitDecoration.ignoredResourceForeground": "$fg-3",
+			"gitDecoration.conflictingResourceForeground": "$yellow",
+			"gitDecoration.stageModifiedResourceForeground": "$yellow-fg",
+			"gitDecoration.submoduleResourceForeground": "$blue-fg",
+			"diffEditor.insertedTextBackground": "$green/20",
+			"diffEditor.removedTextBackground": "$red/22",
+			"diffEditor.insertedLineBackground": "$green/15",
+			"diffEditor.removedLineBackground": "$red/18",
+			"diffEditor.diagonalFill": "$border",
+			"merge.currentHeaderBackground": "$green/44",
+			"merge.currentContentBackground": "$green/22",
+			"merge.incomingHeaderBackground": "$blue/44",
+			"merge.incomingContentBackground": "$blue/22",
+			"breadcrumb.foreground": "$fg-2",
+			"breadcrumb.focusForeground": "$fg-1",
+			"breadcrumb.activeSelectionForeground": "$fg-1",
+			"breadcrumbPicker.background": "$bg-elevated",
+			"settings.headerForeground": "$fg-1",
+			"settings.modifiedItemIndicator": "$accent",
+			"settings.dropdownBackground": "$bg-elevated",
+			"settings.dropdownBorder": "$border",
+			"settings.checkboxBackground": "$bg-elevated",
+			"settings.checkboxBorder": "$border",
+			"settings.textInputBackground": "$bg-elevated",
+			"settings.textInputBorder": "$border",
+			"settings.numberInputBackground": "$bg-elevated",
+			"settings.numberInputBorder": "$border",
+			"settings.focusedRowBackground": "$bg-surface/80",
+			"welcomePage.background": "$bg-base",
+			"welcomePage.tileBackground": "$bg-surface",
+			"welcomePage.tileHoverBackground": "$bg-elevated",
+			"welcomePage.tileBorder": "$border",
+			"welcomePage.progress.background": "$border-subtle",
+			"welcomePage.progress.foreground": "$accent",
+			"walkThrough.embeddedEditorBackground": "$bg-inset",
+			"charts.foreground": "$fg-2",
+			"charts.lines": "$border",
+			"charts.red": "$red-fg",
+			"charts.blue": "$blue-fg",
+			"charts.yellow": "$yellow-fg",
+			"charts.orange": "$yellow",
+			"charts.green": "$green-fg",
+			"charts.purple": "$magenta-fg",
+			"toolbar.hoverBackground": "$bg-subtle",
+			"toolbar.activeBackground": "$border",
+			"editorIndentGuide.background": "$border-subtle",
+			"editorIndentGuide.activeBackground": "$border-strong",
+			"extensionButton.prominentBackground": "$accent",
+			"extensionButton.prominentForeground": "$bg-base",
+			"extensionButton.prominentHoverBackground": "$accent-hover",
+			"extensionBadge.remoteBackground": "$accent",
+			"extensionBadge.remoteForeground": "$bg-base",
+			"debugIcon.breakpointForeground": "$red",
+			"debugConsoleInputIcon.foreground": "$accent",
+			"debugTokenExpression.name": "$blue-fg",
+			"debugTokenExpression.value": "$fg-2",
+			"debugTokenExpression.string": "$green-fg",
+			"debugTokenExpression.boolean": "$yellow-fg",
+			"debugTokenExpression.number": "$yellow-fg",
+			"actionBar.toggledBackground": "$bg-subtle",
+			"chat.slashCommandBackground": "$accent/33",
+			"chat.slashCommandForeground": "$accent-fg",
+			"chat.editedFileForeground": "$yellow-fg",
+			"debugToolBar.background": "$bg-elevated",
+			"ports.iconRunningProcessForeground": "$green",
+			"tab.selectedBackground": "$bg-base",
+			"tab.selectedForeground": "$fg-1",
+			"tab.unfocusedActiveBorder": "$bg-base",
+			"terminal.inactiveSelectionBackground": "$sel-inactive"
+		},
+		"tokenColors": [
+			{
+				"scope": [
+					"comment",
+					"punctuation.definition.comment"
+				],
+				"settings": {
+					"foreground": "$fg-3",
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"string",
+					"string.quoted",
+					"punctuation.definition.string"
+				],
+				"settings": {
+					"foreground": "$green-fg"
+				}
+			},
+			{
+				"scope": [
+					"string.regexp",
+					"constant.character.escape"
+				],
+				"settings": {
+					"foreground": "$accent-fg"
+				}
+			},
+			{
+				"scope": [
+					"constant.numeric",
+					"constant.language",
+					"keyword.other.unit",
+					"support.constant"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"constant.language.boolean",
+					"constant.language.null",
+					"constant.language.undefined"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"keyword",
+					"keyword.control",
+					"storage",
+					"storage.type",
+					"storage.modifier"
+				],
+				"settings": {
+					"foreground": "$accent-fg"
+				}
+			},
+			{
+				"scope": [
+					"keyword.operator",
+					"punctuation.separator",
+					"punctuation.terminator",
+					"meta.brace"
+				],
+				"settings": {
+					"foreground": "$fg-2"
+				}
+			},
+			{
+				"scope": [
+					"entity.name.function",
+					"support.function",
+					"meta.function-call entity.name.function"
+				],
+				"settings": {
+					"foreground": "$blue-fg"
+				}
+			},
+			{
+				"scope": [
+					"entity.name.type",
+					"entity.name.class",
+					"support.type",
+					"support.class",
+					"entity.other.inherited-class"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"variable",
+					"meta.definition.variable",
+					"variable.other.readwrite"
+				],
+				"settings": {
+					"foreground": "$fg-1"
+				}
+			},
+			{
+				"scope": [
+					"variable.parameter",
+					"variable.other.constant"
+				],
+				"settings": {
+					"foreground": "$fg-1"
+				}
+			},
+			{
+				"scope": [
+					"variable.language",
+					"variable.language.this"
+				],
+				"settings": {
+					"foreground": "$red",
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"variable.other.property",
+					"variable.other.object.property",
+					"support.variable.property",
+					"meta.object-literal.key"
+				],
+				"settings": {
+					"foreground": "$fg-2"
+				}
+			},
+			{
+				"scope": [
+					"entity.name.tag",
+					"punctuation.definition.tag"
+				],
+				"settings": {
+					"foreground": "$red-fg"
+				}
+			},
+			{
+				"scope": [
+					"entity.other.attribute-name"
+				],
+				"settings": {
+					"foreground": "$accent-fg",
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"support.type.property-name.css",
+					"support.type.property-name"
+				],
+				"settings": {
+					"foreground": "$blue-fg"
+				}
+			},
+			{
+				"scope": [
+					"entity.name.selector",
+					"entity.other.attribute-name.class.css",
+					"entity.other.attribute-name.id.css"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"support.constant.property-value.css",
+					"constant.numeric.css",
+					"keyword.other.unit.css"
+				],
+				"settings": {
+					"foreground": "$green-fg"
+				}
+			},
+			{
+				"scope": [
+					"markup.heading",
+					"markup.heading entity.name",
+					"entity.name.section"
+				],
+				"settings": {
+					"foreground": "$accent-fg",
+					"fontStyle": "bold"
+				}
+			},
+			{
+				"scope": [
+					"markup.bold",
+					"punctuation.definition.bold"
+				],
+				"settings": {
+					"foreground": "$fg-1",
+					"fontStyle": "bold"
+				}
+			},
+			{
+				"scope": [
+					"markup.italic",
+					"punctuation.definition.italic"
+				],
+				"settings": {
+					"foreground": "$fg-1",
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"markup.inline.raw",
+					"markup.fenced_code",
+					"markup.raw.block"
+				],
+				"settings": {
+					"foreground": "$green-fg"
+				}
+			},
+			{
+				"scope": [
+					"markup.underline.link",
+					"string.other.link",
+					"constant.other.reference.link.markdown"
+				],
+				"settings": {
+					"foreground": "$accent-fg"
+				}
+			},
+			{
+				"scope": [
+					"markup.list punctuation.definition.list",
+					"markup.list.numbered",
+					"markup.list.unnumbered"
+				],
+				"settings": {
+					"foreground": "$accent"
+				}
+			},
+			{
+				"scope": [
+					"markup.quote"
+				],
+				"settings": {
+					"foreground": "$fg-2",
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"markup.inserted",
+					"punctuation.definition.inserted"
+				],
+				"settings": {
+					"foreground": "$green-fg"
+				}
+			},
+			{
+				"scope": [
+					"markup.deleted",
+					"punctuation.definition.deleted"
+				],
+				"settings": {
+					"foreground": "$red-fg"
+				}
+			},
+			{
+				"scope": [
+					"markup.changed",
+					"punctuation.definition.changed"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"support.type.property-name.json",
+					"string.quoted.double.json punctuation.definition.string"
+				],
+				"settings": {
+					"foreground": "$blue-fg"
+				}
+			},
+			{
+				"scope": [
+					"meta.structure.dictionary.value.json string.quoted.double",
+					"meta.structure.array.json string.quoted.double"
+				],
+				"settings": {
+					"foreground": "$green-fg"
+				}
+			},
+			{
+				"scope": [
+					"invalid",
+					"invalid.illegal"
+				],
+				"settings": {
+					"foreground": "$red-fg"
+				}
+			},
+			{
+				"scope": [
+					"invalid.deprecated"
+				],
+				"settings": {
+					"foreground": "$yellow"
+				}
+			},
+			{
+				"scope": [
+					"token.info-token"
+				],
+				"settings": {
+					"foreground": "$blue-fg"
+				}
+			},
+			{
+				"scope": [
+					"token.warn-token"
+				],
+				"settings": {
+					"foreground": "$yellow-fg"
+				}
+			},
+			{
+				"scope": [
+					"token.error-token"
+				],
+				"settings": {
+					"foreground": "$red-fg"
+				}
+			},
+			{
+				"scope": [
+					"token.debug-token"
+				],
+				"settings": {
+					"foreground": "$magenta-fg"
+				}
+			}
+		],
+		"semanticTokenColors": {
+			"property": "$fg-2",
+			"variable.readonly": "$fg-1",
+			"parameter": "$fg-1",
+			"function": "$blue-fg",
+			"method": "$blue-fg",
+			"class": "$yellow-fg",
+			"interface": "$yellow-fg",
+			"type": "$yellow-fg",
+			"enum": "$yellow-fg",
+			"enumMember": "$green-fg",
+			"namespace": "$accent-fg",
+			"keyword": "$accent-fg",
+			"string": "$green-fg",
+			"number": "$yellow-fg",
+			"comment": "$fg-3",
+			"*.declaration": {
+				"fontStyle": ""
+			}
+		}
+	},
+	"initialColorKeys": [
+		"actionBar.toggledBackground",
+		"activityBar.activeBorder",
+		"activityBar.background",
+		"activityBar.border",
+		"activityBar.foreground",
+		"activityBar.inactiveForeground",
+		"activityBarBadge.background",
+		"activityBarBadge.foreground",
+		"badge.background",
+		"badge.foreground",
+		"button.background",
+		"button.border",
+		"button.foreground",
+		"button.hoverBackground",
+		"button.secondaryBackground",
+		"button.secondaryForeground",
+		"button.secondaryHoverBackground",
+		"chat.slashCommandBackground",
+		"chat.slashCommandForeground",
+		"chat.editedFileForeground",
+		"checkbox.background",
+		"checkbox.border",
+		"debugToolBar.background",
+		"descriptionForeground",
+		"dropdown.background",
+		"dropdown.border",
+		"dropdown.foreground",
+		"dropdown.listBackground",
+		"editor.background",
+		"editor.findMatchBackground",
+		"editor.foreground",
+		"editor.inactiveSelectionBackground",
+		"editor.selectionHighlightBackground",
+		"editorGroup.border",
+		"editorGroupHeader.tabsBackground",
+		"editorGroupHeader.tabsBorder",
+		"editorGutter.addedBackground",
+		"editorGutter.deletedBackground",
+		"editorGutter.modifiedBackground",
+		"editorIndentGuide.activeBackground1",
+		"editorIndentGuide.background1",
+		"editorLineNumber.activeForeground",
+		"editorLineNumber.foreground",
+		"editorOverviewRuler.border",
+		"editorWidget.background",
+		"errorForeground",
+		"focusBorder",
+		"foreground",
+		"icon.foreground",
+		"input.background",
+		"input.border",
+		"input.foreground",
+		"input.placeholderForeground",
+		"inputOption.activeBackground",
+		"inputOption.activeBorder",
+		"keybindingLabel.foreground",
+		"list.activeSelectionIconForeground",
+		"list.dropBackground",
+		"menu.background",
+		"menu.border",
+		"menu.foreground",
+		"menu.selectionBackground",
+		"menu.separatorBackground",
+		"notificationCenterHeader.background",
+		"notificationCenterHeader.foreground",
+		"notifications.background",
+		"notifications.border",
+		"notifications.foreground",
+		"panel.background",
+		"panel.border",
+		"panelInput.border",
+		"panelTitle.activeBorder",
+		"panelTitle.activeForeground",
+		"panelTitle.inactiveForeground",
+		"peekViewEditor.background",
+		"peekViewEditor.matchHighlightBackground",
+		"peekViewResult.background",
+		"peekViewResult.matchHighlightBackground",
+		"pickerGroup.border",
+		"ports.iconRunningProcessForeground",
+		"progressBar.background",
+		"quickInput.background",
+		"quickInput.foreground",
+		"settings.dropdownBackground",
+		"settings.dropdownBorder",
+		"settings.headerForeground",
+		"settings.modifiedItemIndicator",
+		"sideBar.background",
+		"sideBar.border",
+		"sideBar.foreground",
+		"sideBarSectionHeader.background",
+		"sideBarSectionHeader.border",
+		"sideBarSectionHeader.foreground",
+		"sideBarTitle.foreground",
+		"statusBar.background",
+		"statusBar.border",
+		"statusBar.debuggingBackground",
+		"statusBar.debuggingForeground",
+		"statusBar.focusBorder",
+		"statusBar.foreground",
+		"statusBar.noFolderBackground",
+		"statusBarItem.focusBorder",
+		"statusBarItem.prominentBackground",
+		"statusBarItem.remoteBackground",
+		"statusBarItem.remoteForeground",
+		"tab.activeBackground",
+		"tab.activeBorder",
+		"tab.activeBorderTop",
+		"tab.activeForeground",
+		"tab.border",
+		"tab.hoverBackground",
+		"tab.inactiveBackground",
+		"tab.inactiveForeground",
+		"tab.lastPinnedBorder",
+		"tab.selectedBackground",
+		"tab.selectedBorderTop",
+		"tab.selectedForeground",
+		"tab.unfocusedActiveBorder",
+		"tab.unfocusedActiveBorderTop",
+		"tab.unfocusedHoverBackground",
+		"terminal.foreground",
+		"terminal.inactiveSelectionBackground",
+		"terminal.tab.activeBorder",
+		"textBlockQuote.background",
+		"textBlockQuote.border",
+		"textCodeBlock.background",
+		"textLink.activeForeground",
+		"textLink.foreground",
+		"textPreformat.background",
+		"textPreformat.foreground",
+		"textSeparator.foreground",
+		"titleBar.activeBackground",
+		"titleBar.activeForeground",
+		"titleBar.border",
+		"titleBar.inactiveBackground",
+		"titleBar.inactiveForeground",
+		"welcomePage.progress.foreground",
+		"welcomePage.tileBackground",
+		"widget.border"
+	]
+}
