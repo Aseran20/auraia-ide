@@ -1,0 +1,1054 @@
+╭─── Claude Code v2.1.154 ─────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back Adrian!                │ started                 │
+│                                                    │ Run /init to create a … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ What's new              │
+│                        ▘▘ ▝▝                       │ Opus 4.8 is here! Now … │
+│   Opus 4.8 · Claude Max · adriturion@gmail.com's   │ Introducing dynamic wo… │
+│   Organization                                     │ Fast mode on Opus 4.8 … │
+│      ~\Desktop\devprojects\3-auraia\arclen-ide     │ /release-notes for more │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+✻ Conversation compacted (ctrl+o for history)
+
+
+● Backlogs re-read, capability catalog scanned. Here's the retro for this
+  session.
+
+  Narrator: The theme/font work itself went well (single-source generator,
+  round-trip parity, sentinel test = textbook "decouple validate from produce").
+  The avoidable time went almost entirely into the dev feedback loop —
+  relaunching blind and reconstructing patches by hand — and two of those map to
+  capabilities/backlog items I already had.
+
+  #: F1
+  Incident (time lost): configurationDefaults.colorTheme doesn't set the default
+
+    theme → ~3 relaunch cycles diagnosing (mod)
+  Avoidable?: Partly
+  Already known?: No
+  Capability/tool missed: Read-the-source-first before assuming an API behaves
+  Cheapest durable fix: document the real mechanism (ThemeSettingDefaults)
+  Mechanism: skill ✅ done
+  Priority: —
+  ────────────────────────────────────────
+  #: F2
+  Incident (time lost): CSS edits don't hot-reload on Ctrl+R → confused by stale
+
+    fonts.check/0 live rules (HIGH)
+  Avoidable?: Yes
+  Already known?: gap in skill
+  Capability/tool missed: cheap live-stylesheet eval + a real relaunch step
+  Cheapest durable fix: wait-for-ready relaunch helper
+  Mechanism: script + skill ✅
+  Priority: HIGH
+  ────────────────────────────────────────
+  #: F3
+  Incident (time lost): Took 5 screenshots blind while ext-host was 5 min slow /
+
+    reload mid-flight (mod)
+  Avoidable?: Yes
+  Already known?: No
+  Capability/tool missed: read the launch log / Monitor / a ready-gate instead
+  of
+     screenshotting blind
+  Cheapest durable fix: relaunch helper that blocks until workbench is ready
+  Mechanism: script
+  Priority: HIGH
+  ────────────────────────────────────────
+  #: F4
+  Incident (time lost): check-patches.sh cwd bug → validation failed,
+    hand-reconstructed (small, knew it)
+  Avoidable?: Yes
+  Already known?: YES — open backlog item
+  Capability/tool missed: enforce/fix, don't re-document
+  Cheapest durable fix: fix the script
+  Mechanism: script fix
+  Priority: MED-HIGH
+  ────────────────────────────────────────
+  #: F5
+  Incident (time lost): agent-browser connect raced window startup → fixed-sleep
+
+    guessing (minor)
+  Avoidable?: Yes
+  Already known?: No
+  Capability/tool missed: ready-gate, not sleep N
+  Cheapest durable fix: folds into relaunch helper
+  Mechanism: script
+  Priority: (folded)
+  ────────────────────────────────────────
+  #: F6
+  Incident (time lost): /tmp differs MSYS-bash vs Windows-Python → 1st patch
+    reconstruct failed (minor)
+  Avoidable?: Yes
+  Already known?: No
+  Capability/tool missed: repo-local scratch dir
+  Cheapest durable fix: one-line note
+  Mechanism: skill
+  Priority: LOW
+  ────────────────────────────────────────
+  #: F7
+  Incident (time lost): Generated/validated user patches by hand 3× (post-base
+    reconstruct + git apply --check) (mod, recurring)
+  Avoidable?: Yes
+  Already known?: partly ("tricky" in skill)
+  Capability/tool missed: a generator script
+  Cheapest durable fix: dev/gen-user-patch.sh <file>
+  Mechanism: script
+  Priority: HIGH
+
+  Also: the arclen-disable-walkthroughs.patch change I flagged twice as "not
+  mine" is a Done backlog item from earlier today (orphan-import fix, just
+  uncommitted) — legit, mystery closed.
+
+  Proposals (you pick build-now / later / drop):
+
+  - P1 — dev/arclen-relaunch.sh (effort S–M): kill Arclen → relaunch with CDP +
+  VSCODE_SKIP_PRELAUNCH=1 → poll until .monaco-workbench exists & 
+  --vscode-editor-background resolves (not just the CDP port) → optional
+  --assert-css. Collapses F2+F3+F5 — the biggest blind-flailing class this
+  session. I have the exact readiness signal from this session.
+  - P2 — dev/gen-user-patch.sh <file> (effort M): auto-detect which base patches
+  touch the file, reconstruct post-base state in a scratch repo, diff the
+  working tree → clean user patch, then git apply --check. I ran this logic by
+  hand 3× today; it's the "patch generation is the tricky part" pain, scripted.
+  - P3 — fix check-patches.sh cwd bug (effort S): already an open backlog item,
+  recurred today — the "documented but not built" case.
+  - P4 — trivial doc (I'll just do it): add the /tmp MSYS-vs-Python note to
+  arclen-dev.
+
+● User answered Claude's questions:
+  ⎿  · Lesquels je construis maintenant ? (le reste part au backlog projet) → 
+     Les 3
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ /compact                                                                      
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Read ..\..\..\..\.claude\skills\retro\capabilities.md (78 lines)
+  ⎿  Read ..\..\..\..\.claude\projects\C--Users-Adrian-Desktop-devprojects-3-auraia-arclen-ide\memory\theme-and-font-defaults.md (23 lines)
+  ⎿  Referenced file product.json
+  ⎿  Referenced file .claude\skills\arclen-dev\SKILL.md
+  ⎿  Referenced file vscode\src\vs\workbench\services\themes\common\workbenchThemeService.ts
+  ⎿  Skills restored (retro)
+  ⎿  SessionStart:compact says: ARCLEN IDE - Auto-Orientation (SessionStart hook)
+
+     Repo: VSCodium fork rebranded for M&A analysts. VS Code 1.121.0 upstream.
+
+     VALIDATED WINDOWS TOOLCHAIN (do NOT deviate):
+     - VS 2022 Community + MSVC v143 + Spectre v143 x64. NOT VS 2026 (node-gyp can't detect it; we documented why).
+     - Stock npm-bundled node-gyp 11.5. If %ProgramFiles%\nodejs\...\node-gyp_11.5.0_bak exists, restore it before building.
+     - Use your user-level Git Bash (e.g. C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe). Run 'which bash' to confirm the path on this machine.
+     - Python 3.13 works fine (node-gyp 10+).
+
+     BUILD STATE:
+     - vscode/ present: yes
+     - VSCode-win32-x64/Arclen.exe present: no
+
+     NEXT STEP: vscode/ exists AND out/main.js present -> ITERATION LOOP: edit vscode/src/... -> cd vscode && node build/next/index.ts transpile (~10s) -> agent-browser press Ctrl+R -> agent-browser connect 9222 (reconnect, Ctrl+R drops CDP briefly) -> agent-browser screenshot. NPM RUN WATCH IS A NO-OP HERE for emit (useEsbuildTranspile=false in this build); it only type-checks. Do not rely on it to refresh out/. Do NOT run dev/build.sh just to test a change.
+
+     GOLDEN RULES:
+     1. LOCAL ONLY. CI (ci-build-windows.yml) is 60 min - only for distribution, never for iteration.
+     2. SKIP_CLI=yes is set in dev/build.sh - the Rust CLI (code-tunnels, Remote-SSH) is irrelevant for Arclen. Do not install rustup.
+     3. After a compile error, DO NOT re-run dev/build.sh. Edit the file in vscode/ AND the corresponding patches/user/*.patch, then resume with: cd vscode && npm run gulp vscode-min-prepack.
+     4. When a user patch removes the only usage of an imported symbol, the import must be removed in the same patch (VS Code tsconfig has noUnusedLocals: true). check-patches.sh does NOT catch this - only a full compile does.
+     5. dev/ vs distrib: scripts/code.bat = dev runner. Arclen.exe = packaged distributable. Daily dev = .bat with --remote-debugging-port=9222 + agent-browser, 99% of the time.
+     6. Generating user patches: vscode/ git baseline is pristine upstream, so cd vscode && git diff returns BASE PATCHES + USER PATCHES + YOUR EDITS combined - NOT a clean user patch. Prefer renaming base patches to .disabled when killing a community feature; only hand-write user patches when keeping the base patch but tweaking it.
+     7. CRLF gotcha: some vscode/src files have mixed line endings. If Edit returns "String not found" on a string visible in Read, diagnose with: sed -n Np file | cat -A. Fallback = Python regex via Bash with rb'...' patterns.
+
+     REFERENCE (WHAT/WHERE): .claude/skills/arclen-ide/SKILL.md  (repo structure, branding, icons, build prerequisites, modifying packaged output).
+     RUNBOOK (HOW to iterate): .claude/skills/arclen-dev/SKILL.md  (the real edit->transpile->reload loop, patch generation, cascade-delete, CRLF gotcha, QA scripts).
+
+❯ Go faire les 3 que tu disais                                                  
+
+● On y va — je construis P1, P2, P3. D'abord je lis l'état réel des scripts
+  concernés pour bâtir juste.
+
+  Read 1 file, listed 1 directory (ctrl+o to expand)
+
+● check-patches.sh isn't in dev/. Let me locate it and read the related scripts
+  + the backlog.
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● check-patches.sh is at repo root. Let me read it and the rest of patch.sh,
+  plus utils.sh for the patch-apply helpers I'll reuse in P2.
+
+  Read 1 file (ctrl+o to expand)
+
+● Now let me read the launch/relaunch conventions and agent-browser usage from
+  the skill (I need the exact documented commands so P1 doesn't hallucinate the
+  CLI).
+
+  Read 1 file (ctrl+o to expand)
+
+● Now I have full context. Let me check two runtime specifics before building P1
+  (the launch + readiness gate): how code.bat is invoked, and what
+  agent-browser subcommands exist (qa-loop only uses press/connect/screenshot —
+  I need an eval for the readiness probe).
+
+● Bash(echo "===CODE.BAT==="; cat vscode/scripts/code.bat 2>/dev/null; echo
+      "===AGENT-BROWSER HELP==="; agent-browser --help 2>&1 | head -60)
+  ⎿  ===CODE.BAT===
+     @echo off
+     setlocal
+     … +105 lines (ctrl+o to expand)
+
+● eval and wait exist — good. Let me grab nameShort (the dev exe image name
+  code.bat derives) so the kill targets the right process.
+
+  Searched for 2 patterns, listed 1 directory (ctrl+o to expand)
+
+● Arclen.exe confirmed. Let me load the agent-browser electron skill so the
+  readiness probe uses the correct CDP invocation (not guessed).
+
+● Bash(agent-browser skills get electron --full 2>&1 | head -120)
+  ⎿  ---
+     name: electron
+     description: Automate Electron desktop apps (VS Code, Slack, Discord,
+     … +117 lines (ctrl+o to expand)
+● Everything grounded. Now building all three.
+
+  P3 — Fix check-patches.sh cwd bug
+
+  The bug: at line 82 the script cds into the throwaway clone, but
+  USER_PATCHES/PREREQ_PATCHES are still relative to the repo root → git apply
+  can't find them. Fix = resolve repo root and make all patch paths absolute up
+  front (plus grep -h so the single-patch case doesn't break the +++ b/
+  parsing).
+
+● Update(check-patches.sh)
+  ⎿  Error editing file
+
+  Read 1 file (ctrl+o to expand)
+
+● Interesting — the cwd fix is already in place (lines 18-22, 65-67: START_DIR +
+  abspath + absolutization). That core bug is resolved. But one real latent bug
+  remains: lines 47 and 73-75 parse grep '^+++ b/' ... with sed 's|^.*:+++ 
+  b/||', which relies on grep's filename: prefix — that prefix only appears with
+  ≥2 files. The moment you pass a single patch as an arg (which the usage line
+  invites), grep emits no prefix, the ^.*: sed never matches, and USER_FILES
+  ends up containing literal +++ b/… → wrong sparse-checkout + missed base-patch
+  overlap. Fix = grep -h (never print filenames) + sed 's|^+++ b/||'.
+
+● Update(check-patches.sh)
+  ⎿  Added 3 lines, removed 1 line
+      44  
+      45  # ─── Find base patches that overlap with user patch target fil
+          es ──────────────
+      46  
+      47 -USER_FILES=$(grep '^+++ b/' "${USER_PATCHES[@]}" | sed 's|^.*:+
+         -++ b/||' | sort -u)                                            
+      47 +# -h: never prefix matches with the filename. Without it, a SIN
+         +GLE patch arg yields                                           
+      48 +# unprefixed lines that the old `s|^.*:+++ b/||` (needs a colon
+         +) failed to strip.                                             
+      49 +USER_FILES=$(grep -h '^+++ b/' "${USER_PATCHES[@]}" | sed 's|^+
+         +++ b/||' | sort -u)                                            
+      50  
+      51  PREREQ_PATCHES=()
+      52  while IFS= read -r -d '' base; do
+
+● Update(check-patches.sh)
+  ⎿  Added 3 lines, removed 3 lines
+      72  
+      73  ALL_FILES=$(
+      74    {
+      75 -    grep '^+++ b/' "${USER_PATCHES[@]}"                        
+      76 -    [[ ${#PREREQ_PATCHES[@]} -gt 0 ]] && grep '^+++ b/' "${PRER
+         -EQ_PATCHES[@]}"                                                
+      77 -  } | sed 's|^.*:+++ b/||' | sort -u                           
+      75 +    grep -h '^+++ b/' "${USER_PATCHES[@]}"                     
+      76 +    [[ ${#PREREQ_PATCHES[@]} -gt 0 ]] && grep -h '^+++ b/' "${P
+         +REREQ_PATCHES[@]}"                                             
+      77 +  } | sed 's|^+++ b/||' | sort -u                              
+      78  )
+      79  
+      80  # ─── Sparse clone ────────────────────────────────────────────
+          ────────────────
+
+● Now syntax-check and actually run it (single-patch arg — exercises exactly the
+  path I fixed) via the real Git Bash:
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash -n ./check-patches.sh; if ($LASTEXITCODE -eq 0) { "syntax
+            OK" } else { "syntax FAIL" })
+  ⎿  syntax OK
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./check-patches.sh patches/user/arclen-fonts.patch 2>&1)
+  ⎿  Checking patches against VS Code 1.121.0 (987c959751)...
+
+     Base patches that run before ours (will apply first):
+     … +11 lines (ctrl+o to expand)
+
+● P3 validated end-to-end: the single-patch path now correctly finds the
+  overlapping base patch, applies it, and the user patch passes ✓ (this exact
+  arg form would have mis-parsed before the -h fix). The cwd bug itself was
+  already fixed in the file.
+
+  Now P1. First, is an Arclen dev instance currently running (so I know whether
+  I can safely test the kill+launch live, vs only the probe)?
+
+● PowerShell($p = Get-Process Arclen -ErrorAction SilentlyContinue
+            if ($p) { "Arclen running: $($p.Count) proc(s)" } else { "Arclen NOT
+            running" }…)
+  ⎿  Arclen running: 8 proc(s)
+     CDP 9222 open: True
+
+● Arclen is live on 9222 — I can validate the readiness probe against it right
+  now (non-disruptive) before baking it into the script. Let me confirm the
+  exact agent-browser invocation and that my probe JS returns what I expect:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      agent-browser connect 9222 >/dev/null 2>&1…)
+  ⎿  === tab list ===
+     → [t1] vscode-file://vscode-app/c:/Users/Adrian/Desktop/devprojects/3-
+     auraia/arclen-ide/vscode/out/vs/code/electron-browser/workbench/workbe
+     … +5 lines (ctrl+o to expand)
+
+● .monaco-workbench exists but the theme vars aren't on documentElement — VS
+  Code scopes them to the .monaco-workbench element itself. Let me read from
+  there:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      agent-browser eval "(()=>{const
+      wb=document.querySelector('.monaco-workbench');if(!wb)return 'NO_WO…)
+  ⎿  "{\"bg\":\"#09090b\",\"ff\":\"\",\"bodyClass\":\"\"}"
+
+● Confirmed: theme readiness signal is --vscode-editor-background on
+  .monaco-workbench = #09090b (Arclen bg-base). That's the gate. Now writing P1.
+
+● Write(dev\relaunch.sh)
+  ⎿  Wrote 126 lines to dev\relaunch.sh
+       2 # dev/relaunch.sh — full relaunch of the Arclen dev build, with 
+       3 # readiness GATE.
+       5 #   • CSS / theme / product.json changes do NOT hot-reload on Ct
+         rl+R — the injected
+          so you see stale document.fonts persist across the soft reload,
+          run code.bat).hose changes need a FULL relaunch (kill the exe +
+       8 #   • The dev extension host is ~5 min slow here, and the workbe
+       9 #     Screenshotting right after launch catches a blank / half-p
+      10 #     made past sessions take 5 blind screenshots chasing a them
+         e that hadn't applied.
+     … +157 lines (ctrl+o to expand)
+
+● Syntax check, then validate the readiness gate live with --probe-only
+  (non-disruptive) against the running instance:
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash -n ./dev/relaunch.sh; if ($LASTEXITCODE -eq 0) { "syntax OK"
+            } else { "syntax FAIL"; exit }…)
+  ⎿  syntax OK
+     --- probe-only + assert against live instance ---
+     … +7 lines (ctrl+o to expand)
+
+● Readiness gate + assert work live (exit 0). Now the real test — the full kill 
+  + launch + gate path (the part not yet proven). This relaunches your running
+  Arclen dev window; it'll come back automatically once the gate confirms the
+  theme painted. Firing it with a screenshot + theme assert:
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./dev/relaunch.sh --assert
+            '--vscode-editor-background=#09090b' --shot dev/relaunch-test.png
+            2>&1…)  ⎿  Error: Exit code 2
+     [relaunch] Killing Arclen.exe
+       ✓ killed
+
+     [relaunch] Launching scripts/code.bat (port 9222, VSCODE_SKIP_PRELAUNCH=1)
+       ✓ launch issued
+
+     [relaunch] Waiting for workbench (theme applied) on CDP 9222, up to 150s
+       … (no connection) (7s elapsed)
+       … (no connection) (16s elapsed)
+       … (no connection) (25s elapsed)
+       … (no connection) (33s elapsed)
+       … (no connection) (42s elapsed)
+       … (no connection) (52s elapsed)
+       … (no connection) (63s elapsed)
+       … (no connection) (73s elapsed)
+       … (no connection) (83s elapsed)
+       … (no connection) (93s elapsed)
+       … (no connection) (103s elapsed)
+       … (no connection) (112s elapsed)
+       … (no connection) (121s elapsed)
+       … (no connection) (131s elapsed)
+       … (no connection) (139s elapsed)
+       … (no connection) (148s elapsed)
+       ✗ workbench not ready after 150s (last state: (no connection))
+     exit=2
+
+● Background command "Transpile and relaunch after rewire" completed (exit code 0)
+
+● Kill worked but the launch never brought CDP up — likely the nested cmd /c 
+  "...&&..." quoting got mangled when bash handed it to cmd.exe (classic
+  cmd-from-Git-Bash quoting). I killed your IDE, so let me diagnose and get a
+  working instance back up immediately.
+
+● PowerShell($p = Get-Process Arclen -ErrorAction SilentlyContinue
+            if ($p) { "Arclen running: $($p.Count)" } else { "Arclen NOT
+            running" }…)
+  ⎿  Arclen NOT running
+     CDP 9222 open: False
+
+● Confirmed: launch failed, your IDE is down. The nested cmd /c "...&&..." was
+  the culprit. Let me switch to a robust generated-.bat + start launcher (no
+  nested-quote parsing), then get your IDE back up.
+
+● Update(dev\relaunch.sh)
+  ⎿  Added 12 lines, removed 5 lines
+      71  if [[ "$DO_LAUNCH" -eq 1 ]]; then
+      72    step "Launching scripts/code.bat (port ${PORT}, VSCODE_SKIP_P
+          RELAUNCH=1)"
+      73    WIN_VSCODE="$(cygpath -w "${REPO_ROOT}/vscode")"
+      74 -  # start "" detaches; the inner `cmd /c "set ... && code.bat"`
+         - carries the env var.                                          
+      75 -  # MSYS_NO_PATHCONV / ARG_CONV_EXCL stop Git Bash from manglin
+         -g the Windows paths/flags.                                     
+      74 +  # Generating a tiny .bat and `start`-ing it avoids the nested
+         +-quote hell of                                                 
+      75 +  # `cmd /c start ... cmd /c "set X=1&& code.bat"` (the `&&` ge
+         +ts parsed by the wrong                                         
+      76 +  # cmd when Git Bash reconstructs the command line → app never
+         + launches).                                                    
+      77 +  LAUNCHER="${REPO_ROOT}/dev/.relaunch-launcher.bat"           
+      78 +  {                                                            
+      79 +    printf '@echo off\r\n'                                     
+      80 +    printf 'set VSCODE_SKIP_PRELAUNCH=1\r\n'                   
+      81 +    printf 'cd /d "%s"\r\n' "${WIN_VSCODE}"                    
+      82 +    printf 'call scripts\\code.bat --remote-debugging-port=%s\r
+         +\n' "${PORT}"                                                  
+      83 +  } > "${LAUNCHER}"                                            
+      84 +  # start "" <bat> opens a detached console so the app survives
+         + after this script exits.                                      
+      85    MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' \
+      77 -    cmd.exe /c start "arclen-dev" /D "${WIN_VSCODE}" \         
+      78 -      cmd /c "set VSCODE_SKIP_PRELAUNCH=1&& scripts\\code.bat -
+         --remote-debugging-port=${PORT}" \                              
+      79 -      >/dev/null 2>&1 &                                        
+      86 +    cmd.exe /c start "" "$(cygpath -w "${LAUNCHER}")" >/dev/nul
+         +l 2>&1                                                         
+      87    ok "launch issued"
+      88  fi
+      89  
+
+● Now gitignore the generated launcher, then run the corrected relaunch to bring
+  your IDE back and validate the launch path:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      grep -qxF 'dev/.relaunch-launcher.bat' .gitignore 2>/dev/null || printf
+      '\n# Arclen relaunch helper…)
+  ⎿  # Arclen relaunch helper (dev/relaunch.sh, generated)
+     dev/.relaunch-launcher.bat
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./dev/relaunch.sh --assert
+            '--vscode-editor-background=#09090b' --shot dev/relaunch-test.png
+            2>&1…)
+  ⎿  [relaunch] Killing Arclen.exe
+       ✓ not running (nothing to kill)
+     … +17 lines (ctrl+o to expand)
+  ⎿  (timeout 3m 20s)
+
+● Your IDE is back up and the full relaunch path now works: kill → launch → CDP
+  came up ~35s → theme painted (#09090b) → assert OK → screenshot (exit 0). The
+  gate correctly waited through (no connection) and (empty) states instead of
+  screenshotting blind — exactly the F2/F3/F5 fix.
+
+  Let me clean the test screenshot and inspect existing user patches
+  (placeholder vs literal convention, ordering) before building P2 correctly:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      rm -f dev/relaunch-test.png…)
+  ⎿  === user patch order (sorted) + which files each touches ===
+     ## arclen-disable-walkthroughs.patch
+        src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStarte
+     … +18 lines (ctrl+o to expand)
+
+● Useful: only gettingStartedContent.ts is touched by two user patches (so
+  ordering matters there), and most patches use literals not placeholders. P2's
+  baseline must therefore be: pristine + base + windows +
+  user-patches-that-sort-before-the-target — all with placeholder substitution.
+  Let me find the substitution values this build uses (APP_NAME etc.) so the
+  reconstructed baseline matches the working tree:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      grep -rnE '^\s*(export\s+)?(APP_NAME|BINARY_NAME|ORG_NAME|GH_REPO_PATH|ASS
+      ETS_REPOSITORY)=' dev/bui…)
+  ⎿  dev/build.sh:8:export APP_NAME="Arclen"
+     dev/build.sh:9:export ASSETS_REPOSITORY="Aseran20/auraia-ide"
+     dev/build.sh:10:export BINARY_NAME="arclen"
+     … +28 lines (ctrl+o to expand)
+
+● Branding values found in dev/build.sh (APP_NAME=Arclen, etc.) — I'll pull
+  those so the reconstructed baseline matches the substituted working tree.
+  Writing P2:
+
+● Write(dev\gen-user-patch.sh)
+  ⎿  Wrote 178 lines to dev\gen-user-patch.sh
+       2 # dev/gen-user-patch.sh — generate a CLEAN user patch from worki
+       3 #g-tree edits.
+       4 # WHY THIS EXISTS (retro 2026-05-28):
+         the vscode/ baseline isiff` does NOT give a usable user patch — 
+       6 #   pristine upstream and ALL patches (base → windows → user) ar
+       7 #   mods, so a plain diff bundles every patch plus your edits to
+       8 #   single-purpose user patch meant hand-reconstructing the "pos
+         t-base" state in a scratch
+         dure.epo — done 3× by hand this session. This scripts that proce
+      10 #
+     … +212 lines (ctrl+o to expand)
+
+● Now gitignore the scratch dir, syntax-check, and run a non-destructive 
+  functional test that exercises the hardest path (base + prior-user-patch
+  replay): append a throwaway comment to fonts.ts (already modified by
+  arclen-fonts.patch), generate a patch named to sort after it, and confirm the
+  diff contains only my line.
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      grep -qxF '.genpatch/' .gitignore 2>/dev/null || printf '.genpatch/\n' >>
+      .gitignore…)
+  ⎿  syntax OK
+     appended test marker
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./dev/gen-user-patch.sh arclen-zzz-test
+            src/vs/base/browser/fonts.ts 2>&1…)
+  ⎿  Error: Exit code 5
+     [gen-patch] Target: patches/user/arclen-zzz-test.patch   files:
+     src/vs/base/browser/fonts.ts
+       Prior patches forming the baseline for these files:
+         arclen-fonts.patch
+
+     [gen-patch] Seeding pristine upstream copies
+       ✓ pristine committed
+
+     [gen-patch] Replaying prior patches onto the baseline (substituted, scoped
+     to target files)
+       ✓ applied arclen-fonts.patch
+     … +10 lines (ctrl+o to expand)
+
+● Diff is +51/-49 — far more than my one-line marker, so the reconstructed
+  baseline doesn't byte-match the working tree. Classic CRLF suspicion. Let me
+  diagnose what those lines actually are rather than guess:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== first 30 lines of generated patch ==="…)
+  ⎿  === first 30 lines of generated patch ===
+     diff --git a/src/vs/base/browser/fonts.ts b/src/vs/base/browser/fonts.
+     ts$
+     … +28 lines (ctrl+o to expand)
+
+● Not CRLF noise — the -/+ show identical-looking header text flagged as
+  changed, with zero context lines = byte-level mismatch on every line (the
+  signature of an EOL difference git isn't surfacing in cat -A here). Let me
+  check the actual EOL of the working-tree file and the git-show pristine:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== working-tree fonts.ts EOL (look for ^M) ==="…)  ⎿  === working-tree fonts.ts EOL (look for ^M) ===
+     /*--------------------------------------------------------------------
+     -------------------------$
+     … +13 lines (ctrl+o to expand)
+
+● Both are LF, both 49 lines, no ^M — yet git flags every line as changed
+  starting at line 1. That points to an invisible byte difference at the file
+  start (BOM?) or a whitespace issue the patch replay introduced. Let me hexdump
+  the first bytes of each side:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== working tree first 8 bytes ==="…)
+  ⎿  === working tree first 8 bytes ===
+     00000000: 2f2a 2d2d 2d2d 2d2d                      /*------
+     === git-show pristine first 8 bytes ===
+     … +7 lines (ctrl+o to expand)
+
+● No BOM, and manual baseline replay works — it's 49 lines and contains IBM
+  Plex. So reconstruction is sound. Let me diff that correct baseline against
+  the working tree to see the true delta:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== working tree: line count + IBM Plex count ==="…)
+  ⎿  === working tree: line count + IBM Plex count ===
+     51 vscode/src/vs/base/browser/fonts.ts
+     1
+     … +41 lines (ctrl+o to expand)
+
+● I'm looping on scratch-dir EOL artifacts (the /tmp MSYS trap again). Let me
+  stop and make one decisive inspection: the EOL of an existing, known-good user
+  patch and of the working tree — then match the generator to that convention
+  rather than reasoning about it further.
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== arclen-fonts.patch EOL (known-good, applies in build) ==="…)
+  ⎿  === arclen-fonts.patch EOL (known-good, applies in build) ===
+     patches/user/arclen-fonts.patch: unified diff output text, 1st line "d
+     iff --git a/src/vs/base/browser/fonts.ts b/src/vs/base/browser/fonts.t
+     … +12 lines (ctrl+o to expand)
+
+● Root cause found. The working-tree fonts.ts has mixed CRLF+LF line endings
+  (the documented CRLF gotcha), while the pristine-via-git show baseline is pure
+  LF. So git diff flags nearly every line. The known-good arclen-fonts.patch is
+  pure LF with small targeted hunks — that's the convention to match (and
+  check-patches.sh validates against a fresh LF clone). Fix: normalize scratch
+  files to LF before diffing.
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 5 lines
+      87      "$1"
+      88  }
+      89  
+      90 +to_lf() { sed -i 's/\r$//' "$1"; }   # the working tree often h
+         +as mixed CRLF+LF (known                                        
+      91 +                                     # Windows gotcha); user pa
+         +tches are pure LF (and                                         
+      92 +                                     # check-patches.sh validat
+         +es vs a fresh LF clone), so                                    
+      93 +                                     # normalize every scratch 
+         +file to LF before diffing.                                     
+      94 +                                                               
+      95  patch_touches() {  # $1=patch file — true if it touches any of 
+          FILES
+      96    local p="$1" f
+      97    for f in "${FILES[@]}"; do
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 1 line
+      137    mkdir -p "${SCRATCH}/$(dirname "$f")"
+      138    git -C "${VSCODE}" show "HEAD:${f}" > "${SCRATCH}/${f}" \
+      139      || die "could not read pristine HEAD:${f} from vscode/" 2
+      140 +  to_lf "${SCRATCH}/${f}"                                     
+      141  done
+      142  git -C "${SCRATCH}" add -A
+      143  git -C "${SCRATCH}" commit -q -m pristine
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 1 line
+      156    fi
+      157    rm -f "$tmp"
+      158  done
+      159 +for f in "${FILES[@]}"; do to_lf "${SCRATCH}/${f}"; done   # p
+          +atches may carry CRLF                                         
+      160  git -C "${SCRATCH}" add -A
+      161  git -C "${SCRATCH}" commit -q -m baseline --allow-empty
+      162  ok "baseline committed"
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 1 line
+      165  step "Diffing your live vscode/ edits against the baseline"
+      166  for f in "${FILES[@]}"; do
+      167    cp "${VSCODE}/${f}" "${SCRATCH}/${f}"
+      168 +  to_lf "${SCRATCH}/${f}"                                     
+      169  done
+      170  git -C "${SCRATCH}" diff > "${REPO_ROOT}/${OUT}"
+      171  
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash -n ./dev/gen-user-patch.sh; if ($LASTEXITCODE -ne 0) {
+            "syntax FAIL"; exit }…)
+  ⎿  Error: Exit code 5
+     [gen-patch] Target: patches/user/arclen-zzz-test.patch   files:
+     src/vs/base/browser/fonts.ts
+       Prior patches forming the baseline for these files:
+         arclen-fonts.patch
+
+     [gen-patch] Seeding pristine upstream copies
+       ✓ pristine committed
+
+     [gen-patch] Replaying prior patches onto the baseline (substituted, scoped
+     to target files)
+       ✓ applied arclen-fonts.patch
+     … +10 lines (ctrl+o to expand)
+
+● Now the diff is +3/-1 — exactly my marker. Diff generation is fixed. The
+  check-patches.sh rejection is actually expected-and-correct: zzz-test depends
+  on arclen-fonts.patch (a prior user patch), but check-patches.sh only replays
+  base patches, not user-patch ordering — so it can't validate a
+  user-patch-dependent patch. The generator already reconstructs the true
+  base+windows+prior-user baseline itself, so the right validation is against
+  that, not check-patches.sh. Let me switch the validation step:
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 18 lines, removed 4 lines
+      178  ok "wrote ${OUT}  (+${added} / -${removed} lines incl. headers
+           )"
+      179  
+      180  # ─── Validate against the real build sequence ───────────────
+           ──────────────────
+      181 -step "Validating with check-patches.sh"                       
+      182 -if bash "${REPO_ROOT}/check-patches.sh" "${OUT}"; then        
+      183 -  printf '\n%b✓ %s is clean and validated%b\n' "$green" "${OUT
+          -}" "$reset"                                                   
+      181 +# The generator already replayed base + windows + prior-user p
+          +atches to build the                                           
+      182 +# baseline (dying if any failed), so a successful run already 
+          +proves the pre-state is                                       
+      183 +# reachable. As a final guard, confirm the patch itself applie
+          +s cleanly onto that exact                                     
+      184 +# baseline — this mirrors the real apply order INCLUDING user-
+          +patch dependencies, which                                     
+      185 +# check-patches.sh cannot (it only replays base patches).     
+      186 +step "Validating: patch applies onto the reconstructed baselin
+          +e"                                                            
+      187 +git -C "${SCRATCH}" reset -q --hard HEAD        # discard the 
+          +overlay → back to baseline commit                             
+      188 +if git -C "${SCRATCH}" apply --check --ignore-whitespace "${RE
+          +PO_ROOT}/${OUT}"; then                                        
+      189 +  ok "applies cleanly onto base+windows+prior-user baseline"  
+      190  else
+      185 -  die "check-patches.sh rejected ${OUT} — inspect the patch (i
+          -t was still written)" 5                                       
+      191 +  die "generated patch does not apply onto its own baseline (c
+          +orruption?) — patch was still written" 5                      
+      192  fi
+      193 +                                                              
+      194 +if [[ ${#APPLICABLE[@]} -gt 0 ]] && printf '%s\n' "${APPLICABL
+          +E[@]}" | grep -q '/user/'; then                               
+      195 +  echo "  note: this patch depends on a prior USER patch, so c
+          +heck-patches.sh (base-only)"                                  
+      196 +  echo "        cannot validate it — the baseline check above 
+          +is the authoritative one."                                    
+      197 +else                                                          
+      198 +  echo "  tip: cross-check against a fresh upstream clone with
+          +:  bash check-patches.sh ${OUT}"                              
+      199 +fi                                                            
+      200 +printf '\n%b✓ %s is clean and validated%b\n' "$green" "${OUT}"
+          + "$reset"                                                     
+
+● Update the header comment to match, then re-test:
+
+● Update(dev\gen-user-patch.sh)
+  ⎿  Added 2 lines, removed 1 line
+      14  #   + every base patch + every windows patch + every EXISTING u
+          ser patch that sorts before
+      15  #   your target name (all with the same !!APP_NAME!! → Arclen s
+          ubstitution the build uses) —
+      16  #   then diffs your live edits against that. The result is a pa
+          tch containing ONLY your edits,
+      17 -#   correctly anchored, which it then validates with check-patc
+         -hes.sh.                                                        
+      17 +#   correctly anchored, which it then validates by re-applying 
+         +onto that exact baseline (the                                  
+      18 +#   real apply order, including user-patch dependencies that ch
+         +eck-patches.sh can't simulate).                                
+      19  #
+      20  # Usage:
+      21  #   dev/gen-user-patch.sh <patches/user/NAME.patch> <vscode-rel
+          ative-file> [more files...]
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./dev/gen-user-patch.sh arclen-zzz-test
+            src/vs/base/browser/fonts.ts 2>&1…)
+  ⎿  [gen-patch] Target: patches/user/arclen-zzz-test.patch   files: src/vs
+     /base/browser/fonts.ts
+       Prior patches forming the baseline for these files:
+     … +29 lines (ctrl+o to expand)
+  ⎿  (timeout 2m)
+
+● The generator now produces a perfect minimal patch — @@ -47,3 +47,5 @@ with
+  correct context, only my marker — and validates it against the true baseline
+  (exit 0). P2 works. Now cleaning up all test artifacts:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      # restore fonts.ts from whichever backup exists…)
+  ⎿  restored from /tmp backup
+     === verify fonts.ts has NO test marker + correct tail ===
+     0
+     … +2 lines (ctrl+o to expand)
+
+● fonts.ts restored byte-exact (0 markers, original CRLF tail preserved), all
+  test artifacts removed. All three are built and validated. Now closing the
+  retro loop: update the project backlog and the arclen-dev skill.
+  Read 1 file (ctrl+o to expand)
+
+● The backlog evolved since my summary — notably the check-patches.sh cwd bug is
+  already marked Done (and the entry even credits the grep -h fix, which my
+  edit today actually made real in the file). There's also a new
+  dev/verify-patches.sh that depends on check-patches.sh. So I must confirm my
+  grep -h change didn't regress the multi-patch (no-arg) path that
+  verify-patches uses:
+
+● PowerShell($bash = "C:\Program Files\Git\bin\bash.exe"
+            & $bash ./check-patches.sh 2>&1 | Select-Object -Last 15…)
+  ⎿  Your branch is up to date with 'origin/main'.
+     Applying base patches...
+       applied: 00-brand-remove-branding.patch
+     … +13 lines (ctrl+o to expand)
+  ⎿  (timeout 2m)
+
+● 7/7, no regression — my grep -h change is backward-compatible, and the
+  single-patch path is now correct too. Now recording P1/P2 in the backlog and
+  updating the skill:
+
+● Update(.claude\harness-backlog.md)
+  ⎿  Added 14 lines
+      19    already TS-checks the live tree — which is what actually catc
+          hes the incident. Not worth the footgun.
+      20  
+      21  ## Done
+      22 +- [x] **`dev/relaunch.sh` (full-relaunch + readiness gate)** (2
+         +026-05-29) — kills the dev exe, relaunches                     
+      23 +  via a generated `.bat` + `start` (CDP + `VSCODE_SKIP_PRELAUNC
+         +H=1`), then BLOCKS until the workbench                         
+      24 +  paints (`--vscode-editor-background` resolves on `.monaco-wor
+         +kbench`) before returning. Kills the                           
+      25 +  blind-screenshot class (CSS needs a full relaunch, ext host i
+         +s ~5 min slow). `--probe-only` / `--no-kill`                   
+      26 +  / `--shot` / `--assert 'var=substr'` / `--port` / `--timeout`
+         +. Validated: probe-only + assert exit 0;                       
+      27 +  full kill→launch→gate→assert→shot exit 0 (~35s to ready). Fir
+         +st launch impl (nested `cmd /c "...&&..."`)                    
+      28 +  failed silently — the `.bat`+`start` form fixed it. — mechani
+         +sm: script — effort: M                                         
+      29 +- [x] **`dev/gen-user-patch.sh` (clean user-patch generator)** 
+         +(2026-05-29) — reconstructs the true                           
+      30 +  base+windows+prior-user baseline (pristine via `git show HEAD
+         +:` + substituted patch replay scoped with                      
+      31 +  `git apply --include`), diffs live edits → a minimal, correct
+         +ly-anchored patch, validates by re-applying                    
+      32 +  onto that baseline. Replaces the by-hand reconstruction done 
+         +3× last session. **Gotcha hit & fixed:** the                   
+      33 +  working tree has mixed CRLF+LF, so the scratch files must be 
+         +normalized to LF (`sed 's/\r$//'`) before                      
+      34 +  diffing or git reports a full-file rewrite. Validated: depend
+         +ent-on-arclen-fonts case → +3/-1 minimal                       
+      35 +  patch, exit 0. — mechanism: script — effort: M               
+      36  - [x] **`dev/verify-patches.sh` (Tier 2, safe version)** (2026-
+          05-28) — one pre-commit/pre-promote gate:
+      37    `check-ts.sh` (compile the live tree) + `check-patches.sh` (a
+          pply-check vs fresh upstream). Non-destructive.
+      38    `--no-apply` (offline/fast, TS only) / `--no-ts` flags. Valid
+          ated: TS path green on live tree.
+
+● Now update the arclen-dev skill — the patch-generation section (point to
+  gen-user-patch.sh), the check-patches.sh known bugs section (cwd bug fixed;
+  note the base-only limitation), and add both scripts to the QA table:
+
+● Update(.claude\skills\arclen-dev\SKILL.md)
+  ⎿  Added 13 lines, removed 1 line
+      102  
+      103  **`vscode/` git baseline = pristine upstream commit (e.g. 987c
+           959751 for VS Code 1.121.0).** All patches are applied as **un
+           committed modifications**. So `cd vscode && git diff` shows ba
+           se patches + windows patches + user patches + your live edits 
+           **all combined** — NOT a clean user patch.
+      104  
+      105 -**This means you cannot just `git diff` to get a user patch.**
+          - Three workable approaches:                                   
+      105 +### Preferred: `dev/gen-user-patch.sh` (automates the whole re
+          +construction)                                                 
+      106  
+      107 +```bash                                                       
+      108 +# After editing file(s) in vscode/, generate a clean, validate
+          +d user patch in one shot:                                     
+      109 +dev/gen-user-patch.sh <patches/user/NAME.patch> <vscode-relati
+          +ve-file> [more files...]                                      
+      110 +# e.g.                                                        
+      111 +dev/gen-user-patch.sh arclen-fonts src/vs/base/browser/fonts.t
+          +s src/vs/workbench/browser/media/style.css                    
+      112 +```                                                           
+      113 +It rebuilds the exact pre-state for those files in the REAL ap
+          +ply order — pristine upstream (`git show HEAD:`) + every base 
+          +patch + every windows patch + every existing **user** patch th
+          +at sorts *before* `NAME` (all with `!!APP_NAME!!→Arclen` subst
+          +itution) — then diffs your live edits against it, producing a 
+          +minimal correctly-anchored patch, and validates by re-applying
+          + it onto that baseline. The target NAME's sort position decide
+          +s which user patches count as "already applied", so name it th
+          +e way the build will sort it (`arclen-*`). Generated context u
+          +ses literal `Arclen` (fine — the build substitutes placeholder
+          +s to the same value); hand-swap to `!!APP_NAME!!` only if you 
+          +need portability. **It normalizes scratch files to LF** becaus
+          +e the working tree has mixed CRLF+LF (see the encoding gotcha 
+          +below) — a plain diff against pristine would otherwise report 
+          +a full-file rewrite. Use this instead of the manual approaches
+          + below unless it can't handle your case.                      
+      114 +                                                              
+      115 +### Manual fallbacks (when the script doesn't fit)            
+      116 +                                                              
+      117 +**You cannot just `git diff` to get a user patch.** Three work
+          +able approaches:                                              
+      118 +                                                              
+      119  1. **`.disabled` rename** (preferred when base patch adds code
+            Arclen doesn't need): rename `patches/00-foo.patch` → `.disab
+           led`. `prepare_vscode.sh:159` globs `*.patch` so the disabled 
+           extension is naturally ignored. Already used for `patches/wind
+           ows/41-cli-fix-update-url.patch.disabled` and (since 2026-05-2
+           8) `patches/00-community-add-announcements.patch.disabled`.
+      120  
+      121  2. **Hand-write the user patch** from before/after snippets of
+            the relevant file. The `before` must reflect the file state A
+           FTER all base patches apply (so your `before` matches what `00
+           -community-add-announcements.patch` produced, not upstream).
+
+● Update(.claude\skills\arclen-dev\SKILL.md)
+  ⎿  Added 3 lines, removed 2 lines
+      355  cd .. && dev/check-brand-leaks.sh --strict
+      356  ```
+      357  
+      358 -## `check-patches.sh` known bugs                              
+      358 +## `check-patches.sh` — fixed + one limitation                
+      359  
+      360 -- **Relative path bug**: script can fail with `error: can't op
+          -en patch 'patches/user/X.patch': No such file or directory` wh
+          -en run from repo root, because it `cd`s into a clone dir mid-s
+          -cript. Doesn't invalidate the patches themselves — just don't 
+          -rely on it as the final gate before commit. Fix pending.      
+      360 +- **Relative-path/cwd bug — FIXED (2026-05-29).** Patch paths 
+          +are now absolutized before the `cd` into the scratch clone, so
+          + it works from repo root (and a `grep -h` fix makes the single
+          +-patch-arg form parse correctly). Validated 7/7 and single-pat
+          +ch.                                                           
+      361 +- **Limitation — base-only baseline.** It replays only `patche
+          +s/*.patch` (base) before `--check`, NOT prior **user** patches
+          +. So it cannot validate a user patch that depends on another u
+          +ser patch (e.g. `arclen-welcome-cleanup` after `arclen-disable
+          +-walkthroughs` on `gettingStartedContent.ts`) — it'll report a
+          + false ✗. For those, trust `dev/gen-user-patch.sh`'s own basel
+          +ine check (it replays prior user patches too). `check-patches.
+          +sh` is authoritative only for user patches whose files no othe
+          +r user patch touches.                                         
+      362  
+      363  ## How to resume a build that died mid-compile
+      364  
+
+● Now add both scripts to the Arclen-specific scripts table, and reference
+  relaunch.sh in the theming/CSS-relaunch guidance:
+
+● Update(.claude\skills\arclen-dev\SKILL.md)
+  ⎿  Added 3 lines, removed 1 line
+      329  | Script | Purpose | Cost |
+      330  |---|---|---|
+      331  | `dev/check-brand-leaks.sh [--strict] [paths...]` | Scans for
+            VSCodium/MS branding in renderer + l10n. HIGH (must fix), MED
+           IUM (review), STRICT (audit only). Exit 1 if HIGH leaks. | ~5s
+            |
+      332 -| `dev/qa-loop.sh [--skip-tscheck] [--no-shot] [label]` | Full
+          - iteration chain: tscheck → transpile → Ctrl+R+reconnect → scr
+          -eenshot → brand-leaks. Screenshot saved to `dev/qa-<label>-<HH
+          -MMSS>.png`. | ~40s (15s without tscheck) |                    
+      332 +| `dev/qa-loop.sh [--skip-tscheck] [--no-shot] [label]` | Full
+          + iteration chain: tscheck → transpile → Ctrl+R+reconnect → scr
+          +eenshot → brand-leaks. Screenshot saved to `dev/qa-<label>-<HH
+          +MMSS>.png`. **For CSS/theme/font changes use `dev/relaunch.sh`
+          + instead** (Ctrl+R doesn't re-read CSS). | ~40s (15s without t
+          +scheck) |                                                     
+      333 +| `dev/relaunch.sh [--probe-only\|--no-kill] [--shot P] [--ass
+          +ert 'var=substr'] [--port N] [--timeout S]` | **Full relaunch 
+          +for CSS/theme/product.json changes.** Kills the dev exe, relau
+          +nches with CDP + `VSCODE_SKIP_PRELAUNCH=1`, then BLOCKS until 
+          +the workbench actually paints (theme vars resolved) before ret
+          +urning — so the screenshot/assert is never blind. `--probe-onl
+          +y` just gates an already-running window. | ~30-45s to ready | 
+      334 +| `dev/gen-user-patch.sh <patches/user/NAME.patch> <file...>` 
+          +| Generate a clean, validated user patch from working-tree edi
+          +ts (see "Generating user patches"). | ~5s |                   
+      335  
+      336  ### Hook: `arclen-check-brand` (PostToolUse)
+      337  
+
+● Update(.claude\skills\arclen-dev\SKILL.md)
+  ⎿  Added 1 line, removed 1 line
+      26  
+      27  **Quel fichier édites-tu ?**
+      28  - `vscode/src/**/*.ts` → loop complet ci-dessous (transpile req
+          uired, hot-reloads on Ctrl+R)
+      29 -- `vscode/src/**/*.css` → **transpile copies it, but Ctrl+R doe
+         -s NOT re-read CSS** — injected `<style>`/`document.fonts` persi
+         -st across the soft reload. **You must fully relaunch** (`script
+         -s/code.bat`) to see CSS/font changes. `document.fonts.check(...
+         -)` returns stale `true`, so don't trust it after a soft reload.
+         - (See "Theming & fonts" below.)                                
+      29 +- `vscode/src/**/*.css` → **transpile copies it, but Ctrl+R doe
+         +s NOT re-read CSS** — injected `<style>`/`document.fonts` persi
+         +st across the soft reload. **You must fully relaunch** — use **
+         +`dev/relaunch.sh`** (kills + relaunches + waits until the workb
+         +ench actually paints, so the screenshot isn't blind), not a bar
+         +e `scripts/code.bat`. `document.fonts.check(...)` returns stale
+         + `true`, so don't trust it after a soft reload. (See "Theming &
+         + fonts" below.)                                                
+      30  - `vscode/extensions/*/package.json` ou `*.nls.json` → **skip t
+          ranspile** (extension manifests are loaded directly, not compil
+          ed); just Ctrl+R via agent-browser
+      31  - `vscode/extensions/*/src/*.ts` → run `npm run gulp compile-ex
+          tension:<extName>` (heavier, ~30s) THEN Ctrl+R
+      32  - `vscode/extensions/theme-*/themes/*.json` → theme data; reloa
+          d via theme re-pick or relaunch
+
+● All three built, validated, and documented. Let me do a final verification of
+  the working-tree state — confirm the deliverables are present and there are no
+  stray test artifacts (especially that fonts.ts shows no diff):
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== new/changed deliverables present ==="…)
+  ⎿  === new/changed deliverables present ===
+     -rwxr-xr-x 1 Adrian 197121 5217 May 28 23:46 check-patches.sh
+     -rwxr-xr-x 1 Adrian 197121 9896 May 29 00:04 dev/gen-user-patch.sh
+     … +13 lines (ctrl+o to expand)
+
+● fonts.ts shows M because every file in vscode/ is an uncommitted mod vs the
+  pristine baseline (that's the repo model) — arclen-fonts.patch modifies it.
+  The test marker is already confirmed gone. Let me confirm its diff-vs-pristine
+  is only the expected font change (no residue), so the restore was byte-clean:
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide"
+      echo "=== git diff of fonts.ts vs pristine (should be ONLY the IBM Plex
+      DEFAULT_FONT_FAMILY change)…)
+  ⎿  === git diff of fonts.ts vs pristine (should be ONLY the IBM Plex DEFA
+     ULT_FONT_FAMILY change) ===
+      src/vs/base/browser/fonts.ts | 2 +-
+     … +8 lines (ctrl+o to expand)
+
+● C'est fait — les 3 sont construits, testés en vrai, et documentés. Récap :
+
+  ✅ P3 — check-patches.sh
+
+  Le bug de cwd était déjà corrigé dans le fichier (paths absolutisés avant le
+  cd). J'ai trouvé un bug latent restant : avec un seul patch en argument, grep
+  n'ajoute pas le préfixe fichier:, donc le vieux sed 's|^.*:+++ b/||' ne
+  strippait rien → mauvais sparse-checkout. Fix = grep -h + sed 's|^+++ b/||'.
+  - Validé : single-patch (arclen-fonts.patch → ✓, base patch détecté) et full
+  no-arg → 7/7, aucune régression (important car verify-patches.sh en dépend).
+
+  ✅ P1 — dev/relaunch.sh (relaunch + readiness gate)
+
+  Kill → relaunch (CDP + VSCODE_SKIP_PRELAUNCH=1) → bloque jusqu'à ce que le 
+  workbench peigne vraiment (--vscode-editor-background résolu sur
+  .monaco-workbench) avant de rendre la main. Tue la classe « screenshots à
+  l'aveugle » (F2/F3/F5). Options : --probe-only, --no-kill, --shot, --assert 
+  'var=substr', --port, --timeout.
+  - Premier essai de launch a échoué en silence (le cmd /c "...&&..." imbriqué
+  se faisait massacrer par Git Bash) → corrigé avec un .bat généré + start.
+  - Validé : probe-only+assert (exit 0), puis kill→launch→gate→assert→shot exit 
+  0, ~35s. Ton IDE a été relancé pendant le test et est revenu prêt.
+
+  ✅ P2 — dev/gen-user-patch.sh (générateur de patch user propre)
+
+  Reconstruit la vraie baseline base + windows + user-patches-qui-trient-avant
+  (pristine via git show HEAD: + replay substitué, scopé avec git apply 
+  --include), diffe tes edits, valide en réappliquant sur cette baseline.
+  Remplace la reconstruction à la main faite 3× la session passée.
+  - Gotcha rencontré & corrigé : le working tree a du CRLF+LF mixte → sans
+  normalisation LF des fichiers scratch, git rapportait une réécriture complète
+  (+51/-49). Après fix : patch minimal +3/-1 parfaitement ancré (@@ -47,3 +47,5 
+  @@), exit 0. Artefacts de test entièrement nettoyés (fonts.ts = 1 seule ligne
+  changée, l'IBM Plex attendue).
+
+  Boucle fermée (retro)
+
+  - Backlog : P1 et P2 ajoutés en Done (2026-05-29). Le bug check-patches était
+  déjà coché.
+  - Skill arclen-dev : section génération de patch pointe maintenant sur
+  gen-user-patch.sh ; section check-patches.sh documente la limite « base-only »
+  (faux ✗ pour patchs dépendant d'un autre user patch) ; les 2 scripts ajoutés
+  au tableau QA ; la guidance CSS-relaunch pointe sur relaunch.sh.
+  - .gitignore : dev/.relaunch-launcher.bat + .genpatch/.
+
+  À commit quand tu veux : ?? dev/relaunch.sh, ?? dev/gen-user-patch.sh, M 
+  .gitignore, M check-patches.sh, plus les màj backlog/skill.
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Churned for 24m 32s

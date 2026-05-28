@@ -26,7 +26,7 @@ cd vscode && node build/next/index.ts transpile   # ~10s, full src/ → out/
 
 **Quel fichier édites-tu ?**
 - `vscode/src/**/*.ts` → loop complet ci-dessous (transpile required, hot-reloads on Ctrl+R)
-- `vscode/src/**/*.css` → **transpile copies it, but Ctrl+R does NOT re-read CSS** — injected `<style>`/`document.fonts` persist across the soft reload. **You must fully relaunch** (`scripts/code.bat`) to see CSS/font changes. `document.fonts.check(...)` returns stale `true`, so don't trust it after a soft reload. (See "Theming & fonts" below.)
+- `vscode/src/**/*.css` → **transpile copies it, but Ctrl+R does NOT re-read CSS** — injected `<style>`/`document.fonts` persist across the soft reload. **You must fully relaunch** — use **`dev/relaunch.sh`** (kills + relaunches + waits until the workbench actually paints, so the screenshot isn't blind), not a bare `scripts/code.bat`. `document.fonts.check(...)` returns stale `true`, so don't trust it after a soft reload. (See "Theming & fonts" below.)
 - `vscode/extensions/*/package.json` ou `*.nls.json` → **skip transpile** (extension manifests are loaded directly, not compiled); just Ctrl+R via agent-browser
 - `vscode/extensions/*/src/*.ts` → run `npm run gulp compile-extension:<extName>` (heavier, ~30s) THEN Ctrl+R
 - `vscode/extensions/theme-*/themes/*.json` → theme data; reload via theme re-pick or relaunch
@@ -102,7 +102,19 @@ After this, the loop above works.
 
 **`vscode/` git baseline = pristine upstream commit (e.g. 987c959751 for VS Code 1.121.0).** All patches are applied as **uncommitted modifications**. So `cd vscode && git diff` shows base patches + windows patches + user patches + your live edits **all combined** — NOT a clean user patch.
 
-**This means you cannot just `git diff` to get a user patch.** Three workable approaches:
+### Preferred: `dev/gen-user-patch.sh` (automates the whole reconstruction)
+
+```bash
+# After editing file(s) in vscode/, generate a clean, validated user patch in one shot:
+dev/gen-user-patch.sh <patches/user/NAME.patch> <vscode-relative-file> [more files...]
+# e.g.
+dev/gen-user-patch.sh arclen-fonts src/vs/base/browser/fonts.ts src/vs/workbench/browser/media/style.css
+```
+It rebuilds the exact pre-state for those files in the REAL apply order — pristine upstream (`git show HEAD:`) + every base patch + every windows patch + every existing **user** patch that sorts *before* `NAME` (all with `!!APP_NAME!!→Arclen` substitution) — then diffs your live edits against it, producing a minimal correctly-anchored patch, and validates by re-applying it onto that baseline. The target NAME's sort position decides which user patches count as "already applied", so name it the way the build will sort it (`arclen-*`). Generated context uses literal `Arclen` (fine — the build substitutes placeholders to the same value); hand-swap to `!!APP_NAME!!` only if you need portability. **It normalizes scratch files to LF** because the working tree has mixed CRLF+LF (see the encoding gotcha below) — a plain diff against pristine would otherwise report a full-file rewrite. Use this instead of the manual approaches below unless it can't handle your case.
+
+### Manual fallbacks (when the script doesn't fit)
+
+**You cannot just `git diff` to get a user patch.** Three workable approaches:
 
 1. **`.disabled` rename** (preferred when base patch adds code Arclen doesn't need): rename `patches/00-foo.patch` → `.disabled`. `prepare_vscode.sh:159` globs `*.patch` so the disabled extension is naturally ignored. Already used for `patches/windows/41-cli-fix-update-url.patch.disabled` and (since 2026-05-28) `patches/00-community-add-announcements.patch.disabled`.
 
@@ -317,7 +329,9 @@ Some files in `vscode/src/` have **mixed line endings** (CRLF mixed with LF). Th
 | Script | Purpose | Cost |
 |---|---|---|
 | `dev/check-brand-leaks.sh [--strict] [paths...]` | Scans for VSCodium/MS branding in renderer + l10n. HIGH (must fix), MEDIUM (review), STRICT (audit only). Exit 1 if HIGH leaks. | ~5s |
-| `dev/qa-loop.sh [--skip-tscheck] [--no-shot] [label]` | Full iteration chain: tscheck → transpile → Ctrl+R+reconnect → screenshot → brand-leaks. Screenshot saved to `dev/qa-<label>-<HHMMSS>.png`. | ~40s (15s without tscheck) |
+| `dev/qa-loop.sh [--skip-tscheck] [--no-shot] [label]` | Full iteration chain: tscheck → transpile → Ctrl+R+reconnect → screenshot → brand-leaks. Screenshot saved to `dev/qa-<label>-<HHMMSS>.png`. **For CSS/theme/font changes use `dev/relaunch.sh` instead** (Ctrl+R doesn't re-read CSS). | ~40s (15s without tscheck) |
+| `dev/relaunch.sh [--probe-only\|--no-kill] [--shot P] [--assert 'var=substr'] [--port N] [--timeout S]` | **Full relaunch for CSS/theme/product.json changes.** Kills the dev exe, relaunches with CDP + `VSCODE_SKIP_PRELAUNCH=1`, then BLOCKS until the workbench actually paints (theme vars resolved) before returning — so the screenshot/assert is never blind. `--probe-only` just gates an already-running window. | ~30-45s to ready |
+| `dev/gen-user-patch.sh <patches/user/NAME.patch> <file...>` | Generate a clean, validated user patch from working-tree edits (see "Generating user patches"). | ~5s |
 
 ### Hook: `arclen-check-brand` (PostToolUse)
 
@@ -343,9 +357,10 @@ cd vscode && npm run compile-check-ts-native && npm run eslint && npm run hygien
 cd .. && dev/check-brand-leaks.sh --strict
 ```
 
-## `check-patches.sh` known bugs
+## `check-patches.sh` — fixed + one limitation
 
-- **Relative path bug**: script can fail with `error: can't open patch 'patches/user/X.patch': No such file or directory` when run from repo root, because it `cd`s into a clone dir mid-script. Doesn't invalidate the patches themselves — just don't rely on it as the final gate before commit. Fix pending.
+- **Relative-path/cwd bug — FIXED (2026-05-29).** Patch paths are now absolutized before the `cd` into the scratch clone, so it works from repo root (and a `grep -h` fix makes the single-patch-arg form parse correctly). Validated 7/7 and single-patch.
+- **Limitation — base-only baseline.** It replays only `patches/*.patch` (base) before `--check`, NOT prior **user** patches. So it cannot validate a user patch that depends on another user patch (e.g. `arclen-welcome-cleanup` after `arclen-disable-walkthroughs` on `gettingStartedContent.ts`) — it'll report a false ✗. For those, trust `dev/gen-user-patch.sh`'s own baseline check (it replays prior user patches too). `check-patches.sh` is authoritative only for user patches whose files no other user patch touches.
 
 ## How to resume a build that died mid-compile
 

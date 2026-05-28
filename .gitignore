@@ -22,3 +22,13 @@ font-size/generate-css.js
 build.log
 arclen-check.png
 skills-lock.json
+
+# Arclen relaunch helper (dev/relaunch.sh, generated)
+dev/.relaunch-launcher.bat
+.genpatch/
+
+# Dev QA/debug screenshots & logs (transient, machine-local — don't commit)
+dev/check-*.png
+dev/qa-*.png
+dev/relaunch-test.png
+dev-launch*.log

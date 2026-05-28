@@ -19,6 +19,20 @@ _(none — all triaged 2026-05-28; next harness work returns from the M&A roadma
   already TS-checks the live tree — which is what actually catches the incident. Not worth the footgun.
 
 ## Done
+- [x] **`dev/relaunch.sh` (full-relaunch + readiness gate)** (2026-05-29) — kills the dev exe, relaunches
+  via a generated `.bat` + `start` (CDP + `VSCODE_SKIP_PRELAUNCH=1`), then BLOCKS until the workbench
+  paints (`--vscode-editor-background` resolves on `.monaco-workbench`) before returning. Kills the
+  blind-screenshot class (CSS needs a full relaunch, ext host is ~5 min slow). `--probe-only` / `--no-kill`
+  / `--shot` / `--assert 'var=substr'` / `--port` / `--timeout`. Validated: probe-only + assert exit 0;
+  full kill→launch→gate→assert→shot exit 0 (~35s to ready). First launch impl (nested `cmd /c "...&&..."`)
+  failed silently — the `.bat`+`start` form fixed it. — mechanism: script — effort: M
+- [x] **`dev/gen-user-patch.sh` (clean user-patch generator)** (2026-05-29) — reconstructs the true
+  base+windows+prior-user baseline (pristine via `git show HEAD:` + substituted patch replay scoped with
+  `git apply --include`), diffs live edits → a minimal, correctly-anchored patch, validates by re-applying
+  onto that baseline. Replaces the by-hand reconstruction done 3× last session. **Gotcha hit & fixed:** the
+  working tree has mixed CRLF+LF, so the scratch files must be normalized to LF (`sed 's/\r$//'`) before
+  diffing or git reports a full-file rewrite. Validated: dependent-on-arclen-fonts case → +3/-1 minimal
+  patch, exit 0. — mechanism: script — effort: M
 - [x] **`dev/verify-patches.sh` (Tier 2, safe version)** (2026-05-28) — one pre-commit/pre-promote gate:
   `check-ts.sh` (compile the live tree) + `check-patches.sh` (apply-check vs fresh upstream). Non-destructive.
   `--no-apply` (offline/fast, TS only) / `--no-ts` flags. Validated: TS path green on live tree.

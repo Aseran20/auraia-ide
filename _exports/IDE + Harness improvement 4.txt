@@ -1,0 +1,1029 @@
+╭─── Claude Code v2.1.154 ─────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back Adrian!                │ started                 │
+│                                                    │ Run /init to create a … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ What's new              │
+│                        ▘▘ ▝▝                       │ Opus 4.8 is here! Now … │
+│   Opus 4.8 · Claude Max · adriturion@gmail.com's   │ Introducing dynamic wo… │
+│   Organization                                     │ Fast mode on Opus 4.8 … │
+│      ~\Desktop\devprojects\3-auraia\arclen-ide     │ /release-notes for more │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+✻ Conversation compacted (ctrl+o for history)
+
+
+● Step 0 fait. Les signaux confirment l'échec (build.log: 'vscode-min-prepack' 
+  errored after 16 min / Found 5 errors), les backlogs + mémoires sont en place.
+  (Note : le git status montre aussi du travail thème/fonts pullé/parallèle —
+  branding/, gen-arclen-theme.mjs, patches fonts — hors de notre session ; je me
+  concentre sur la friction qu'on a vécue ici.)
+
+  Retro — session 2026-05-28
+
+  #: 1
+  Incident (temps perdu): Patch casse la compile, révélé après 16 min de build
+  Évitable ?: ✅
+  Déjà connu ?: ✅ oui (runbook : "patches must remove imports")
+  Capacité ratée: compile-check-ts-native (25s) avant le build
+  Fix le moins cher: gate TS pré-build
+  Mécanisme: enforced ✅ fait (Tier 1)
+  Prio: 🔴
+  ────────────────────────────────────────
+  #: 2
+  Incident (temps perdu): tee masque l'exit code → "exit 0" menteur
+  Évitable ?: ✅
+  Déjà connu ?: ❌
+  Capacité ratée: lire le log / pipefail
+  Fix le moins cher: pipefail + scan log
+  Mécanisme: enforced ✅ fait
+  Prio: 🔴
+  ────────────────────────────────────────
+  #: 3
+  Incident (temps perdu): Monitor v1 faux positif (gyp ERR transitoire) puis v2
+  a
+    raté l'erreur
+  Évitable ?: partiel
+  Déjà connu ?: ❌
+  Capacité ratée: pattern Monitor = résumé terminal, pas lignes mid-run
+  Fix le moins cher: bon fail_re
+  Mécanisme: doc ✅ fait
+  Prio: 🟠
+  ────────────────────────────────────────
+  #: 4
+  Incident (temps perdu): Hook SessionStart cassé (backticks + " dans la string)
+  Évitable ?: ✅
+  Déjà connu ?: ❌
+  Capacité ratée: bash -n / lancer le hook avant de s'y fier
+  Fix le moins cher: heredoc + LF
+  Mécanisme: fix ✅ fait
+  Prio: 🟠
+  ────────────────────────────────────────
+  #: 5
+  Incident (temps perdu): vscode/ désync des patches pullés → -s de 16 min
+  Évitable ?: ✅
+  Déjà connu ?: partiel
+  Capacité ratée: sync léger sans recompile
+  Fix le moins cher: sync-and-check.sh
+  Mécanisme: script ⬜ logué
+  Prio: 🟠
+  ────────────────────────────────────────
+  #: 6
+  Incident (temps perdu): Chemins autre-PC en dur (AdrianTurion/2-auraia)
+  Évitable ?: ✅
+  Déjà connu ?: ❌
+  Capacité ratée: —
+  Fix le moins cher: génériser <you>/<repo-root>
+  Mécanisme: fix ✅ fait
+  Prio: 🟡
+  ────────────────────────────────────────
+  #: 7
+  Incident (temps perdu): /tmp Python(Windows)=C:\tmp ≠ bash(MSYS) → 1 cycle
+    perdu
+  Évitable ?: ✅
+  Déjà connu ?: ❌
+  Capacité ratée: conscience gotcha Windows/MSYS
+  Fix le moins cher: noter le gotcha
+  Mécanisme: doc ⬜ nouveau
+  Prio: 🟡
+
+  Step 7 — boucle sur les backlogs
+
+  ✅ Déjà shippé cette session (5/7) : Tier 1 (check-ts + build-checked),
+  pipefail, pattern Monitor, fix hook SessionStart, génération chemins, fix
+  patch walkthroughs + 3 mémoires. Le harness-backlog.md projet est à jour.
+
+  ⬜ Open (déjà logué projet) : sync-and-check.sh (Tier 2), hook import-orphelin
+  (Tier 3), fix cwd check-patches.sh (Tier 3).
+
+  La leçon transverse qui compte
+
+  L'incident #1 était documenté et nous a quand même coûté 16 min → preuve
+  canonique de la conviction n°1 (documenter ≠ prévenir). La règle généralisable
+  : « quand un runbook dit "X est un mode d'échec connu", c'est le signal de 
+  construire un GATE, pas de faire confiance à la doc. » C'est exactement ce que
+  retro encode maintenant.
+
+  Nouvelles propositions de cette retro (2, légères)
+
+  1. Enrichir capabilities.md : entrée Monitor → « matcher les résumés d'état 
+  terminal, pas les lignes mid-run qui sont réessayées » (incident #3, leçon
+  Monitor générale, pas juste Arclen). — trivial, je peux le faire direct.
+  2. Noter le gotcha /tmp Windows/MSYS vs Python (incident #7) → soit dans
+  capabilities.md (cross-cutting), soit une mémoire « Windows gotchas ». —
+  trivial.
+
+  Les deux sont du type « je fais direct » selon la routine. Je les applique, ou
+  tu veux les voir loggés plutôt ? Et pour les 3 open (Tier 2/3) : build 
+  maintenant ou on garde loggé et on revient à la vision M&A ?
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Cogitated for 1m 24s
+
+❯ /compact                                                                      
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Read .claude\harness-backlog.md (26 lines)
+  ⎿  Read ..\..\..\..\.claude\skills\retro\backlog.md (15 lines)
+  ⎿  Read ..\..\..\..\.claude\skills\retro\capabilities.md (71 lines)
+  ⎿  Read ..\..\..\..\.claude\skills\retro\SKILL.md (97 lines)
+  ⎿  Referenced file .claude\skills\arclen-dev\SKILL.md
+  ⎿  Skills restored (retro, hook-development)
+  ⎿  SessionStart:compact says: ARCLEN IDE - Auto-Orientation (SessionStart hook)
+
+     Repo: VSCodium fork rebranded for M&A analysts. VS Code 1.121.0 upstream.
+
+     VALIDATED WINDOWS TOOLCHAIN (do NOT deviate):
+     - VS 2022 Community + MSVC v143 + Spectre v143 x64. NOT VS 2026 (node-gyp can't detect it; we documented why).
+     - Stock npm-bundled node-gyp 11.5. If %ProgramFiles%\nodejs\...\node-gyp_11.5.0_bak exists, restore it before building.
+     - Use your user-level Git Bash (e.g. C:\Users\<you>\AppData\Local\Programs\Git\bin\bash.exe). Run 'which bash' to confirm the path on this machine.
+     - Python 3.13 works fine (node-gyp 10+).
+
+     BUILD STATE:
+     - vscode/ present: yes
+     - VSCode-win32-x64/Arclen.exe present: no
+
+     NEXT STEP: vscode/ exists AND out/main.js present -> ITERATION LOOP: edit vscode/src/... -> cd vscode && node build/next/index.ts transpile (~10s) -> agent-browser press Ctrl+R -> agent-browser connect 9222 (reconnect, Ctrl+R drops CDP briefly) -> agent-browser screenshot. NPM RUN WATCH IS A NO-OP HERE for emit (useEsbuildTranspile=false in this build); it only type-checks. Do not rely on it to refresh out/. Do NOT run dev/build.sh just to test a change.
+
+     GOLDEN RULES:
+     1. LOCAL ONLY. CI (ci-build-windows.yml) is 60 min - only for distribution, never for iteration.
+     2. SKIP_CLI=yes is set in dev/build.sh - the Rust CLI (code-tunnels, Remote-SSH) is irrelevant for Arclen. Do not install rustup.
+     3. After a compile error, DO NOT re-run dev/build.sh. Edit the file in vscode/ AND the corresponding patches/user/*.patch, then resume with: cd vscode && npm run gulp vscode-min-prepack.
+     4. When a user patch removes the only usage of an imported symbol, the import must be removed in the same patch (VS Code tsconfig has noUnusedLocals: true). check-patches.sh does NOT catch this - only a full compile does.
+     5. dev/ vs distrib: scripts/code.bat = dev runner. Arclen.exe = packaged distributable. Daily dev = .bat with --remote-debugging-port=9222 + agent-browser, 99% of the time.
+     6. Generating user patches: vscode/ git baseline is pristine upstream, so cd vscode && git diff returns BASE PATCHES + USER PATCHES + YOUR EDITS combined - NOT a clean user patch. Prefer renaming base patches to .disabled when killing a community feature; only hand-write user patches when keeping the base patch but tweaking it.
+     7. CRLF gotcha: some vscode/src files have mixed line endings. If Edit returns "String not found" on a string visible in Read, diagnose with: sed -n Np file | cat -A. Fallback = Python regex via Bash with rb'...' patterns.
+
+     REFERENCE (WHAT/WHERE): .claude/skills/arclen-ide/SKILL.md  (repo structure, branding, icons, build prerequisites, modifying packaged output).
+     RUNBOOK (HOW to iterate): .claude/skills/arclen-dev/SKILL.md  (the real edit->transpile->reload loop, patch generation, cascade-delete, CRLF gotcha, QA scripts).
+
+❯ Go faire maintenant                                                           
+                                                                                
+  Nouvelles propositions de cette retro (2, légères)                            
+                                                                                
+    1. Enrichir capabilities.md : entrée Monitor → « matcher les résumés d'état 
+  terminal, pas les lignes mid-run qui sont réessayées » (incident #3, leçon    
+  Monitor générale, pas juste Arclen). — trivial, je peux le faire              
+    direct.                                                                     
+    2. Noter le gotcha /tmp Windows/MSYS vs Python (incident #7) → soit dans    
+  capabilities.md (cross-cutting), soit une mémoire « Windows gotchas ». —      
+  trivial.                                                                      
+                                                                                
+    Les deux sont du type « je fais direct » selon la routine. Je les applique, 
+  ou tu veux les voir loggés plutôt ? Et pour les 3 open (Tier 2/3) : build     
+  maintenant ou on garde loggé et on revient à la vision M&A ?                  
+
+● Go. J'applique les deux dans capabilities.md (cross-project, relu à chaque
+  retro).
+
+● Update(~\.claude\skills\retro\capabilities.md)
+  ⎿  Added 3 lines
+      43    context can't hold it. (Opt-in: needs the user's go.)
+      44  - **Monitor** — stream events from a long-running script; heart
+          beat + failure detection. *Reach for it:*
+      45    watching a build/CI/long job. *Smell:* manual polling, or dis
+          covering a failure way too late.
+      46 +  *Design rule (learned 2026-05-28):* match the **terminal-stat
+         +e summary line** (e.g. `Found N errors`,                       
+      47 +  `errored after`), NOT noisy mid-run lines (`gyp ERR`, `MSBxxx
+         +x`) — those get retried and trip false                         
+      48 +  positives, while a too-loose pattern can also miss the real o
+         +ne. Anchor on what the tool prints when it's *done*.           
+      49  - **Background Bash** (`run_in_background`) — long task that no
+          tifies on exit. *Reach for it:* one
+      50    "tell me when it's done" signal (use an `until` loop, not an 
+          unbounded tail).
+      51  - **Scheduling** — `ScheduleWakeup` (self-pace a loop), cron / 
+          scheduled remote agents. *Reach for it:*
+
+● Update(~\.claude\skills\retro\capabilities.md)
+  ⎿  Added 4 lines
+      71  - **Anti-hallucination first** — doc-check before typing extern
+          al-API code; over-check beats re-debug.
+      72  - **Tunneling stop** — ≥2 non-converging attempts → stop, chang
+          e keywords, read the source/issue tracker.
+      73  - **Decouple validate from produce** — proving "it works" is us
+          ually far cheaper than producing the artifact.
+      74 +- **Windows path/shell mismatch** — on Windows, `python`/`node`
+         + resolve `/tmp` to `C:\tmp`, but MSYS bash                     
+      75 +  (Git Bash) maps it to `%LOCALAPPDATA%\Temp`. When a script ha
+         +nds a path between the two, pass an                            
+      76 +  **explicit Windows path** (`C:/Users/.../Temp/...`), never a 
+         +bare `/tmp`. Also: bare `bash` may be WSL                      
+      77 +  (can't touch the Windows toolchain) — confirm with `which bas
+         +h`. (Cost us a cycle 2026-05-28.)                              
+
+● Fait. Les deux leçons sont gravées dans capabilities.md :
+  - Monitor → règle de design : matcher la ligne de résumé terminal, pas les
+  lignes mid-run réessayées.
+  - Cross-cutting → gotcha chemins Windows/MSYS (/tmp Python = C:\tmp ≠ bash) +
+  le piège bash = WSL.
+
+  Retro bouclée. Bilan : 5/7 incidents déjà fixés en séance (Tier 1, pipefail,
+  pattern Monitor, hook SessionStart, chemins génériques), 2 leçons transverses
+  ajoutées à l'instant. Reste 3 items open déjà logués dans
+  .claude/harness-backlog.md :
+
+  1. dev/sync-and-check.sh (Tier 2) — reset → réappliquer patches → transpile →
+  check-ts. ~2 min, attrape les patches cassés avant tout build long. — effort M
+  2. Hook PostToolUse import-orphelin (Tier 3) — la classe noUnusedLocals qui a
+  coûté 16 min. — effort M
+  3. Fix cwd check-patches.sh (Tier 3) — bug "can't open patch" depuis la
+  racine. — effort S
+
+  Mon avis : le #1 (sync-and-check.sh) est le seul à vraiment haut ROI — c'est
+  lui qui aurait évité le build de 16 min. Le #2 est redondant avec le gate TS
+  qu'on a déjà (Tier 1 attrape déjà la même erreur, juste un peu plus tard) → je
+  le drop ou le garde loggé. Le #3 est un fix S sympa mais pas urgent.
+
+  On build le #1 maintenant, ou on garde tout loggé et on repart sur la vision 
+  M&A (section B jobs-to-be-done du chantier-arclen.md) ?
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Sautéed for 35s
+
+❯ Vas y fait ceux qui sont utiles                                               
+
+● D'accord : je construis le #1 (sync-and-check.sh, le gros ROI) et le #3 (fix
+  cwd check-patches.sh, S et utile). Le #2 je le drop (redondant avec le gate TS
+  Tier 1).
+
+  Je lis d'abord les scripts existants pour réutiliser exactement
+  apply_patch/l'ordre des patches.
+
+  Read 3 files (ctrl+o to expand)
+
+● Maintenant je regarde comment prepare_vscode.sh applique les patches dans
+  l'ordre, pour répliquer exactement la même séquence.
+
+  Read 1 file (ctrl+o to expand)
+
+● I've now got the full patch-application sequence. Two findings shaped my plan:
+
+  1. The cwd bug is clear: check-patches.sh:82 does cd "${WORKDIR}/vscode" but
+  the patch paths in the arrays stay relative to the repo root → git apply from
+  inside the clone can't find them. Fix = absolutize the paths before the cd.
+  2. On #1 I'm revising down: a faithful full reset+reapply (per the backlog
+  wording) has a real footgun — git reset --hard on vscode/ wipes any
+  un-promoted live edits (everything in vscode/ is an uncommitted mod vs the
+  pristine baseline). And its marginal value is low because Tier 1's check-ts.sh
+  already TS-checks the live tree — which is exactly what would've caught the
+  16-min incident. So instead of the destructive version, the genuinely useful +
+  safe win is a combined pre-commit gate: apply-check + TS-check in one
+  command, no reset.
+
+  Let me read check-ts.sh to wire it correctly.
+
+  Read 1 file (ctrl+o to expand)
+
+● Both reads confirm the wiring. Now I execute: fix the cwd bug in
+  check-patches.sh, then create dev/verify-patches.sh.
+
+  Fix #3 — check-patches.sh cwd bug (absolutize patch paths before the cd into
+  the clone):
+
+● Update(check-patches.sh)  ⎿  Added 6 lines
+      15  red='\033[0;31m'
+      16  reset='\033[0m'
+      17  
+      18 +# We cd into a scratch clone later; capture the invocation dir 
+         +now so patch paths                                             
+      19 +# (which are relative to it) survive that cd. Without this, git
+         + apply runs from the                                           
+      20 +# clone and reports "can't open patch 'patches/user/X.patch'" w
+         +hen run from repo root.                                        
+      21 +START_DIR="$(pwd)"                                             
+      22 +abspath() { case "$1" in /*) printf '%s\n' "$1" ;; *) printf '%
+         +s/%s\n' "${START_DIR}" "$1" ;; esac; }                         
+      23 +                                                               
+      24  COMMIT=$(jq -r '.commit' upstream/stable.json)
+      25  TAG=$(jq -r '.tag'    upstream/stable.json)
+      26  VSCODE_URL="https://github.com/microsoft/vscode.git"
+
+● Update(check-patches.sh)
+  ⎿  Added 4 lines
+      62    echo ""
+      63  fi
+      64  
+      65 +# ─── Absolutize patch paths (we cd into the clone below) ─────
+         +─────────────────                                              
+      66 +for i in "${!USER_PATCHES[@]}";   do USER_PATCHES[$i]="$(abspat
+         +h "${USER_PATCHES[$i]}")"; done                                
+      67 +for i in "${!PREREQ_PATCHES[@]}"; do PREREQ_PATCHES[$i]="$(absp
+         +ath "${PREREQ_PATCHES[$i]}")"; done                            
+      68 +                                                               
+      69  # ─── Collect all files to sparse-checkout ────────────────────
+          ────────────────
+      70  
+      71  ALL_FILES=$(
+
+● Now the safe, useful version of #1 — dev/verify-patches.sh: one pre-commit
+  gate that runs the apply-check (check-patches.sh) and the TS compile gate
+  (check-ts.sh) together. No destructive reset.
+
+● Write(dev\verify-patches.sh)
+  ⎿  Wrote 65 lines to dev\verify-patches.sh
+       2 # dev/verify-patches.sh — one pre-commit / pre-promote gate for 
+       3 #atch changes.
+          look fine but the cheap checks that together catch the "patches
+       5 # build dies at minute 16" class:
+         e (~25-70s, local).      — tsgo --noEmit on the live vscode/ tre
+         han imports / type errors —Catches noUnusedLocals (TS6133) / orp
+       8 #                          the exact failure that silently kills
+       9 #   2. check-patches.sh  — git apply --check of every patches/us
+      10 #                          upstream sparse clone (~30-60s, needs
+          network). Catches patches
+     … +76 lines (ctrl+o to expand)
+
+● Now smoke-test. Syntax-check both, then run the TS-only path end-to-end (no
+  network needed):
+
+● Bash(BASH="C:/Program Files/Git/bin/bash.exe"; "$BASH" -n check-patches.sh &&
+      echo "check-patches.sh: syntax OK"; "$BASH" -n dev/verify-patches.sh &&
+      echo "verify-pa…)
+  ⎿  check-patches.sh: syntax OK
+     verify-patches.sh: syntax OK
+     check-ts.sh: syntax OK
+
+● The user/linter also fixed a related grep -h bug in the same file — good,
+  coherent with mine. Now validate verify-patches.sh end-to-end via the TS-only
+  path (no network):
+
+● Bash("C:/Program Files/Git/bin/bash.exe" dev/verify-patches.sh --no-apply)
+  ⎿  ── 1/2  TS compile gate (live vscode/ tree) ──────────────────────────
+     ───
+     [check-ts] tsgo --noEmit on src/ (~25s)...
+     … +7 lines (ctrl+o to expand)
+  ⎿  (timeout 3m)
+
+● TS path works. Now prove the #3 cwd fix actually works — run the full
+  check-patches.sh from repo root (the exact scenario that used to fail with
+  "can't open patch"):
+
+● Bash("C:/Program Files/Git/bin/bash.exe" check-patches.sh 2>&1 | tail -25)
+  ⎿  Checking patches against VS Code 1.121.0 (987c959751)...
+
+     Base patches that run before ours (will apply first):
+     … +15 lines (ctrl+o to expand)
+  ⎿  (timeout 4m)
+
+● The cwd fix works — check-patches.sh now runs cleanly from repo root and finds
+  every patch (previously it died with "can't open patch"). And it immediately
+  earned its keep: it surfaced a real issue — arclen-hide-menus.patch reports
+  "corrupt patch at line 8." Let me characterize that before reporting (quick
+  look, not a rabbit-hole):
+
+● Bash("C:/Program Files/Git/bin/bash.exe" -c "echo '--- first 12 lines, cat -A
+      (shows ^M = CRLF, \$ = LF) ---'; sed -n '1,12p'
+      patches/user/arclen-hide-menus.patch |…)
+  ⎿  --- first 12 lines, cat -A (shows ^M = CRLF, $ = LF) ---
+     diff --git a/src/vs/workbench/browser/parts/titlebar/menubar.contribut
+     ion.ts b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.
+     … +13 lines (ctrl+o to expand)
+
+● The cwd fix is solid. The "corrupt patch" flag is a genuine signal the gate
+  surfaced — git apply parse errors point at line 8, which is a completely empty
+  line inside the hunk body (no leading space). Let me settle whether it's a
+  real malformation or a check-only false positive (one decisive look — count
+  the hunk):
+
+● Bash("C:/Program Files/Git/bin/bash.exe" -c '
+      f=patches/user/arclen-hide-menus.patch…)
+  ⎿  === total lines: 38 ===
+     === diff/hunk headers (with line numbers) ===
+     1:diff --git a/src/vs/workbench/browser/parts/titlebar/menubar.contrib
+     … +12 lines (ctrl+o to expand)
+
+● Settled — it's a real malformation, not a false positive. The patch has four
+  zero-length lines (8, 19, 25, 36) sitting inside the hunk bodies. In a unified
+  diff, a context line for an empty source line must be a single space " ", not
+  truly empty — an editor stripped the trailing whitespace on those blank
+  lines, which is exactly what makes git apply report "corrupt patch at line 8."
+  This would break the next full build's patch-apply step. The gate I just
+  built caught a latent broken patch on its first real run.
+
+  The fix is one line (s/^$/ / → restore the space markers). I'll apply it and
+  immediately re-verify with the gate to prove both the fix and the harness:
+
+● Bash("C:/Program Files/Git/bin/bash.exe" -c '
+      f=patches/user/arclen-hide-menus.patch…)
+  ⎿  empty lines remaining inside file:
+     0
+     --- re-verify just this patch ---
+     Checking patches against VS Code 1.121.0 (987c959751)...
+  ⎿  (timeout 4m)
+
+● Output got truncated mid-run. Let me get the clean verdict and tidy the
+  backup:
+
+● Bash("C:/Program Files/Git/bin/bash.exe" check-patches.sh
+      patches/user/arclen-hide-menus.patch 2>&1 | tail -6; rm -f
+      patches/user/arclen-hide-menus.patch.bak; echo "…)
+  ⎿  Checking patches against VS Code 1.121.0 (987c959751)...
+
+     (removed .bak)
+  ⎿  (timeout 4m)
+
+● Output's truncating through the pipe. Let me capture to a log and read it
+  directly for a clean verdict:
+
+● Bash("C:/Program Files/Git/bin/bash.exe" -c 'cd "$(pwd)"; ./check-patches.sh >
+      /tmp/cp.log 2>&1; echo "exit=$?"'; echo "--- log ---")
+  ⎿  exit=0
+     --- log ---
+  ⎿  (timeout 4m)
+● Exit 0 — all patches pass now. Let me confirm the detail (reading via bash to
+  avoid the /tmp Windows-path mismatch):
+
+● Bash("C:/Program Files/Git/bin/bash.exe" -c 'tail -12 /tmp/cp.log')
+  ⎿    applied: 00-ui-custom-font.patch
+
+     Checking user patches...
+     … +9 lines (ctrl+o to expand)
+
+● All 7 patches pass. The harness is proven end-to-end and it caught + fixed a
+  latent broken patch on its first run. Now I close the loop in the backlog
+  (retro Step 6/7):
+
+● Update(.claude\harness-backlog.md)
+  ⎿  Added 19 lines, removed 9 lines
+       7  
+       8  ## Open
+       9  
+      10 -- [ ] **`dev/sync-and-check.sh` (Tier 2)** — after a pull/patch
+         - change, the live `vscode/` tree is out                        
+      11 -  of sync with the patch set; we did a 16-min `-s` build to syn
+         -c and it failed at compile. Script:                            
+      12 -  `git reset --hard` → reapply ALL patches (via `apply_patch`/`
+         -utils.sh`, with placeholder subst) →                           
+      13 -  transpile → `check-ts.sh`. ~2 min, catches broken patches bef
+         -ore any full build. — mechanism: script — effort: M            
+      14 -- [ ] **PostToolUse orphan-import hook (Tier 3)** — after editi
+         -ng `vscode/src/**/*.ts`, grep the file:                        
+      15 -  for each `import { X }`, warn if `X` no longer appears elsewh
+         -ere (the noUnusedLocals class that cost                        
+      16 -  16 min on 2026-05-28). Soft, non-blocking (grep heuristic → f
+         -alse positives possible). — mechanism: hook — effort: M        
+      17 -- [ ] **Fix `check-patches.sh` cwd bug (Tier 3)** — fails with 
+         -"can't open patch …" when run from repo                        
+      18 -  root because it `cd`s into a clone mid-script. — mechanism: s
+         -cript fix — effort: S                                          
+      10 +_(none — all triaged 2026-05-28; next harness work returns from
+         + the M&A roadmap)_                                             
+      11  
+      12 +## Dropped                                                     
+      13 +- **PostToolUse orphan-import hook (was Tier 3)** — dropped 202
+         +6-05-28: redundant with `check-ts.sh`,                         
+      14 +  which catches the same noUnusedLocals/orphan-import class aut
+         +horitatively (and `verify-patches.sh`                          
+      15 +  now runs it as a gate). A grep heuristic would only add false
+         + positives for no extra coverage.                              
+      16 +- **`dev/sync-and-check.sh` destructive reset variant (was Tier
+         + 2)** — dropped 2026-05-28 in favor of                         
+      17 +  the non-destructive `verify-patches.sh` below. A `git reset -
+         +-hard` on `vscode/` would wipe un-promoted                     
+      18 +  live edits (everything in `vscode/` is an uncommitted mod vs 
+         +the pristine baseline), and `check-ts.sh`                      
+      19 +  already TS-checks the live tree — which is what actually catc
+         +hes the incident. Not worth the footgun.                       
+      20 +                                                               
+      21  ## Done
+      22 +- [x] **`dev/verify-patches.sh` (Tier 2, safe version)** (2026-
+         +05-28) — one pre-commit/pre-promote gate:                      
+      23 +  `check-ts.sh` (compile the live tree) + `check-patches.sh` (a
+         +pply-check vs fresh upstream). Non-destructive.                
+      24 +  `--no-apply` (offline/fast, TS only) / `--no-ts` flags. Valid
+         +ated: TS path green on live tree.                              
+      25 +- [x] **Fix `check-patches.sh` cwd bug** (2026-05-28) — absolut
+         +ize patch paths before the `cd` into the                       
+      26 +  scratch clone (was "can't open patch …" from repo root). Also
+         + fixed a `grep -h` bug (single-patch-arg                       
+      27 +  path stripping). Validated from repo root: 7/7 patches checke
+         +d.                                                             
+      28 +- [x] **Repaired `arclen-hide-menus.patch` corruption** (2026-0
+         +5-28) — `verify-patches`/`check-patches`                       
+      29 +  caught zero-length context lines (editor stripped trailing sp
+         +ace → "corrupt patch at line 8", would                         
+      30 +  break the next full build). Restored the space markers; re-ve
+         +rified 7 passed / 0 failed.                                    
+      31  - [x] **`dev/check-ts.sh` + `dev/build-checked.sh` (Tier 1)** (
+          2026-05-28) — 25s TS gate before any full
+      32    build + truthful exit (no `tee` masking) + log backstop. Vali
+          dated red (catches injected TS6133) & green.
+      33  - [x] **`arclen-disable-walkthroughs.patch` orphan-import fix**
+           (2026-05-28) — added 3 hunks removing
+
+● Tout est fait et vérifié. Récap serré :
+
+  Fait cette session
+
+  Leçons transverses → capabilities.md (relu à chaque retro, tout projet)
+  - Règle Monitor : matcher le résumé d'état terminal, pas les lignes mid-run
+  réessayées.
+  - Gotcha chemins Windows/MSYS (/tmp Python = C:\tmp ≠ bash) + piège bash =
+  WSL.
+
+  Items harness utiles → construits & validés
+  1. dev/verify-patches.sh (la version saine du Tier 2) — un seul gate avant
+  commit : check-ts.sh (compile l'arbre live) + check-patches.sh (apply-check vs
+  upstream frais). Non destructif. Flags --no-apply (offline/rapide) / --no-ts.
+  ✅ testé : passe vert sur l'arbre live.
+    - J'ai abandonné la variante reset-destructif que le backlog décrivait : git
+  reset --hard sur vscode/ effacerait tes edits non-promus, et check-ts.sh
+  couvre déjà la vraie classe d'erreur. Footgun pour rien.
+  2. Fix cwd de check-patches.sh — paths absolutisés avant le cd dans le clone
+  (fini le "can't open patch" depuis la racine). ✅ testé : 7/7 patches checkés.
+  3. Item #2 (hook import-orphelin) droppé — redondant avec check-ts.sh,
+  n'aurait ajouté que des faux positifs.
+
+  Bonus — le harness a payé immédiatement : à son premier vrai run,
+  check-patches.sh a attrapé un patch cassé (arclen-hide-menus.patch) — des
+  lignes de contexte vidées par un éditeur (trailing-space stripped → corrupt 
+  patch at line 8), qui aurait planté le prochain build complet. Réparé,
+  re-vérifié : 7 passed / 0 failed.
+
+  État
+
+  - Backlog projet Open : vide — tout trié.
+  - Retro bouclée.
+
+  On repart sur la vision M&A (section B jobs-to-be-done du chantier-arclen.md)
+  quand tu veux. Je commit ce batch d'abord, ou tu préfères enchaîner ?
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Worked for 10m 35s
+
+❯ Vas y commit deja                                                             
+
+● Bash(git -C "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide" status;
+      echo "=== diff --stat (tracked) ==="; git -C
+      "C:/Users/Adrian/Desktop/devprojects/3-aur…)
+  ⎿  On branch master
+     Your branch is up to date with 'origin/master'.
+     … +67 lines (ctrl+o to expand)
+
+● Beaucoup de choses dans l'arbre — un mix de mon travail de cette session
+  (harness, skills, fixes de patches, doc retro) et du travail thème/fonts
+  (pullé/parallèle : branding/, gen-arclen-theme.mjs, patches fonts,
+  product.json, + des screenshots de debug dev/check-*.png et logs). Je vérifie
+  le .gitignore modifié avant de décider du périmètre :
+
+● Bash(git -C "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide" diff
+      .gitignore)
+  ⎿  warning: in the working copy of '.gitignore', LF will be replaced by C
+     RLF the next time Git touches it
+     diff --git a/.gitignore b/.gitignore
+     … +10 lines (ctrl+o to expand)
+
+● Le .gitignore change est lié au thème (helper relaunch), pas à moi.
+
+  Décision : je commit uniquement le travail de cette session (harness +
+  consolidation skills + fixes de patches + doc retro), en laissant de côté le
+  travail thème/fonts (à toi de le committer avec ton intention) et les
+  artefacts de debug (screenshots dev/check-*.png, logs). Commit sur master
+  puisque c'est ta convention ici (tous les commits récents y sont).
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide" && git add \
+        .claude/hooks/arclen-orient.sh \…)
+  ⎿  warning: in the working copy of '.claude/hooks/arclen-orient.sh', LF w
+     ill be replaced by CRLF the next time Git touches it
+     warning: in the working copy of '.claude/skills/arclen-ide/SKILL.md',
+     … +45 lines (ctrl+o to expand)
+
+● Staging propre. Je commit :
+
+● Bash(cd "C:/Users/Adrian/Desktop/devprojects/3-auraia/arclen-ide" && git
+      commit -m "$(cat <<'EOF'
+      chore: harden dev harness + consolidate skills + fix patches…)
+  ⎿  [master d8b41ba] chore: harden dev harness + consolidate skills + fix
+     patches
+      13 files changed, 497 insertions(+), 133 deletions(-)
+     … +8 lines (ctrl+o to expand)
+
+● Commité : d8b41ba — 13 fichiers, +497/−133. C'est le batch harness + skills +
+  fixes de patches de cette session.
+
+  Resté hors du commit (volontairement) :
+  - Feature thème/fonts (pas mon travail — à toi de le committer avec ton
+  intention) : product.json, .gitignore, branding/, dev/gen-arclen-theme.mjs,
+  dev/relaunch.sh, patches/user/arclen-fonts.patch,
+  patches/user/arclen-theme-default.patch, src/stable/extensions/,
+  src/stable/src/..., docs/Arclen Design System.zip.
+    - ⚠️ Note : arclen-fonts.patch et arclen-theme-default.patch sont des
+  patches actifs (ils passent dans le check 7/7) — donc l'état committé du repo
+  ne build pas encore comme ton working tree tant qu'ils ne sont pas committés.
+  - Artefacts de debug (à ignorer ou supprimer) : dev/check-*.png (13
+  screenshots), dev/relaunch-test.png, dev-launch3.log.
+
+  Tu veux que je :
+  1. commit la feature thème/fonts en second commit (message dédié), et
+  2. ajoute dev/check-*.png + *.log au .gitignore (ou je les supprime) ?
+
+  Ou tu gères le thème toi-même ?
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Brewed for 2m 27s
+
+❯ Avant qu'on continue, j'aimerais qu'on revienne sur ce skill rétro qu'on a    
+  fait, qui est très bien. Je suis allé chercher sur internet différentes       
+  choses pour voir si ça existait déjà ou un équivalent, ou pour s'inspirer de  
+  choses qui pourraient nous être utiles, donc je vais te les mettre            
+  ci-dessous.                                                                   
+                                                                                
+  Est-ce que déjà dans le skill, il propose les hooks ? Et quand est-ce qu'il y 
+  a besoin de hooks pour faire un skill ? Quand il y a besoin de faire un       
+  skill avec des scripts et des helpers, quand il y a besoin du harness ? Et    
+  tout ça, tout ça, c'est bien expliqué déjà. Est-ce que dans ce skill, il y a  
+  besoin justement de mettre ces choses-là ou pas ?                             
+  https://github.com/trailofbits/skills                                         
+  https://github.com/severity1/claude-code-prompt-improver                      
+                                                                                
+  Et tu pourras faire des recherches, d'autres repos ou d'autres choses qui     
+  pourraient exister, qui sont un peu dans le même délire, parce que c'est un   
+  vrai sujet, ça quand même.                                                    
+                                                                                
+  En général, sur n'importe quel projet, pouvoir faire que toi tu t'améliores   
+  au fil du temps et que tu puisses t'auditer tout seul et pouvoir continuer à  
+  la chaîne, c'est une aide énorme. Et ça compte pas dans le futur, tu vois, le 
+  fait d'accumuler.                                                             
+
+● Excellent sujet — c'est exactement le genre de chose qui compose dans le
+  temps. Je vais d'abord faire la recherche (tes deux repos + prior art), puis
+  on confronte ça au skill actuel et je réponds précisément sur la question
+  hooks/scripts/harness.
+
+  Je charge les outils de recherche et je lance tout en parallèle.
+● Fetch(https://github.com/trailofbits/skills)
+  ⎿  Received 330.1KB (200 OK)
+
+● Fetch(https://github.com/severity1/claude-code-prompt-improver)
+  ⎿  Received 329.8KB (200 OK)
+
+● Web Search("claude code skill self-improvement retrospective post-mortem
+            meta-skill agent learns over time")
+  ⎿  Did 1 search in 8s
+
+● Web Search("claude code agent self-audit reflection skill harness compounding
+            improvement github")
+  ⎿  Did 1 search in 9s
+
+● Bonne matière. Je creuse les trois sources les plus concrètes (le pattern
+  "learnings", l'instruction self-improving, et le skill-improver de Trail of
+  Bits) pour en extraire ce qui est volable :
+
+● Fetch(https://jngiam.bearblog.dev/the-instruction-that-turns-claude-into-a-sel
+       f-improving-system/)
+  ⎿  Received 30.6KB (200 OK)
+
+● Fetch(https://github.com/trailofbits/skills/tree/main/skill-improver)
+  ⎿  Received 0 bytes (404 Not Found)
+
+● Fetch(https://towardsdatascience.com/how-i-continually-improve-my-claude-code/
+       )
+  ⎿  Received 210.7KB (200 OK)
+
+● Le skill-improver est l'analogue le plus proche — je récupère son contenu réel
+  via gh (le tree URL a 404) pour voir sa routine exacte :
+
+● Bash(gh api repos/trailofbits/skills/contents/skill-improver 2>/dev/null |
+      python -c "import sys,json; [print(x['name'],'-',x['type']) for x in
+      json.load(sys.stdin)]…)
+  ⎿  listing failed, trying raw README
+     ---SKILL.md head---
+
+● Bash(gh api repos/trailofbits/skills/git/trees/main?recursive=1 2>/dev/null |
+      python -c "import sys,json; d=json.load(sys.stdin); [print(t['path']) for
+      t in d.get('t…)
+  ⎿  .codex/skills/c-review
+     .codex/skills/differential-review
+     .codex/skills/skill-improver
+     … +27 lines (ctrl+o to expand)
+
+● Bash(gh api
+      repos/trailofbits/skills/contents/.codex/skills/skill-improver/SKILL.md
+      --jq '.content' 2>/dev/null | base64 -d 2>/dev/null | head -90 || echo
+      "FAILED")
+  ⎿  (No output)
+
+● Bash(for p in ".codex/skills/skill-improver/SKILL.md"
+      ".codex/skills/skill-improver/README.md"; do echo "=== $p ==="; gh api
+      "repos/trailofbits/skills/contents/$p" 2…)
+  ⎿  === .codex/skills/skill-improver/SKILL.md ===
+     === .codex/skills/skill-improver/README.md ===
+
+● Bash(gh api repos/trailofbits/skills/git/trees/main?recursive=1 2>/dev/null |
+      python -c "import sys,json; d=json.load(sys.stdin); [print(t['path']) for
+      t in d.get('t…)
+  ⎿  .codex/skills/skill-improver
+     plugins/skill-improver
+     plugins/skill-improver/.claude-plugin
+     … +15 lines (ctrl+o to expand)
+
+● C'est exactement le sujet : skill-improver est un plugin complet = command +
+  hook (Stop) + scripts + skill. Je récupère le README, le SKILL.md et le hook
+  pour comprendre comment ils articulent les quatre :
+
+● Bash(cd /tmp 2>/dev/null; for p in "plugins/skill-improver/README.md"
+      "plugins/skill-improver/skills/skill-improver/SKILL.md"
+      "plugins/skill-improver/hooks/hooks.jso…)
+  ⎿  ############ plugins/skill-improver/README.md ############
+     # Skill Improver Plugin
+     … +103 lines (ctrl+o to expand)
+  ⎿  Shell cwd was reset to 
+     C:\Users\Adrian\Desktop\devprojects\3-auraia\arclen-ide
+
+● Recherche faite — et le sujet est riche. Voici ce que j'ai trouvé, puis je
+  réponds précisément à tes questions et je propose des ajouts concrets.
+
+  Ce qui existe déjà (prior art)
+
+  Projet: trailofbits/skill-improver
+  Mécanique: /command (lance + état de session) + Stop-hook (relance la boucle
+    jusqu'à <complete> ou max-iter) + scripts + un sous-agent reviewer 
+    indépendant
+  La leçon volable: C'est le plus proche, et il répond à ta question : il
+  combine
+     les 4 mécanismes — command = déclencheur manuel, hook =
+    continuation/enforcement de la boucle, script = état déterministe, skill =
+    méthodo. Et il ne s'auto-note pas : un agent reviewer séparé juge
+    (anti-biais).
+  ────────────────────────────────────────
+  Projet: severity1/prompt-improver
+  Mécanique: Hook (UserPromptSubmit) + skill
+  La leçon volable: Hook léger qui intervient rarement — n'agit que si le prompt
+
+    est vague.
+  ────────────────────────────────────────
+  Projet: "learnings.md" (MindStudio)
+  Mécanique: Le skill append quoi-a-marché/raté après chaque run, et relit ce
+    fichier avant de s'exécuter
+  La leçon volable: Accumulation par-skill. retro fait ça via les backlogs +
+    mémoire, mais pas une boucle learnings dédiée par skill.
+  ────────────────────────────────────────
+  Projet: review-past-performance (TDS)
+  Mécanique: Cron nightly 2 AM : « revois mes dernières 24h d'interactions,
+    repère les inefficacités » → crée skills/scripts/hooks
+  La leçon volable: Le retro proactif planifié, pas seulement à la demande.
+  ────────────────────────────────────────
+  Projet: jngiam auto-logging
+  Mécanique: Écrit les learnings en markdown git, relus au démarrage
+  La leçon volable: = exactement la philosophie de retro (Step 7 « close the
+  loop
+    au début aussi »).
+
+  Verdict : ton skill retro est en fait plus structuré que la plupart (les deux
+  questions tranchantes + le capability-check + le routing projet/user, personne
+  ne fait ça aussi proprement). Ce qui lui manque vs le prior art est ciblé —
+  voir ci-dessous.
+
+  Réponses directes à tes questions
+
+  1. Est-ce que retro propose déjà les hooks ? — Oui. capabilities.md a une
+  entrée hook (« the HARNESS runs them, so they enforce — memory cannot »), la
+  table « flailing smell → reach for » mappe « from now on whenever X do Y » →
+  hook, et le Step 4 classe « enforced (hook/gate/default) » en premier choix.
+  La conviction n°1 (documenter ≠ prévenir → enforcement) pousse activement vers
+  les hooks. Donc oui, et il les privilégie.
+
+  2. Est-ce que le "quand utiliser hook vs skill+scripts vs harness" est bien 
+  expliqué ? — Partiellement. Il y a (a) des one-liners « reach for X when Y »
+  par capacité, et (b) un ordre de préférence au Step 4. Mais il n'y a pas de 
+  rubrique de décision qui oppose frontalement les mécanismes. La distinction
+  est éparpillée/implicite, pas posée en un seul endroit. C'est exactement le
+  trou que ta question révèle.
+
+  3. Faut-il l'y mettre ? — Oui, parce que c'est littéralement le travail du 
+  Step 4 (« map to the cheapest durable fix » = choisir le mécanisme). Mais dans
+  capabilities.md (la référence consultée au Step 3/4), pas en gonflant le
+  SKILL.md.
+
+  Ce que je propose d'ajouter
+
+  A. Une rubrique « Mechanism selection » dans capabilities.md (le manque que tu
+  as pointé). Brouillon :
+
+  ▎ Hook — quand le harness doit forcer/déclencher tout seul 
+  ▎ (before/after/on-stop). Mémoire et instructions de skill ne peuvent pas se 
+  ▎ forcer à tourner ; un hook si. → règle « always/never/whenever », gate 
+  ▎ non-contournable, boucle qui doit continuer.
+  ▎ Slash command — déclencheur manuel d'une routine fixe. Pas d'auto-trigger.
+  ▎ Skill — méthodo/connaissance réutilisable où le modèle applique du jugement 
+  ▎ ; peut embarquer des scripts.
+  ▎ Script (dev/) — logique déterministe que le modèle ferait mal/lentement à la
+  ▎ main (parse, calcul, validation). Les skills/commands appellent les 
+  ▎ scripts.
+  ▎ Memory — un fait à rappeler, pas un comportement à forcer.
+  ▎ Subagent/Workflow — perspective indépendante (anti-auto-biais) ou 
+  ▎ parallélisme.
+  ▎ Harness = l'ensemble assemblé de ces gates. On l'investit quand la classe 
+  ▎ d'échec récurre et que le check est cheap vs le coût de l'échec (= la 
+  ▎ formule du Step 5).
+
+  B. Deux upgrades volés au prior art (optionnels) :
+  - « Valide le fix que tu construis » au Step 6 — aujourd'hui on a prouvé
+  check-patches en le lançant (rouge→vert) par réflexe ; l'encoder en règle (un
+  fix de harness n'est « done » qu'après run red & green) reprend l'idée du
+  reviewer indépendant de skill-improver.
+  - retro proactif planifié (cron) — une option pour lancer retro
+  automatiquement après une session lourde, façon review-past-performance. Plus
+  lourd ; à activer seulement si tu veux le côté « il s'auto-audite sans que je
+  le lance ».
+
+  Mon avis : A + le point « valide le fix » de B, c'est le cœur de valeur et
+  c'est léger. Le cron, je le garderais en réserve (à activer quand tu auras un
+  rythme de sessions régulier).
+
+  Tu veux que j'applique A seul, A + valide-le-fix, ou les trois (avec le cron)
+  ?
+
+  Sources : trailofbits/skills (https://github.com/trailofbits/skills) ·
+  severity1/claude-code-prompt-improver
+  (https://github.com/severity1/claude-code-prompt-improver) · TDS — How I
+  Continually Improve My Claude Code
+  (https://towardsdatascience.com/how-i-continually-improve-my-claude-code/) ·
+  jngiam — self-improving instruction (https://jngiam.bearblog.dev/the-instructi
+  on-that-turns-claude-into-a-self-improving-system/) · MindStudio —
+  self-improving skills
+  (https://www.mindstudio.ai/blog/self-improving-ai-skills-claude-code)
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Worked for 4m 12s
+❯ Vas y                                                                         
+
+● Je pars sur ma reco : A (rubrique mechanism-selection) + le point « valide le 
+  fix », et je log le cron en réserve dans le backlog user-level.
+
+  A — rubrique « Mechanism selection » dans capabilities.md :
+
+● Update(~\.claude\skills\retro\capabilities.md)
+  ⎿  Added 26 lines
+      20  | Verifying a UI change by squinting at code | **agent-browser 
+          / electron** (screenshot + a11y snapshot) |
+      21  | Lost track of a multi-step task | **TodoWrite** / Task tools 
+          |
+      22  
+      23 +## Mechanism selection — which one is the fix?                 
+      24 +                                                               
+      25 +Step 4 picks the *cheapest durable fix*. That means choosing a 
+         +mechanism, not just "write it down."                           
+      26 +The distinguishing question for each (pick the first that fits)
+         +:                                                              
+      27 +                                                               
+      28 +- **Hook** — *does the harness need to force/trigger this on it
+         +s own* (before/after a tool, on session                        
+      29 +  start, on stop)? Memory and skill instructions cannot make th
+         +emselves run; a hook is the only thing                         
+      30 +  that *enforces*. Reach for it for any "always / never / whene
+         +ver X" rule, a cheap gate that must not be                     
+      31 +  skippable, or a loop that must keep going. (e.g. trailofbits 
+         +`skill-improver` uses a **Stop hook** to                       
+      32 +  continue its improve loop; `prompt-improver` uses a **UserPro
+         +mptSubmit hook** that rarely intervenes.)                      
+      33 +- **Slash command** — *is it a manual, user-typed one-shot* rou
+         +tine with no auto-trigger? Then a command,                     
+      34 +  not a hook. (A command can set up state a hook then drives — 
+         +that's the `skill-improver` split.)                            
+      35 +- **Skill** — *is it reusable methodology/knowledge where the m
+         +odel applies judgment*? Skills are model-                      
+      36 +  or user-invoked and can bundle scripts. Use when the procedur
+         +e is worth carrying across sessions.                           
+      37 +- **Script (`dev/` helper)** — *is it deterministic logic the m
+         +odel would do unreliably or slowly by hand*                    
+      38 +  (parse, compute, validate, transform)? Write a script; skills
+         +/commands/hooks then *call* it. The model                      
+      39 +  decides; the script does.                                    
+      40 +- **Memory** — *is it a fact to recall*, not a behavior to enfo
+         +rce? Then memory, not a hook.                                  
+      41 +- **Subagent / Workflow** — *do you need an independent perspec
+         +tive (anti-self-grading) or parallel scale*?                   
+      42 +  (`skill-improver` grades with a *separate* reviewer agent pre
+         +cisely so the author doesn't mark its own work.)               
+      43 +- **Plugin** — packages several of the above for distribution; 
+         +not a fix in itself.                                           
+      44 +                                                               
+      45 +**"Harness"** is not one mechanism — it's the *assembled set* o
+         +f these gates. Invest in it when the failure                   
+      46 +class **recurs** and the check is **cheap relative to the cost 
+         +when it bites** (that's the Step 5 formula:                    
+      47 +frequency × cost ÷ effort). A one-off doesn't earn a gate; a th
+         +ing that bit you twice does.                                   
+      48 +                                                               
+      49  ## The capabilities (reach-for + the smell that means you misse
+          d it)
+      50  
+      51  - **Doc-check tools** — `context7` (ctx7), `microsoft-docs`, pe
+          r-library skills (`claude-api`,
+
+● B — règle « valide le fix (rouge & vert) » dans le Step 6 du SKILL.md :
+
+● Update(~\.claude\skills\retro\SKILL.md)
+  ⎿  Added 5 lines
+      66  ### Step 6 — Decide & record
+      67  Present proposals as the table below. For each, the user choose
+          s **build now / build later / drop**.
+      68  - *Build now* → implement (and for trivial ones like `set -o pi
+          pefail`, just do it).
+      69 +  **Then validate it before calling it done**: a gate/script/ho
+         +ok isn't "done" until you've seen it fire                      
+      70 +  correctly — ideally **red AND green** (run it against a known
+         +-bad input so you've watched it catch, and a                   
+      71 +  known-good one so it doesn't cry wolf). A gate that's never b
+         +een seen to catch is a guess, and a false-                     
+      72 +  positive gate gets ignored. (Mirror of `skill-improver`'s ind
+         +ependent reviewer: don't trust your own                        
+      73 +  "it should work.") This pass routinely *finds the next bug* —
+         + log whatever it surfaces.                                     
+      74  - *Build later* → append to the backlog.
+      75  - **Routing:** project-specific fixes → the **project backlog**
+           (`<repo>/.claude/harness-backlog.md`,
+      76    create it if missing). Cross-project / method improvements → 
+          the **user backlog**
+
+● Cron en réserve → backlog user-level (pour ne pas le perdre) :
+
+● Update(~\.claude\skills\retro\backlog.md)
+  ⎿  Added 4 lines, removed 1 line
+       8  
+       9  ## Open
+      10  
+      11 -- [ ] (none yet — first cross-project item will land here from 
+         -a `/retro` pass)                                               
+      11 +- [ ] **Proactive scheduled retro (cron)** — opt-in cron (à la 
+         +TDS `review-past-performance`, nightly) that                   
+      12 +  auto-reviews the last session(s) for friction and proposes fi
+         +xes, instead of only on-demand. Heavier;                       
+      13 +  activate once session cadence is regular enough to be worth i
+         +t. — mechanism: cron + the retro skill — effort: M             
+      14  
+      15  ## Done
+      16  - [x] Created the `retro` skill itself (2026-05-28) — capture s
+          ession friction → durable harness fixes; expose Claude's full c
+          apability catalog to stop blind trial-and-error.
+      17 +- [x] Added **Mechanism-selection rubric** to `capabilities.md`
+         + + **validate-the-fix (red & green)** rule to Step 6 (2026-05-2
+         +9) — from prior-art study (trailofbits skill-improver's command
+         ++Stop-hook+reviewer split; learnings-file / cron patterns). Nam
+         +es hook vs command vs skill vs script vs memory vs subagent hea
+         +d-to-head.                                                     
+
+● Fait. Récap :
+
+  capabilities.md → nouvelle section « Mechanism selection » : pose frontalement
+  la question discriminante de chaque mécanisme (hook = le harness doit
+  forcer/déclencher seul ; command = one-shot manuel ; skill = méthodo
+  réutilisable avec jugement ; script = logique déterministe que les autres
+  appellent ; memory = fait à rappeler ; subagent = perspective indépendante).
+  Plus la définition du harness = l'ensemble assemblé, à investir quand la
+  classe d'échec récurre (formule du Step 5).
+
+  SKILL.md Step 6 → règle « valide le fix (rouge & vert) » : un gate/script/hook
+  n'est « done » qu'après l'avoir vu attraper un mauvais input ET laisser 
+  passer un bon — sinon c'est une supposition ou un crieur-au-loup. (Exactement
+  ce qu'on a fait aujourd'hui en lançant check-patches.)
+
+  backlog.md user-level → cron proactif logué en réserve (activable quand ta
+  cadence de sessions le justifie), + l'amélioration d'aujourd'hui marquée done.
+
+  Ces trois fichiers sont dans ~/.claude/skills/retro/ (config globale, hors de
+  ce repo git) — donc rien à committer ici ; ils sont actifs immédiatement pour
+  tout projet.
+
+  Le skill retro est maintenant aligné sur le meilleur du prior art tout en
+  gardant ce qui le rend plus structuré (les deux questions tranchantes +
+  capability-check + routing). On reprend le fil — la feature thème/fonts à 
+  committer (+ gitignore des screenshots) ou la vision M&A ?
+
+● Ran 2 stop hooks (ctrl+o to expand)
+  ⎿  Stop hook error: Failed with non-blocking status code: The argument
+  'C:UsersAdrian.claudeclaude-hook-toast.ps1' to the -File parameter
+  does not exist. Provide the path to an existing '.ps1' file as an
+  argument to the -File parameter.
+
+✻ Brewed for 1m 3s
+
+❯ /rename IDE + Harness improvement 4 
+  ⎿  Session renamed to: IDE + Harness improvement 4
