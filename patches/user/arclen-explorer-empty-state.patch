@@ -1,0 +1,23 @@
+diff --git a/extensions/git/package.json b/extensions/git/package.json
+index 483589b3d16..aa773817320 100644
+--- a/extensions/git/package.json
++++ b/extensions/git/package.json
+@@ -4362,18 +4362,6 @@
+         "view": "scm",
+         "contents": "%view.workbench.scm.closedRepositories%",
+         "when": "config.git.enabled && !git.missing && git.state == initialized && git.closedRepositoryCount > 1"
+-      },
+-      {
+-        "view": "explorer",
+-        "contents": "%view.workbench.cloneRepository%",
+-        "when": "config.git.enabled && git.state == initialized && scm.providerCount == 0",
+-        "group": "5_scm@1"
+-      },
+-      {
+-        "view": "explorer",
+-        "contents": "%view.workbench.learnMore%",
+-        "when": "config.git.enabled && git.state == initialized && scm.providerCount == 0",
+-        "group": "5_scm@10"
+       }
+     ]
+   },

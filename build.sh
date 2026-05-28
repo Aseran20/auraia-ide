@@ -48,7 +48,9 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
         SHOULD_BUILD_REH_WEB="no"
       fi
 
-      . ../build_cli.sh
+      if [[ "${SKIP_CLI:-no}" != "yes" ]]; then
+        . ../build_cli.sh
+      fi
     fi
 
     VSCODE_PLATFORM="win32"

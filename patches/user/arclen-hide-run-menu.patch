@@ -2,6 +2,15 @@ diff --git a/src/vs/workbench/contrib/debug/browser/debug.contribution.ts b/src/
 index 6a10c81e6be..4c3dbac6527 100644
 --- a/src/vs/workbench/contrib/debug/browser/debug.contribution.ts
 +++ b/src/vs/workbench/contrib/debug/browser/debug.contribution.ts
+@@ -20,7 +20,7 @@
+ import { Registry } from '../../../../platform/registry/common/platform.js';
+ import { EditorPaneDescriptor, IEditorPaneRegistry } from '../../../browser/editor.js';
+ import { ViewPaneContainer } from '../../../browser/parts/views/viewPaneContainer.js';
+-import { FocusedViewContext, IsSessionsWindowContext } from '../../../common/contextkeys.js';
++import { FocusedViewContext } from '../../../common/contextkeys.js';
+ import { IWorkbenchContributionsRegistry, Extensions as WorkbenchExtensions, WorkbenchPhase, registerWorkbenchContribution2 } from '../../../common/contributions.js';
+ import { EditorExtensions } from '../../../common/editor.js';
+ import { IViewContainersRegistry, IViewsRegistry, ViewContainer, ViewContainerLocation, Extensions as ViewExtensions } from '../../../common/views.js';
 @@ -256,17 +256,7 @@ if (isMacintosh) {
  
  MenuRegistry.appendMenuItem(MenuId.EditorTitle, { submenu: MenuId.EditorTitleRun, isSplitButton: { togglePrimaryAction: true }, title: nls.localize2('run', "Run or Debug..."), icon: icons.debugRun, group: 'navigation', order: -1 });

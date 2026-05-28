@@ -8,24 +8,35 @@ allowed-tools: Bash(agent-browser:*), Bash(npx agent-browser:*)
 
 Automate Arclen IDE (and any Electron app) using `agent-browser` CLI via Chrome DevTools Protocol (CDP).
 
-## Quick Start — Arclen
+## Quick Start — Arclen (validated paths on this machine)
 
 ```bash
-# 1. Launch Arclen with CDP
-"C:\Users\Adrian\Desktop\devprojects\3-auraia\auraia-ide\VSCode-win32-x64\arclen.exe" --remote-debugging-port=9333
+# OPTION A — QA the packaged distributable (production binary)
+"C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\VSCode-win32-x64\Arclen.exe" --remote-debugging-port=9222
 
-# 2. Verify CDP is up
-curl -s http://localhost:9333/json/version
+# OPTION B — QA the dev runner (with hot reload via npm run watch)
+# In one terminal: cd vscode && npm run watch
+# In another:
+cmd /c "cd /d C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\vscode && scripts\code.bat --remote-debugging-port=9222"
 
-# 3. Screenshot
-agent-browser --cdp 9333 screenshot arclen-check.png
+# Verify CDP is up
+curl -s http://localhost:9222/json/version
 
-# 4. Snapshot (accessibility tree — interactive elements)
-agent-browser --cdp 9333 snapshot -i
+# Connect agent-browser (persists for subsequent calls)
+agent-browser connect 9222
 
-# 5. Click an element
-agent-browser --cdp 9333 click @e5
+# Workflow
+agent-browser tab                                 # list windows
+agent-browser snapshot -i                         # a11y tree with @e refs
+agent-browser screenshot dev/arclen-check.png     # visual
+agent-browser click @e5                           # interact
 ```
+
+**Important paths on this machine (not Adrian/Desktop/3-auraia — that's an old layout):**
+- Repo root: `C:\Users\AdrianTurion\devprojects\2-auraia\auraia-ide\`
+- Production exe: `VSCode-win32-x64\Arclen.exe` (capital A)
+- Dev runner: `vscode\scripts\code.bat`
+- Before launching `code.bat` after a fresh `dev/build.sh`: run `cd vscode && node build/next/index.ts transpile` to populate `vscode/out/` (the dev runner needs `out/main.js` which the production build doesn't create).
 
 ## Core Workflow
 
@@ -104,6 +115,7 @@ agent-browser --session slack screenshot slack.png
 ## Troubleshooting
 
 - **"Connection refused"**: App must be launched with `--remote-debugging-port=9333`. If already running, quit and relaunch.
+- **`os error 10060` (timeout) right after `press Ctrl+R`**: the reload drops the CDP socket briefly. Reconnect with `agent-browser connect 9222` before the next call. This is the normal recovery — not a bug. Build it into any reload→screenshot sequence.
 - **Elements not found**: Use `agent-browser tab` to list targets, switch to the right webview.
 - **Cannot type**: Try `agent-browser keyboard type "text"` or `agent-browser keyboard inserttext "text"`.
 - **Dark mode lost**: Set `AGENT_BROWSER_COLOR_SCHEME=dark` before connecting.

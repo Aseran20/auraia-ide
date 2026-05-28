@@ -89,11 +89,10 @@ rcedit "VSCode-win32-x64/arclen.exe" --set-icon src/stable/resources/win32/code.
 | Git Bash | Latest | Build scripts are POSIX bash |
 | Node.js | 22.x | Must match VS Code's .nvmrc |
 | npm | < 11.2.0 | VS Code requires this; `npm install -g npm@11.1.0` |
-| Python | 3.11 | node-gyp needs it; 3.12+ may break |
+| Python | 3.11 ideal (3.13 OK with node-gyp 10+) | node-gyp dependency |
 | Rust/Cargo | Latest stable | Native modules |
-| VS Build Tools 2022 | With C++ workload | node-gyp compilation |
-| Spectre-mitigated libs | v143 x64 | Required by VS Code's .vcxproj (install via VS Installer GUI → Individual Components → search "Spectre") |
-| **VS Build Tools 2022** | **With C++ workload** | **Not yet installed on this machine — build fails at `node build/npm/preinstall.ts` with "Invalid C/C++ Compiler Toolchain". Install from https://visualstudio.microsoft.com/visual-cpp-build-tools/ → select "Desktop development with C++"** |
+| **Visual Studio 2022** (Community/Pro/Enterprise/BuildTools) | 17.x, MSVC v143 toolset | `preinstall.ts` only recognizes 2019/2022 paths natively. **Do NOT use VS 2026** — node-gyp 11.x can't detect it, requires npm-bundled node-gyp swap to 12.x + `vs2022_install` env override hack. Stay on 2022. |
+| **Spectre-mitigated libs v143 x64** | Same minor as MSVC toolset | Required by VS Code's `.vcxproj`. Install via VS Installer GUI → Modify → Individual Components → search "Spectre" → check "MSVC v143 - VS 2022 C++ x64/x86 Spectre-mitigated libs (Latest)". CLI install (`setup.exe modify --add ...Spectre`) often fails silently with exit 87 if installer engine is locked — GUI is more reliable. |
 | ImageMagick | 7.x | Icon generation |
 | jq | Latest | JSON manipulation in build scripts |
 
@@ -306,7 +305,7 @@ The `configurationDefaults` in product.json are tuned for M&A analysts, not deve
 **Run this before any build, before any push that touches patches, and whenever `upstream/stable.json` changes:**
 
 ```bash
-"C:\Program Files\Git\bin\bash.exe" ./check-patches.sh
+"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./check-patches.sh
 ```
 
 This script verifies that every patch in `patches/user/` applies cleanly against the pinned VS Code upstream — **without needing `vscode/` locally**. It works by downloading only the specific files each patch touches from GitHub (curl per file, ~5-10 seconds total).
@@ -329,15 +328,15 @@ The lightweight CI workflow at `.github/workflows/check-patches.yml` runs this c
 **Always run preflight before a full build** to catch blockers in 30 seconds.
 
 ```bash
-"C:\Program Files\Git\bin\bash.exe" ./preflight.sh
+"C:\Users\AdrianTurion\AppData\Local\Programs\Git\bin\bash.exe" ./preflight.sh
 ```
 
 What it checks:
 - Node major version matches `.nvmrc` (currently 22.x)
 - npm < 11.2.0 (VS Code hard requirement)
-- Python 3.11 (node-gyp; 3.12+ breaks)
+- Python 3.11 ideal (3.13 works with node-gyp 10+)
 - CLI tools: git, jq, curl, cargo, imagemagick
-- VS Build Tools 2022 + Spectre-mitigated libs (Windows)
+- VS 2022 (Community / BuildTools) + Spectre v143 x64 (Windows). NOT VS 2026.
 - `vscode/` commit matches `upstream/stable.json` (stale source = silent patch failures)
 - Calls `check-patches.sh` for patch applicability (works without `vscode/`)
 - `product.json` valid JSON
@@ -349,7 +348,9 @@ Exit 0 = safe to build. Exit 1 = at least one blocker. Warnings are non-fatal.
 1. **Icons have white square background** → Regenerate with `-background none` in the magick command
 2. **Build fails on Spectre libs** → Install via VS Installer GUI: Individual Components → search "Spectre" → check MSVC v143 x64
 3. **Build fails on npm version** → VS Code requires npm < 11.2.0: `npm install -g npm@11.1.0`
-4. **Build fails on Python** → node-gyp needs Python 3.11 specifically
+4. **Build fails on Python** → Python 3.11 is the cleanest; 3.13 works with node-gyp ≥10
+8. **`gyp ERR! find VS unknown version "undefined"`** → You installed VS 2026 (toolset 14.5x). node-gyp 11.x can't detect it. **Don't try to patch around this** — uninstall 2026, install VS 2022 instead. The hacks (npm-bundled node-gyp swap to 12.x, `vs2022_install` env override) work but leave the machine in a non-reproducible state and diverge from CI (windows-latest = VS 2022).
+9. **`error MSB8040: Spectre-mitigated libraries are required`** → Spectre v143 x64 component not installed for the active MSVC toolset. Install via VS Installer GUI (CLI often returns exit 87 silently when installer engine is locked or disk < ~12 GB free).
 5. **Settings don't apply** → Delete `$env:APPDATA\Arclen` to clear cached profile
 6. **nls.messages.json changes lost after rebuild** → Put text changes in a patch instead
 7. **Patch doesn't apply** → Generate patches with `git diff` from within the `vscode/` dir, not by hand

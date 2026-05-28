@@ -2,10 +2,10 @@ diff --git a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts b/s
 index 4794c30c9ec..30ae967311e 100644
 --- a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
 +++ b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
-@@ -27,35 +27,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+@@ -27,15 +27,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	order: 2
  });
- 
+
 -MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
 -	submenu: MenuId.MenubarSelectionMenu,
 -	title: {
@@ -15,17 +15,14 @@ index 4794c30c9ec..30ae967311e 100644
 -	},
 -	order: 3
 -});
--
--MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
--	submenu: MenuId.MenubarViewMenu,
--	title: {
--		value: 'View',
--		original: 'View',
--		mnemonicTitle: localize({ key: 'mView', comment: ['&& denotes a mnemonic'] }, "&&View")
--	},
--	order: 4
--});
--
++// Arclen: Selection menu hidden — text-selection submenu not relevant for M&A analysts
+
+ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+ 	submenu: MenuId.MenubarViewMenu,
+@@ -47,15 +39,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+ 	order: 4
+ });
+
 -MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
 -	submenu: MenuId.MenubarGoMenu,
 -	title: {
@@ -35,24 +32,7 @@ index 4794c30c9ec..30ae967311e 100644
 -	},
 -	order: 5
 -});
-+// Arclen: Selection, View, Go menus hidden — not relevant for M&A analysts
- 
++// Arclen: Go menu hidden — code-navigation submenu not relevant for M&A analysts
+
  MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
  	submenu: MenuId.MenubarTerminalMenu,
-@@ -67,15 +39,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
- 	order: 7
- });
- 
--MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
--	submenu: MenuId.MenubarHelpMenu,
--	title: {
--		value: 'Help',
--		original: 'Help',
--		mnemonicTitle: localize({ key: 'mHelp', comment: ['&& denotes a mnemonic'] }, "&&Help")
--	},
--	order: 8
--});
-+// Arclen: Help menu hidden
- 
- MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
- 	submenu: MenuId.MenubarPreferencesMenu,
