@@ -1,0 +1,10 @@
+# Shell scripts MUST stay LF on every checkout. With core.autocrlf=true (this repo's
+# Windows default), git would otherwise rewrite them to CRLF on checkout, and a CR in
+# the shebang (`#!/usr/bin/env bash\r`) makes Git Bash fail with "No such file or
+# directory" / "bad interpreter". This protects build scripts AND .claude hooks across
+# both PCs. (Added after the 2026-05-29 hooks-launcher fix surfaced the CRLF risk.)
+*.sh text eol=lf
+
+# Windows batch files are CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
