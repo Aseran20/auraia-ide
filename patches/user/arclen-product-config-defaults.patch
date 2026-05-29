@@ -1,0 +1,29 @@
+diff --git a/src/vs/workbench/services/configuration/browser/configuration.ts b/src/vs/workbench/services/configuration/browser/configuration.ts
+index a83c04f..fa4ab8d 100644
+--- a/src/vs/workbench/services/configuration/browser/configuration.ts
++++ b/src/vs/workbench/services/configuration/browser/configuration.ts
+@@ -28,6 +28,7 @@ import { DefaultConfiguration as BaseDefaultConfiguration } from '../../../../pl
+ import { IJSONEditingService } from '../common/jsonEditing.js';
+ import { IUserDataProfilesService } from '../../../../platform/userDataProfile/common/userDataProfile.js';
+ import { IBrowserWorkbenchEnvironmentService } from '../../environment/browser/environmentService.js';
++import product from '../../../../platform/product/common/product.js';
+ 
+ export class DefaultConfiguration extends BaseDefaultConfiguration {
+ 
+@@ -48,6 +49,16 @@ export class DefaultConfiguration extends BaseDefaultConfiguration {
+ 		if (environmentService.options?.configurationDefaults) {
+ 			this.configurationRegistry.registerDefaultConfigurations([{ overrides: environmentService.options.configurationDefaults as IStringDictionary<IStringDictionary<unknown>> }]);
+ 		}
++		// Arclen: product.json `configurationDefaults` is a WEB-only mechanism upstream — it is read
++		// solely from `environmentService.options` (the web workbench construction options), which is
++		// undefined in the desktop/Electron build, so ALL of product.json's configurationDefaults were
++		// silently dropped on the desktop app. Register them here too (same early timing as the web
++		// path, before the configuration model is built) so the M&A defaults actually ship. The raw
++		// product object carries the field even though IProductConfiguration doesn't type it.
++		const productConfigurationDefaults = (product as { configurationDefaults?: IStringDictionary<IStringDictionary<unknown>> }).configurationDefaults;
++		if (productConfigurationDefaults) {
++			this.configurationRegistry.registerDefaultConfigurations([{ overrides: productConfigurationDefaults }]);
++		}
+ 	}
+ 
+ 	protected override getConfigurationDefaultOverrides(): IStringDictionary<unknown> {

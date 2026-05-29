@@ -32,3 +32,4 @@ dev/check-*.png
 dev/qa-*.png
 dev/relaunch-test.png
 dev-launch*.log
+.claude/.live-edits

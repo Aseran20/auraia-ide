@@ -67,6 +67,14 @@ The generator (`dev/gen-arclen-theme.mjs`) expands token refs (`$accent`, `$acce
 
 **Dev extension host is pathologically slow here** (~5 min, "Extension host did not start in 10 seconds") because built-in extensions' `out/` isn't compiled in this dev tree — unrelated to theming, the source-default theme applies regardless. `set VSCODE_SKIP_PRELAUNCH=1` speeds relaunch.
 
+### ⛔ STOP — the red "Activating extension 'vscode.X' failed: Cannot find module …/out/extension.js" toasts are EXPECTED dev noise. DO NOT chase them.
+
+Same root cause as the slow ext host: built-ins aren't compiled in this dev tree, so EVERY built-in with a `main` throws this on launch (git, github, merge-conflict, debug-auto-launch, emmet, git-base…). The notification stack only shows ~3 at a time, so it looks like "3 specific broken extensions" — it isn't. **They do NOT ship** — `gulp` compiles all built-ins at packaging, so the `.exe` has none of these. Treat them as cosmetic dev-only and move on.
+
+Two traps verified the hard way (2026-05-29, ~20 min lost) — don't repeat:
+- **`rm -rf extensions/<x>` to "remove" a built-in BREAKS THE BUILD.** Built-ins use **TypeScript project references** between each other; deleting a referenced target → `TS5058: specified path does not exist` in the dependent's compile. Verified: emmet AND github-authentication are both referenced. Clean removal = untangle the reference graph (remove dependents / drop `references`), NOT just delete the dir. The commented `# rm -rf extensions/copilot` in `prepare_vscode.sh` only works because nothing references copilot.
+- **`npm run gulp compile-extensions` to silence the toasts in dev also fails** (`TS2688: cannot find type definition 'mocha'/'node'` — dev tree lacks the @types). `compile-extension:<name>` works case-by-case if you genuinely need one extension's `out/` (e.g. git-base), but there is **no clean way to get a 0-error dev window** — accept it.
+
 ## Cold start (first time after `dev/build.sh`)
 
 The full build produces `vscode/out-vscode-min/` (minified bundle) but **NOT** `vscode/out/` (dev sources). `scripts/code.bat` will pop `Cannot find module ...vscode/out/main.js`. Fix once:
@@ -273,7 +281,27 @@ VS Code's `tsconfig` has `noUnusedLocals: true`. If a `patches/user/*.patch` rem
 
 **When writing/modifying a user patch that removes code:** grep the file for every symbol used in the removed block — if no other usage remains in the post-patch file, the import must also go in the same patch.
 
+**This also applies to unused PRIVATE class members, not just imports/locals.** The `tsgo` checker here flags `TS6133: 'X' is declared but its value is never read.` for an unused `private` field / getter / setter too (verified 2026-05-29: removing the Accounts code orphaned `private accountAction` + the `accountsVisibilityPreference` getter/setter → 2× TS6133). So when a patch deletes the last use of a private member, delete the member's declaration in the same patch — don't assume "private members are exempt from noUnusedLocals." Run `dev/check-ts.sh` after the edit; it catches this in ~25s instead of at minute ~16 of a build.
+
 `check-patches.sh` does NOT catch this (it only checks `git apply` cleanness, not TS semantics). Only a full compile catches it.
+
+## Where Arclen's product defaults live + how UI surfaces are actually hidden
+
+**M&A `configurationDefaults` + product fields live in the REPO-ROOT `./product.json`**, NOT `vscode/product.json` (which is regenerated). `prepare_vscode.sh:~141` deep-merges root over upstream via `jq -s '.[0] * .[1]' product.json ../product.json` (root wins). So: to change a default (workspace trust, telemetry, minimap, fonts, theme, `update.mode`, extension recs…), edit **root `./product.json` `configurationDefaults`**.
+
+> 🩹 **`product.json` `configurationDefaults` is WEB-only upstream — it was DEAD in the Arclen desktop build until the `arclen-product-config-defaults` patch (2026-05-29).** Root cause (confirmed in source): upstream registers configurationDefaults ONLY from `environmentService.options.configurationDefaults` (`configuration.ts:48`), and `options` = the **web** workbench construction options — `undefined` in the Electron/native env service. So the ENTIRE product.json configurationDefaults block was silently ignored in dev AND the packaged `.exe` (that's why `showTabs` originally had to be patched at the source default). **The fix** (`patches/user/arclen-product-config-defaults.patch`) registers `product.configurationDefaults` in the `DefaultConfiguration` constructor at the same early timing as the web path — `product` (= raw `_VSCODE_PRODUCT_JSON`) carries the field even though `IProductConfiguration` doesn't type it. **Verified on a clean fresh profile:** commandCenter:false, layoutControl→0 icons, showTabs:none all apply purely from product.json. **Consequence: a setting added to root `configurationDefaults` now applies in dev (after transpile + `dev/relaunch.sh --fresh`) AND in packaging** — no per-setting source patch needed anymore. (Verify on a FRESH profile; an existing profile's stored UI state can still mask a default — see the `hideByDefault` caveat below.) NOTE: the Arclen Dark startup bg is still the baked-in `arclenInitialColors.ts` splash; the active *theme* comes from `workbench.colorTheme` in configurationDefaults (now delivered).
+
+**Hiding a UI surface is NOT always a setting — know which lever:**
+- **Settings-controllable** (just add to root `configurationDefaults`): minimap, breadcrumbs, line numbers, workspace trust (`security.workspace.trust.enabled/banner/startupPrompt`), update/extension notifs (`update.mode:"none"`, `extensions.autoUpdate/autoCheckUpdates:false`, `extensions.ignoreRecommendations:true`).
+- **NO setting → needs a patch:**
+  - **Activity-bar AND bottom-panel containers**: `PaneCompositeBar` is the SAME class for both the sidebar and the panel — filter by id in `paneCompositeBar.ts` `getViewContainers()` **AND** the `cachedViewContainers` getter (it restores pinned icons from storage, so filtering only the live list leaves a previously-pinned tab/icon visible). The `arclen-clean-activity-bar.patch` `arclenHiddenContainers` set hides Run&Debug + Extensions (`workbench.view.debug/.extensions`, sidebar) AND Problems/Output/Debug-Console/Ports (`workbench.panel.markers/.output/.repl` + `~remote.forwardedPortsContainer`, panel). Terminal is deliberately NOT filtered — it's the Assistant; `terminal.integrated.defaultLocation:editor` moves it to the editor area so the panel ends up empty (hideIfEmpty) anyway.
+  - **Explorer views** (Outline, Timeline): set `hideByDefault: true` on the view descriptor (`outline.contribution.ts`, `timeline.contribution.ts`). See `arclen-hide-explorer-views.patch`.
+  - **Accounts/global activity:** `globalCompositeBar.ts` (skip the push + neutralize `toggleAccountsActivity` + empty the context-menu toggle, else it re-shows).
+- **⚠️ `hideByDefault` and stored view-state are FRESH-PROFILE-only.** An already-used dev profile keeps the stored visibility, so the change won't show on your daily profile. Verify `hideByDefault` on a **fresh profile** (`dev/relaunch.sh --fresh <dir>`), or in the packaged `.exe`. (The composite-bar filter also strips the cache, so it's clean even on an existing profile — views via `hideByDefault` are not.) Since the `arclen-product-config-defaults` patch, `configurationDefaults` ALSO verify on a fresh dev profile (see the 🩹 box above) — both levers now work in dev, both need a fresh profile.
+
+## Marketplace lock (no extensions gallery)
+
+Locking the marketplace = remove `extensionsGallery` from product.json. Done durably by commenting the `setpath_json "product" "extensionsGallery" …` line in `prepare_vscode.sh` (not propagated by `apply_branding.sh`, which only rewrites single-value `setpath` lines). Verify: Extensions view search returns 0 results. Bundled built-ins still load (they don't need a gallery).
 
 ### Cascade-delete dependency tree
 
@@ -330,7 +358,8 @@ Some files in `vscode/src/` have **mixed line endings** (CRLF mixed with LF). Th
 |---|---|---|
 | `dev/check-brand-leaks.sh [--strict] [paths...]` | Scans for VSCodium/MS branding in renderer + l10n. HIGH (must fix), MEDIUM (review), STRICT (audit only). Exit 1 if HIGH leaks. | ~5s |
 | `dev/qa-loop.sh [--skip-tscheck] [--no-shot] [label]` | Full iteration chain: tscheck → transpile → Ctrl+R+reconnect → screenshot → brand-leaks. Screenshot saved to `dev/qa-<label>-<HHMMSS>.png`. **For CSS/theme/font changes use `dev/relaunch.sh` instead** (Ctrl+R doesn't re-read CSS). | ~40s (15s without tscheck) |
-| `dev/relaunch.sh [--probe-only\|--no-kill] [--shot P] [--assert 'var=substr'] [--port N] [--timeout S]` | **Full relaunch for CSS/theme/product.json changes.** Kills the dev exe, relaunches with CDP + `VSCODE_SKIP_PRELAUNCH=1`, then BLOCKS until the workbench actually paints (theme vars resolved) before returning — so the screenshot/assert is never blind. `--probe-only` just gates an already-running window. | ~30-45s to ready |
+| `dev/relaunch.sh [--probe-only\|--no-kill] [--fresh [DIR]] [--shot P] [--assert 'var=substr'] [--port N] [--timeout S]` | **Full relaunch for CSS/theme/product.json changes.** Kills the dev exe, relaunches with CDP + `VSCODE_SKIP_PRELAUNCH=1`, then BLOCKS until the workbench actually paints (theme vars resolved) before returning — so the screenshot/assert is never blind. `--probe-only` just gates an already-running window. **`--fresh [DIR]`** launches in a throwaway `--user-data-dir` (default `C:\arclen-fresh`) — the **canonical way to verify `configurationDefaults` / `hideByDefault`**, which an existing profile hides behind stored view-state. | ~30-45s to ready |
+| `dev/cdp.sh [--shot P] [--eval JS] [--snapshot] [--port N]` | Connect agent-browser to the **real workbench page** (app already up & painted). `connect <port>` alone can land on `about:blank` → blank/black screenshot or `NO_WORKBENCH`; cdp.sh then selects the workbench target before acting. Use for ad-hoc shots/evals; use `relaunch.sh` for a cold start + paint gate. | ~2s |
 | `dev/gen-user-patch.sh <patches/user/NAME.patch> <file...>` | Generate a clean, validated user patch from working-tree edits (see "Generating user patches"). | ~5s |
 
 ### Hook: `arclen-check-brand` (PostToolUse)

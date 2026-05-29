@@ -192,6 +192,17 @@ else
   die "generated patch does not apply onto its own baseline (corruption?) — patch was still written" 5
 fi
 
+# Clear the promoted files from the live-edits ledger (written by the arclen-track-edits
+# PostToolUse hook) so the destructive-build guard stops flagging them — they're now in a patch.
+LEDGER="${REPO_ROOT}/.claude/.live-edits"
+if [[ -f "${LEDGER}" ]]; then
+  for f in "${FILES[@]}"; do
+    grep -vxF "$f" "${LEDGER}" > "${LEDGER}.tmp" 2>/dev/null || true
+    mv -f "${LEDGER}.tmp" "${LEDGER}" 2>/dev/null || true
+  done
+  [[ -s "${LEDGER}" ]] || rm -f "${LEDGER}"   # tidy up when empty
+fi
+
 if [[ ${#APPLICABLE[@]} -gt 0 ]] && printf '%s\n' "${APPLICABLE[@]}" | grep -q '/user/'; then
   echo "  note: this patch depends on a prior USER patch, so check-patches.sh (base-only)"
   echo "        cannot validate it — the baseline check above is the authoritative one."

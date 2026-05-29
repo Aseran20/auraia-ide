@@ -647,7 +647,11 @@
     "editor.guides.indentation": false,
     "editor.guides.bracketPairs": false,
     "editor.suggestOnTriggerCharacters": false,
-    "editor.quickSuggestions": { "other": "off", "comments": "off", "strings": "off" },
+    "editor.quickSuggestions": {
+      "other": "off",
+      "comments": "off",
+      "strings": "off"
+    },
     "editor.parameterHints.enabled": false,
     "editor.wordWrap": "on",
     "editor.fontSize": 14,
@@ -670,6 +674,10 @@
     "update.mode": "none",
     "extensions.autoUpdate": false,
     "extensions.autoCheckUpdates": false,
+    "extensions.ignoreRecommendations": true,
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.startupPrompt": "never",
     "scm.diffDecorations": "none",
     "debug.toolBarLocation": "hidden",
     "testing.openTesting": "neverOpen",
@@ -678,13 +686,18 @@
     "scm.defaultViewMode": "list",
     "git.enabled": true,
     "git.decorations.enabled": false,
-    "git.showActionButton": { "commit": false, "publish": false, "sync": false },
+    "git.showActionButton": {
+      "commit": false,
+      "publish": false,
+      "sync": false
+    },
     "debug.console.showInStatusBar": "never",
     "debug.openDebug": "neverOpen",
     "testing.automaticallyOpenPeekView": "never",
     "scm.providerCountBadge": "hidden",
     "workbench.welcomePage.walkthroughs.openOnInstall": false,
     "workbench.layoutControl.enabled": false,
+    "window.commandCenter": false,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.colorTheme": "Arclen Dark",
     "workbench.preferredDarkColorTheme": "Arclen Dark",
@@ -692,7 +705,9 @@
     "editor.fontWeight": "400",
     "editor.fontLigatures": false,
     "terminal.integrated.fontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace",
+    "terminal.integrated.defaultLocation": "editor",
     "markdown.preview.fontFamily": "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
-    "chat.editor.fontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace"
+    "chat.editor.fontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace",
+    "workbench.editor.showTabs": "none"
   }
 }

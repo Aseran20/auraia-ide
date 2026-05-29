@@ -1,0 +1,64 @@
+diff --git a/src/vs/workbench/browser/media/style.css b/src/vs/workbench/browser/media/style.css
+index 8c236ab..a29a885 100644
+--- a/src/vs/workbench/browser/media/style.css
++++ b/src/vs/workbench/browser/media/style.css
+@@ -402,4 +402,11 @@ body {
+ .monaco-workbench .part.sidebar .monaco-action-bar:not(.vertical) .action-item .action-label:hover:not(.disabled), .monaco-workbench .part.auxiliarybar .monaco-action-bar:not(.vertical) .action-item .action-label:hover:not(.disabled) {
+     outline: calc(var(--vscode-workbench-sidebar-font-size) * 0.076923) dashed var(--vscode-toolbar-hoverOutline);
+     outline-offset: calc(var(--vscode-workbench-sidebar-font-size) * -0.076923)
+-}
+\ No newline at end of file
++}
++/* Arclen: native Open Editors list styled as vertical "tabs". Horizontal editor tabs are off (product.json showTabs:"none"); row height is bumped in openEditorsView.ts. */
++.open-editors .monaco-list-row { transition: background-color .08s ease, box-shadow .08s ease; border-bottom: 1px solid var(--vscode-sideBar-border, rgba(255,255,255,.04)); }
++.open-editors .monaco-list-row:hover { background: var(--vscode-list-hoverBackground); }
++.open-editors .monaco-list-row.selected { background: var(--vscode-list-activeSelectionBackground, var(--vscode-list-inactiveSelectionBackground)) !important; box-shadow: inset 3px 0 0 0 var(--vscode-focusBorder); }
++.open-editors .monaco-list-row.selected .label-name { font-weight: 600; }
++.open-editors .monaco-list:not(:focus) .monaco-list-row.selected { background: var(--vscode-list-inactiveSelectionBackground) !important; }
++.open-editors .monaco-icon-label { padding-left: 2px; }
+diff --git a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
+index ecc6af4..d1b5409 100644
+--- a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
++++ b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
+@@ -114,7 +114,9 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
+ 			canToggleVisibility: true,
+ 			canMoveView: true,
+ 			collapsed: false,
+-			hideByDefault: true,
++			// Arclen: show Open Editors by default — it's our vertical "tabs" surface
++			// (horizontal editor tabs are off via product.json showTabs:"none").
++			hideByDefault: false,
+ 			focusCommand: {
+ 				id: 'workbench.files.action.focusOpenEditorsView',
+ 				keybindings: { primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyK, KeyCode.KeyE) }
+diff --git a/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts b/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
+index 33cae40..25cbac0 100644
+--- a/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
++++ b/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
+@@ -518,7 +518,7 @@ export class OpenEditorsView extends ViewPane {
+ 			return Number.POSITIVE_INFINITY;
+ 		}
+ 
+-		return (Math.max(this.elementCount, minVisibleOpenEditors)) * FONT.sidebarSize22;
++		return (Math.max(this.elementCount, minVisibleOpenEditors)) * FONT.sidebarSize28;
+ 	}
+ 
+ 	private getMinExpandedBodySize(): number {
+@@ -532,7 +532,7 @@ export class OpenEditorsView extends ViewPane {
+ 
+ 	private computeMinExpandedBodySize(visibleOpenEditors = OpenEditorsView.DEFAULT_VISIBLE_OPEN_EDITORS): number {
+ 		const itemsToShow = Math.min(Math.max(visibleOpenEditors, 1), this.elementCount);
+-		return itemsToShow * FONT.sidebarSize22;
++		return itemsToShow * FONT.sidebarSize28;
+ 	}
+ 
+ 	setStructuralRefreshDelay(delay: number): void {
+@@ -581,7 +581,7 @@ class OpenEditorActionRunner extends ActionRunner {
+ class OpenEditorsDelegate implements IListVirtualDelegate<OpenEditor | IEditorGroup> {
+ 
+ 	getHeight(_element: OpenEditor | IEditorGroup): number {
+-		return FONT.sidebarSize22;
++		return FONT.sidebarSize28;
+ 	}
+ 
+ 	getTemplateId(element: OpenEditor | IEditorGroup): string {

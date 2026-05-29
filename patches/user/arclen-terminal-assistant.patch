@@ -1,0 +1,200 @@
+diff --git a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
+index 6f49c3b..442c25d 100644
+--- a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
++++ b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
+@@ -44,9 +44,9 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+ 	submenu: MenuId.MenubarTerminalMenu,
+ 	title: {
+-		value: 'Terminal',
+-		original: 'Terminal',
+-		mnemonicTitle: localize({ key: 'mTerminal', comment: ['&& denotes a mnemonic'] }, "&&Terminal")
++		value: 'Assistant',
++		original: 'Assistant',
++		mnemonicTitle: localize({ key: 'mTerminal', comment: ['&& denotes a mnemonic'] }, "&&Assistant")
+ 	},
+ 	order: 7
+ });
+diff --git a/src/vs/workbench/contrib/tasks/browser/task.contribution.ts b/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
+index 1ad6a06..b9abd4a 100644
+--- a/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
++++ b/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
+@@ -20,7 +20,7 @@ import { StatusbarAlignment, IStatusbarService, IStatusbarEntryAccessor, IStatus
+ 
+ import { IOutputChannelRegistry, Extensions as OutputExt } from '../../../services/output/common/output.js';
+ 
+-import { ITaskEvent, TaskGroup, TaskSettingId, TASKS_CATEGORY, TASK_RUNNING_STATE, TASK_TERMINAL_ACTIVE, TaskEventKind, rerunTaskIcon, RerunForActiveTerminalCommandId, RerunAllRunningTasksCommandId } from '../common/tasks.js';
++import { ITaskEvent, TaskGroup, TaskSettingId, TASKS_CATEGORY, TASK_TERMINAL_ACTIVE, TaskEventKind, rerunTaskIcon, RerunForActiveTerminalCommandId, RerunAllRunningTasksCommandId } from '../common/tasks.js';
+ import { ITaskService, TaskCommandsRegistered, TaskExecutionSupportedContext } from '../common/taskService.js';
+ 
+ import { Extensions as WorkbenchExtensions, IWorkbenchContributionsRegistry, IWorkbenchContribution, WorkbenchPhase, registerWorkbenchContribution2 } from '../../../common/contributions.js';
+@@ -37,7 +37,6 @@ import { IQuickAccessRegistry, Extensions as QuickAccessExtensions } from '../..
+ import { TasksQuickAccessProvider } from './tasksQuickAccess.js';
+ import { ContextKeyExpr } from '../../../../platform/contextkey/common/contextkey.js';
+ import { TaskDefinitionRegistry } from '../common/taskDefinitionRegistry.js';
+-import { TerminalMenuBarGroup } from '../../terminal/browser/terminalMenus.js';
+ import { isString } from '../../../../base/common/types.js';
+ import { promiseWithResolvers } from '../../../../base/common/async.js';
+ 
+@@ -162,80 +161,10 @@ export class TaskStatusBarContributions extends Disposable implements IWorkbench
+ 
+ workbenchRegistry.registerWorkbenchContribution(TaskStatusBarContributions, LifecyclePhase.Restored);
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Run,
+-	command: {
+-		id: 'workbench.action.tasks.runTask',
+-		title: nls.localize({ key: 'miRunTask', comment: ['&& denotes a mnemonic'] }, "&&Run Task...")
+-	},
+-	order: 1,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Run,
+-	command: {
+-		id: 'workbench.action.tasks.build',
+-		title: nls.localize({ key: 'miBuildTask', comment: ['&& denotes a mnemonic'] }, "Run &&Build Task...")
+-	},
+-	order: 2,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-// Manage Tasks
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Manage,
+-	command: {
+-		precondition: TASK_RUNNING_STATE,
+-		id: 'workbench.action.tasks.showTasks',
+-		title: nls.localize({ key: 'miRunningTask', comment: ['&& denotes a mnemonic'] }, "Show Runnin&&g Tasks...")
+-	},
+-	order: 1,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Manage,
+-	command: {
+-		precondition: TASK_RUNNING_STATE,
+-		id: 'workbench.action.tasks.restartTask',
+-		title: nls.localize({ key: 'miRestartTask', comment: ['&& denotes a mnemonic'] }, "R&&estart Running Task...")
+-	},
+-	order: 2,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Manage,
+-	command: {
+-		precondition: TASK_RUNNING_STATE,
+-		id: 'workbench.action.tasks.terminate',
+-		title: nls.localize({ key: 'miTerminateTask', comment: ['&& denotes a mnemonic'] }, "&&Terminate Task...")
+-	},
+-	order: 3,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-// Configure Tasks
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Configure,
+-	command: {
+-		id: 'workbench.action.tasks.configureTaskRunner',
+-		title: nls.localize({ key: 'miConfigureTask', comment: ['&& denotes a mnemonic'] }, "&&Configure Tasks...")
+-	},
+-	order: 1,
+-	when: TaskExecutionSupportedContext
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarTerminalMenu, {
+-	group: TerminalMenuBarGroup.Configure,
+-	command: {
+-		id: 'workbench.action.tasks.configureDefaultBuildTask',
+-		title: nls.localize({ key: 'miConfigureBuildTask', comment: ['&& denotes a mnemonic'] }, "Configure De&&fault Build Task...")
+-	},
+-	order: 2,
+-	when: TaskExecutionSupportedContext
+-});
++// Arclen: Task entries (Run Task / Build / Show-Restart-Terminate / Configure) removed from the
++// Assistant menu — code-running surface not relevant for M&A analysts. The task ENGINE stays
++// intact: these commands remain registered (command palette + API), so Claude Code can still
++// invoke tasks; only the human-facing menu surface is trimmed.
+ 
+ 
+ MenuRegistry.appendMenuItem(MenuId.CommandPalette, {
+diff --git a/src/vs/workbench/contrib/terminal/browser/terminal.contribution.ts b/src/vs/workbench/contrib/terminal/browser/terminal.contribution.ts
+index 97485af..82d5cb2 100644
+--- a/src/vs/workbench/contrib/terminal/browser/terminal.contribution.ts
++++ b/src/vs/workbench/contrib/terminal/browser/terminal.contribution.ts
+@@ -107,7 +107,7 @@ Registry.as<IDragAndDropContributionRegistry>(DragAndDropExtensions.DragAndDropC
+ // Register views
+ const VIEW_CONTAINER = Registry.as<IViewContainersRegistry>(ViewContainerExtensions.ViewContainersRegistry).registerViewContainer({
+ 	id: TERMINAL_VIEW_ID,
+-	title: nls.localize2('terminal', "Terminal"),
++	title: nls.localize2('terminal', "Assistant"),
+ 	icon: terminalViewIcon,
+ 	ctorDescriptor: new SyncDescriptor(ViewPaneContainer, [TERMINAL_VIEW_ID, { mergeViewWithContainerWhenSingleView: true }]),
+ 	storageId: TERMINAL_VIEW_ID,
+@@ -117,7 +117,7 @@ const VIEW_CONTAINER = Registry.as<IViewContainersRegistry>(ViewContainerExtensi
+ }, ViewContainerLocation.Panel, { doNotRegisterOpenCommand: true, isDefault: true });
+ Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry).registerViews([{
+ 	id: TERMINAL_VIEW_ID,
+-	name: nls.localize2('terminal', "Terminal"),
++	name: nls.localize2('terminal', "Assistant"),
+ 	containerIcon: terminalViewIcon,
+ 	canToggleVisibility: true,
+ 	canMoveView: true,
+diff --git a/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts b/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
+index 4e645b1..908a171 100644
+--- a/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
++++ b/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
+@@ -52,19 +52,6 @@ export function setupTerminalMenus(): void {
+ 					order: 1
+ 				}
+ 			},
+-			{
+-				id: MenuId.MenubarTerminalMenu,
+-				item: {
+-					group: TerminalMenuBarGroup.Create,
+-					command: {
+-						id: TerminalCommandId.NewInNewWindow,
+-						title: localize({ key: 'miNewInNewWindow', comment: ['&& denotes a mnemonic'] }, "New Terminal &&Window"),
+-						precondition: ContextKeyExpr.has(TerminalContextKeyStrings.IsOpen)
+-					},
+-					order: 2,
+-					when: TerminalContextKeys.processSupported
+-				}
+-			},
+ 			{
+ 				id: MenuId.MenubarTerminalMenu,
+ 				item: {
+@@ -78,30 +65,6 @@ export function setupTerminalMenus(): void {
+ 					when: TerminalContextKeys.processSupported
+ 				}
+ 			},
+-			{
+-				id: MenuId.MenubarTerminalMenu,
+-				item: {
+-					group: TerminalMenuBarGroup.Run,
+-					command: {
+-						id: TerminalCommandId.RunActiveFile,
+-						title: localize({ key: 'miRunActiveFile', comment: ['&& denotes a mnemonic'] }, "Run &&Active File")
+-					},
+-					order: 3,
+-					when: TerminalContextKeys.processSupported
+-				}
+-			},
+-			{
+-				id: MenuId.MenubarTerminalMenu,
+-				item: {
+-					group: TerminalMenuBarGroup.Run,
+-					command: {
+-						id: TerminalCommandId.RunSelectedText,
+-						title: localize({ key: 'miRunSelectedText', comment: ['&& denotes a mnemonic'] }, "Run &&Selected Text")
+-					},
+-					order: 4,
+-					when: TerminalContextKeys.processSupported
+-				}
+-			},
+ 		]
+ 	);
+ 

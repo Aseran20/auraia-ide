@@ -20,9 +20,14 @@
 #   dev/relaunch.sh --assert '--vscode-editor-background=#09090b'   # ... assert a theme value
 #   dev/relaunch.sh --probe-only                     # DON'T kill/launch; just gate an existing window
 #   dev/relaunch.sh --no-kill                        # launch without killing first
+#   dev/relaunch.sh --fresh                          # launch in a clean temp profile (canonical way
+#                                                    #   to verify configurationDefaults / hideByDefault —
+#                                                    #   an existing profile hides them behind stored state)
+#   dev/relaunch.sh --fresh C:/arclen-fresh --shot dev/clean.png
 # Options:
 #   --port N        CDP port (default 9222)
 #   --timeout SEC   max wait for readiness (default 150 — workbench paints in ~15-40s)
+#   --fresh [DIR]   use a throwaway --user-data-dir (default C:\arclen-fresh — keep it space-free)
 #
 # Exit codes: 0 ready (and assert passed) | 2 not ready before timeout | 3 assert failed
 
@@ -36,6 +41,8 @@ SHOT=""
 ASSERT=""
 DO_KILL=1
 DO_LAUNCH=1
+FRESH=0
+FRESH_DIR='C:\arclen-fresh'   # space-free on purpose — Start-Process quoting bit us once
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -45,10 +52,14 @@ while [[ $# -gt 0 ]]; do
     --assert)     ASSERT="$2"; shift ;;
     --port)       PORT="$2"; shift ;;
     --timeout)    TIMEOUT="$2"; shift ;;
+    --fresh)      FRESH=1
+                  # optional DIR follows only if the next token isn't another flag
+                  if [[ $# -gt 1 && "$2" != --* ]]; then FRESH_DIR="$2"; shift; fi ;;
     --shot=*)     SHOT="${1#*=}" ;;
     --assert=*)   ASSERT="${1#*=}" ;;
     --port=*)     PORT="${1#*=}" ;;
     --timeout=*)  TIMEOUT="${1#*=}" ;;
+    --fresh=*)    FRESH=1; FRESH_DIR="${1#*=}" ;;
     *) echo "unknown arg: $1" >&2; exit 64 ;;
   esac
   shift
@@ -75,11 +86,16 @@ if [[ "$DO_LAUNCH" -eq 1 ]]; then
   # `cmd /c start ... cmd /c "set X=1&& code.bat"` (the `&&` gets parsed by the wrong
   # cmd when Git Bash reconstructs the command line → app never launches).
   LAUNCHER="${REPO_ROOT}/dev/.relaunch-launcher.bat"
+  UDD_ARG=""
+  if [[ "$FRESH" -eq 1 ]]; then
+    UDD_ARG=" --user-data-dir=\"${FRESH_DIR}\""
+    step "Fresh profile: --user-data-dir=${FRESH_DIR} (clean state — verifies defaults/hideByDefault)"
+  fi
   {
     printf '@echo off\r\n'
     printf 'set VSCODE_SKIP_PRELAUNCH=1\r\n'
     printf 'cd /d "%s"\r\n' "${WIN_VSCODE}"
-    printf 'call scripts\\code.bat --remote-debugging-port=%s\r\n' "${PORT}"
+    printf 'call scripts\\code.bat --remote-debugging-port=%s%s\r\n' "${PORT}" "${UDD_ARG}"
   } > "${LAUNCHER}"
   # start "" <bat> opens a detached console so the app survives after this script exits.
   MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' \
@@ -96,6 +112,11 @@ state="(no connection)"
 bg=""
 while (( SECONDS < deadline )); do
   if agent-browser connect "${PORT}" >/dev/null 2>&1; then
+    # connect can land on about:blank; switch onto the real workbench target before
+    # probing, else PROBE_JS returns NO_WORKBENCH forever and we'd time out blind.
+    # (agent-browser 0.27.0 has no `tab --url`; select by id from the JSON list.)
+    _wbid="$(agent-browser tab list --json 2>/dev/null | jq -r '(.data.tabs // []) | ((map(select((.url // .title // "") | test("workbench";"i")))[0]) // (map(select(.active))[0]) // .[0]) | (.tabId // empty)' 2>/dev/null)"
+    [[ -n "${_wbid}" ]] && agent-browser tab "${_wbid}" >/dev/null 2>&1 || true
     out="$(agent-browser eval "${PROBE_JS}" 2>/dev/null | tr -d '"')"
     state="${out:-（empty）}"
     if [[ "${out}" == READY* ]]; then

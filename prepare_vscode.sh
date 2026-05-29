@@ -15,6 +15,13 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 # rm -rf extensions/copilot
 
+# Arclen — built-in extension trimming is DEFERRED (see TODO/TODO.md "built-ins").
+# Built-ins use TypeScript project references between each other, so `rm -rf extensions/<x>`
+# breaks any dependent extension's compile (TS5058) — verified: emmet AND github-authentication
+# are both referenced. Clean removal needs untangling the reference graph (remove dependents /
+# drop the `references` entries), not just deleting dirs. The activation errors these throw in the
+# DEV tree do NOT ship (gulp compiles all built-ins at packaging). Leaving all built-ins bundled.
+
 { set +x; } 2>/dev/null
 
 # {{{ product.json
@@ -38,7 +45,12 @@ setpath_json() {
 
 setpath "product" "checksumFailMoreInfoUrl" "https://go.microsoft.com/fwlink/?LinkId=828886"
 setpath "product" "documentationUrl" "https://go.microsoft.com/fwlink/?LinkID=533484#vscode"
-setpath_json "product" "extensionsGallery" '{"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item", "latestUrlTemplate": "https://open-vsx.org/vscode/gallery/{publisher}/{name}/latest", "controlUrl": "https://raw.githubusercontent.com/EclipseFdn/publish-extensions/refs/heads/master/extension-control/extensions.json"}'
+# Arclen: marketplace LOCKED — no extensionsGallery. M&A analysts get a curated, pre-installed
+# extension set (incl. Claude Code); they cannot browse/install arbitrary extensions, and the
+# Extensions icon is already hidden (patches/user/arclen-clean-activity-bar.patch). Bundled
+# extensions still load (they don't need a gallery). To re-enable, restore the setpath_json below.
+# NOTE: not touched by apply_branding.sh (it only rewrites single-value `setpath` lines).
+# setpath_json "product" "extensionsGallery" '{"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item", "latestUrlTemplate": "https://open-vsx.org/vscode/gallery/{publisher}/{name}/latest", "controlUrl": "https://raw.githubusercontent.com/EclipseFdn/publish-extensions/refs/heads/master/extension-control/extensions.json"}'
 
 setpath "product" "introductoryVideosUrl" "https://go.microsoft.com/fwlink/?linkid=832146"
 setpath "product" "keyboardShortcutsUrlLinux" "https://go.microsoft.com/fwlink/?linkid=832144"
