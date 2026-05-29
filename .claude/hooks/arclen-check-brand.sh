@@ -8,6 +8,9 @@ set -euo pipefail
 INPUT="$(cat)"
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // ""')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // ""')
+# Windows CC sends backslash file_path; the forward-slash globs below would never match
+# (hook no-ops). Normalize to forward slashes so brand-leak scanning actually fires.
+FILE_PATH=$(printf '%s' "$FILE_PATH" | tr '\\' '/')
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 LEAK_SCRIPT="$PROJECT_DIR/dev/check-brand-leaks.sh"
 

@@ -7,8 +7,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/arclen-orient.sh",
+            "command": "bash .claude/hooks/run.sh .claude/hooks/arclen-orient.sh",
             "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/run.sh .claude/hooks/arclen-guard-destructive.sh",
+            "timeout": 5
           }
         ]
       }
@@ -19,7 +31,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/arclen-check-brand.sh",
+            "command": "bash .claude/hooks/run.sh .claude/hooks/arclen-check-brand.sh",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/run.sh .claude/hooks/arclen-track-edits.sh",
             "timeout": 5
           }
         ]
