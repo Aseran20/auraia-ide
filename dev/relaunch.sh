@@ -69,38 +69,52 @@ step() { printf '\n\033[1;36m[relaunch]\033[0m %s\n' "$1"; }
 ok()   { printf '\033[0;32m  ✓ %s\033[0m\n' "$1"; }
 die()  { printf '\033[0;31m  ✗ %s\033[0m\n' "$1" >&2; exit "${2:-1}"; }
 
-# ─── 1. Kill the running dev exe ──────────────────────────────────────────────
+# ─── 1. Kill the running dev exe + sweep leftover dev consoles ────────────────
 if [[ "$DO_KILL" -eq 1 ]]; then
-  step "Killing ${EXE_IMAGE}"
+  step "Killing ${EXE_IMAGE} + any leftover dev console"
   MSYS_NO_PATHCONV=1 taskkill /F /IM "${EXE_IMAGE}" >/dev/null 2>&1 \
-    && ok "killed" || ok "not running (nothing to kill)"
+    && ok "killed ${EXE_IMAGE}" || ok "${EXE_IMAGE} not running"
+  # code.bat names its console `title VSCode Dev`. Past launches (or any that
+  # survived) leave that console open — they pile up one per relaunch. Sweep any
+  # that lingered so we never accumulate. /T also takes its child tree.
+  MSYS_NO_PATHCONV=1 taskkill /F /T /FI "WINDOWTITLE eq VSCode Dev*" >/dev/null 2>&1 \
+    && ok "closed leftover dev console(s)" || true
   # Give the OS a moment to release the CDP port before relaunch.
   sleep 1
 fi
 
 # ─── 2. Relaunch via code.bat (detached), CDP + skip-prelaunch ────────────────
 if [[ "$DO_LAUNCH" -eq 1 ]]; then
-  step "Launching scripts/code.bat (port ${PORT}, VSCODE_SKIP_PRELAUNCH=1)"
+  step "Launching scripts/code.bat (port ${PORT}, hidden console, VSCODE_SKIP_PRELAUNCH=1)"
   WIN_VSCODE="$(cygpath -w "${REPO_ROOT}/vscode")"
-  # Generating a tiny .bat and `start`-ing it avoids the nested-quote hell of
+  # Generating a tiny .bat and launching it avoids the nested-quote hell of
   # `cmd /c start ... cmd /c "set X=1&& code.bat"` (the `&&` gets parsed by the wrong
   # cmd when Git Bash reconstructs the command line → app never launches).
   LAUNCHER="${REPO_ROOT}/dev/.relaunch-launcher.bat"
+  DEV_LOG="${REPO_ROOT}/dev/.arclen-dev.log"
+  WIN_LOG="$(cygpath -w "${DEV_LOG}")"
   UDD_ARG=""
   if [[ "$FRESH" -eq 1 ]]; then
     UDD_ARG=" --user-data-dir=\"${FRESH_DIR}\""
     step "Fresh profile: --user-data-dir=${FRESH_DIR} (clean state — verifies defaults/hideByDefault)"
   fi
+  # code.bat runs electron in the FOREGROUND with logging on, so its console stays
+  # open the whole session. We redirect that output to a logfile and launch the
+  # console HIDDEN — the IDE's own GUI window still appears; only the noisy
+  # electron-log console is suppressed, so nothing clutters or duplicates on screen.
   {
     printf '@echo off\r\n'
     printf 'set VSCODE_SKIP_PRELAUNCH=1\r\n'
     printf 'cd /d "%s"\r\n' "${WIN_VSCODE}"
-    printf 'call scripts\\code.bat --remote-debugging-port=%s%s\r\n' "${PORT}" "${UDD_ARG}"
+    printf 'call scripts\\code.bat --remote-debugging-port=%s%s > "%s" 2>&1\r\n' "${PORT}" "${UDD_ARG}" "${WIN_LOG}"
   } > "${LAUNCHER}"
-  # start "" <bat> opens a detached console so the app survives after this script exits.
+  # Start-Process -WindowStyle Hidden launches the .bat with NO visible/taskbar
+  # window. Killing Arclen.exe on the next relaunch makes code.bat exit and this
+  # hidden cmd terminate — so it never accumulates.
+  WIN_LAUNCHER="$(cygpath -w "${LAUNCHER}")"
   MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' \
-    cmd.exe /c start "" "$(cygpath -w "${LAUNCHER}")" >/dev/null 2>&1
-  ok "launch issued"
+    powershell.exe -NoProfile -Command "Start-Process -FilePath '${WIN_LAUNCHER}' -WindowStyle Hidden" >/dev/null 2>&1
+  ok "launch issued (hidden console; logs → dev/.arclen-dev.log)"
 fi
 
 # ─── 3. Readiness gate — block until the workbench paints (theme resolved) ─────
