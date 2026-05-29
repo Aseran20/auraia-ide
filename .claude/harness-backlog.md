@@ -22,6 +22,23 @@ Format: `- [ ] <fix> — <why / incident> — mechanism — effort: <S/M/L>`
   already TS-checks the live tree — which is what actually catches the incident. Not worth the footgun.
 
 ## Done
+- [x] **Hidden dev console + leftover-sweep in `relaunch.sh`** (2026-05-30) — `relaunch.sh` launched
+  `code.bat` via `start ""`, opening a VISIBLE console that `code.bat` held open all session (electron
+  runs foreground with logging on); the kill step only targeted `Arclen.exe`, so stray dev consoles
+  piled up one-per-relaunch on screen (user-reported). Fix: launch the console HIDDEN via
+  `Start-Process -WindowStyle Hidden` (IDE GUI still shows; electron logs → `dev/.arclen-dev.log`),
+  and on each relaunch also `taskkill /FI "WINDOWTITLE eq VSCode Dev*"` to sweep survivors. Validated
+  across two consecutive relaunches: stays at 1 launcher proc / 1 app instance, no visible window,
+  theme paints (`#09090b`). Artifacts gitignored. — mechanism: script edit — effort: S
+- [x] **Guard-hook `-m` message-body strip (false-positive fix)** (2026-05-30) — the destructive-build
+  guard (`arclen-guard-destructive.sh`, built 2026-05-29) glob-matches the WHOLE Bash command, so a
+  `git commit` whose multi-line `-m` message contained "build"…".sh"…"-s" (or a quoted "git reset
+  --hard") matched `*build*.sh*-s*` and was blocked — twice, this session, costing ~4 min + a manual
+  `rm .claude/.live-edits`. Refinement: strip everything from the first ` -m `/` -F ` to end-of-command
+  into a `SCAN` var and match THAT (destructive invocations never carry `-m`, so it's loss-free).
+  Re-validated red+green via 5 file fixtures: commit-with-build-prose & commit-quoting-reset → ALLOWED;
+  `build-checked.sh -s`, `git reset --hard`, `git add . && git reset --hard` → BLOCKED. Supersedes the
+  original entry's matcher (kept below, now refined). — mechanism: hook edit — effort: S
 - [x] **Path-agnostic hook launcher `run.sh` + Windows `file_path` normalization** (2026-05-29) — all
   hooks were silently broken on Windows: CC runs `settings.json` hook commands via **`bash -c`**, where bare
   `bash` = `System32\bash.exe` (**WSL**) — which has **no `jq`** (every hook needs it) and **strips

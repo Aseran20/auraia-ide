@@ -22,11 +22,23 @@ LEDGER="$PROJECT_DIR/.claude/.live-edits"
 
 [ "$TOOL_NAME" = "Bash" ] || exit 0
 
+# Strip a `-m`/`-F` message body (everything from the first " -m "/" -F " to end of
+# command) BEFORE pattern-matching. WHY (retro 2026-05-30): the globs below match the
+# whole command string, so a commit MESSAGE that happens to contain "build"…".sh"…"-s"
+# (e.g. "…Electron build … gen-user-patch.sh … de-scaring…") or a quoted "git reset
+# --hard" false-positives and blocks a harmless `git commit`. Destructive invocations
+# (build.sh -s / git reset --hard) never carry a -m, so stripping it is loss-free.
+SCAN="$CMD"
+case "$CMD" in
+  *" -m "*) SCAN="${CMD%% -m *}" ;;
+  *" -F "*) SCAN="${CMD%% -F *}" ;;
+esac
+
 # Match the destructive operations that reset vscode/ to pristine:
 #   • a source build (build.sh / build-checked.sh) with the -s flag
 #   • an explicit hard reset
 is_destructive=0
-case "$CMD" in
+case "$SCAN" in
   *build*.sh*-s*)        is_destructive=1 ;;
   *"git reset --hard"*)  is_destructive=1 ;;
   *"reset -q --hard"*)   is_destructive=1 ;;
