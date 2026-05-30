@@ -22,6 +22,8 @@ Format: `- [ ] <fix> — <why / incident> — mechanism — effort: <S/M/L>`
   already TS-checks the live tree — which is what actually catches the incident. Not worth the footgun.
 
 ## Done
+- [x] **`gen-user-patch.sh` auto-placeholder-izes brand context + `check-patches.sh` labels conditional patches** (2026-05-30) — kills the two cry-wolf false-✗ classes that made the apply-check gate untrustworthy (you'd learned to ignore its FAIL count). **(#1)** When a generated patch's CONTEXT/REMOVED line was one a base patch brand-substituted (`!!APP_NAME!!`→`Arclen`), gen used to emit literal `Arclen` while `check-patches` (no-subst) had the placeholder → false ✗, and the tempting "fix" was a brand regression (cost ~15 min once). gen now reads the resolved→placeholder map straight from the prior patches' own `+` placeholder lines (NOT by rebuilding a non-subst baseline — first attempt did that and got a FALSE map when a prior patch's raw replay partially failed, mapping `Arclen`→pristine `VS Code`), rewrites only context/removed lines, and proves it loss-less by round-trip (`substitute(placeholder)==validated literal`). **(#2)** `check-patches` now detects user-patch→user-patch dependencies and prints `⚠ conditional` (excluded from hard-fail exit) instead of a bare ✗. Validated red+green: trim-help auto-reproduces the hand-fixed patch byte-identical & passes a real upstream `check-patches` (✓, was the canonical ✗); brand-free trim-edit untouched; full run = 20 passed/0 failed/1 conditional exit 0; broken *independent* patch still ✗ (not masked) with clean patch ✓, tally correct, exit 1. — mechanism: script + script edit — effort: M
+- [x] **`check-patches.sh` two latent `set -e`/`pipefail` aborts — FIXED (2026-05-30)** — surfaced by the #1/#2 validation pass (red+green RED test). (a) `ALL_FILES=$( { grep…; [[ ${#PREREQ[@]} -gt 0 ]] && grep…; } | … )` — when PREREQ is empty the `[[ ]] && grep` returns 1, poisoning the pipe under `pipefail` → script aborted **before any check ran** (a single patch overlapping no base patch crashed silently with only the header printed). Fixed by a trailing `true` in the group. (b) The ✗-branch diagnostic pipe `git apply | grep | head | sed` inherited git's 128/1 under `set -e` and aborted mid-loop (skipping the tally, stopping at the first failure, exiting 128 not 1). Fixed with `|| true`. Now any real failure reports every ✗ and exits 1 cleanly. General bash reflex captured cross-project. — mechanism: script edit — effort: S
 - [x] **Hidden dev console + leftover-sweep in `relaunch.sh`** (2026-05-30) — `relaunch.sh` launched
   `code.bat` via `start ""`, opening a VISIBLE console that `code.bat` held open all session (electron
   runs foreground with logging on); the kill step only targeted `Arclen.exe`, so stray dev consoles
@@ -30,15 +32,18 @@ Format: `- [ ] <fix> — <why / incident> — mechanism — effort: <S/M/L>`
   and on each relaunch also `taskkill /FI "WINDOWTITLE eq VSCode Dev*"` to sweep survivors. Validated
   across two consecutive relaunches: stays at 1 launcher proc / 1 app instance, no visible window,
   theme paints (`#09090b`). Artifacts gitignored. — mechanism: script edit — effort: S
-- [x] **Guard-hook `-m` message-body strip (false-positive fix)** (2026-05-30) — the destructive-build
-  guard (`arclen-guard-destructive.sh`, built 2026-05-29) glob-matches the WHOLE Bash command, so a
-  `git commit` whose multi-line `-m` message contained "build"…".sh"…"-s" (or a quoted "git reset
-  --hard") matched `*build*.sh*-s*` and was blocked — twice, this session, costing ~4 min + a manual
-  `rm .claude/.live-edits`. Refinement: strip everything from the first ` -m `/` -F ` to end-of-command
-  into a `SCAN` var and match THAT (destructive invocations never carry `-m`, so it's loss-free).
-  Re-validated red+green via 5 file fixtures: commit-with-build-prose & commit-quoting-reset → ALLOWED;
-  `build-checked.sh -s`, `git reset --hard`, `git add . && git reset --hard` → BLOCKED. Supersedes the
-  original entry's matcher (kept below, now refined). — mechanism: hook edit — effort: S
+- [x] **Guard-hook false-positives — token-anchored match (2 recurrences, final fix 2026-05-30)** — the
+  destructive-build guard (`arclen-guard-destructive.sh`, built 2026-05-29) matched the WHOLE Bash command
+  with the loose glob `*build*.sh*-s*`, so any command whose substrings aligned in order false-positived
+  and was blocked. **1st recurrence:** a `git commit` whose `-m` message mentioned "build"…".sh"…"-s" (or
+  quoted "git reset --hard") — fixed by stripping the `-m`/`-F` body into a `SCAN` var. **2nd recurrence
+  (same day):** the `-m` strip was insufficient — `node build/next/index.ts && ./dev/relaunch.sh
+  dev/oe-simplified.png` matched too ("build"…"relaunch.sh"…"oe-**s**implified"). **Final fix:** replaced
+  the glob with **token-anchored grep** — require an actual `build(-checked)?.sh` at a path/word boundary
+  AND a standalone `-s`/`--source` flag (space/edge both sides); kept the `-m` strip. Re-validated red+green
+  (6 fixtures incl. the exact misfire → ALLOW; `build-checked.sh -s`, `bash dev/build.sh -s`, `git reset
+  --hard` → BLOCK). Lesson = the cross-project reflex already in the user backlog ("match intent, anchor to
+  the executable at a word boundary") — this incident is proof to apply it the *first* time. — mechanism: hook edit — effort: S
 - [x] **Path-agnostic hook launcher `run.sh` + Windows `file_path` normalization** (2026-05-29) — all
   hooks were silently broken on Windows: CC runs `settings.json` hook commands via **`bash -c`**, where bare
   `bash` = `System32\bash.exe` (**WSL**) — which has **no `jq`** (every hook needs it) and **strips

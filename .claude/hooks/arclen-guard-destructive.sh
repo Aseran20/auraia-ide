@@ -23,11 +23,7 @@ LEDGER="$PROJECT_DIR/.claude/.live-edits"
 [ "$TOOL_NAME" = "Bash" ] || exit 0
 
 # Strip a `-m`/`-F` message body (everything from the first " -m "/" -F " to end of
-# command) BEFORE pattern-matching. WHY (retro 2026-05-30): the globs below match the
-# whole command string, so a commit MESSAGE that happens to contain "build"…".sh"…"-s"
-# (e.g. "…Electron build … gen-user-patch.sh … de-scaring…") or a quoted "git reset
-# --hard" false-positives and blocks a harmless `git commit`. Destructive invocations
-# (build.sh -s / git reset --hard) never carry a -m, so stripping it is loss-free.
+# command) BEFORE pattern-matching, so commit prose can't trip the match below.
 SCAN="$CMD"
 case "$CMD" in
   *" -m "*) SCAN="${CMD%% -m *}" ;;
@@ -35,13 +31,22 @@ case "$CMD" in
 esac
 
 # Match the destructive operations that reset vscode/ to pristine:
-#   • a source build (build.sh / build-checked.sh) with the -s flag
+#   • a source build: invokes build.sh / build-checked.sh AND passes a standalone -s/--source flag
 #   • an explicit hard reset
+#
+# WHY token-anchored, not `*build*.sh*-s*` (retro 2026-05-30, 2nd recurrence): the loose
+# glob matched ANY command whose substrings happened to align — a commit message, or even
+# `node build/next/index.ts && ./dev/relaunch.sh dev/oe-simplified.png` ("build"…".sh"…"-s"
+# in "oe-simplified"). The -m strip only fixed the commit case. Anchor the build-script name
+# to a path/word boundary + require -s to be a standalone flag token (space/edge on both sides)
+# so paths like "oe-simplified" or "relaunch.sh" no longer false-positive.
 is_destructive=0
+if printf '%s' "$SCAN" | grep -qE '(^|[[:space:]/])build(-checked)?\.sh([[:space:]]|$)' \
+   && printf '%s' "$SCAN" | grep -qE '(^|[[:space:]])(-s|--source)([[:space:]]|$)' ; then
+  is_destructive=1
+fi
 case "$SCAN" in
-  *build*.sh*-s*)        is_destructive=1 ;;
-  *"git reset --hard"*)  is_destructive=1 ;;
-  *"reset -q --hard"*)   is_destructive=1 ;;
+  *"git reset --hard"*|*"reset -q --hard"*) is_destructive=1 ;;
 esac
 [ "$is_destructive" -eq 1 ] || exit 0
 
