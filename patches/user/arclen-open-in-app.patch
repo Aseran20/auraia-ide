@@ -1,0 +1,124 @@
+diff --git a/src/vs/platform/native/common/native.ts b/src/vs/platform/native/common/native.ts
+index 968960d..16ae577 100644
+--- a/src/vs/platform/native/common/native.ts
++++ b/src/vs/platform/native/common/native.ts
+@@ -176,6 +176,9 @@ export interface ICommonNativeHostService {
+ 
+ 	// OS
+ 	showItemInFolder(path: string): Promise<void>;
++	// Arclen: open a file in its OS-default application (.pptx -> PowerPoint, .xlsx -> Excel, …).
++	// Wraps electron shell.openPath; resolves to '' on success or an error message string.
++	openPath(path: string): Promise<string>;
+ 	setRepresentedFilename(path: string, options?: INativeHostOptions): Promise<void>;
+ 	setDocumentEdited(edited: boolean, options?: INativeHostOptions): Promise<void>;
+ 	openExternal(url: string, defaultApplication?: string): Promise<boolean>;
+diff --git a/src/vs/platform/native/electron-main/nativeHostMainService.ts b/src/vs/platform/native/electron-main/nativeHostMainService.ts
+index 83c0587..ad9f796 100644
+--- a/src/vs/platform/native/electron-main/nativeHostMainService.ts
++++ b/src/vs/platform/native/electron-main/nativeHostMainService.ts
+@@ -627,6 +627,13 @@ export class NativeHostMainService extends Disposable implements INativeHostMain
+ 		shell.showItemInFolder(path);
+ 	}
+ 
++	// Arclen: open a file in its OS-default application (.pptx -> PowerPoint, .xlsx -> Excel, …).
++	// shell.openPath is the correct electron API for local files (openExternal is for URL schemes).
++	// Resolves to '' on success or an error message string.
++	async openPath(windowId: number | undefined, path: string): Promise<string> {
++		return shell.openPath(path);
++	}
++
+ 	async setRepresentedFilename(windowId: number | undefined, path: string, options?: INativeHostOptions): Promise<void> {
+ 		const window = this.windowById(options?.targetWindowId, windowId);
+ 		window?.setRepresentedFilename(path);
+diff --git a/src/vs/workbench/contrib/files/electron-browser/fileActions.contribution.ts b/src/vs/workbench/contrib/files/electron-browser/fileActions.contribution.ts
+index f7f0729..a3a9162 100644
+--- a/src/vs/workbench/contrib/files/electron-browser/fileActions.contribution.ts
++++ b/src/vs/workbench/contrib/files/electron-browser/fileActions.contribution.ts
+@@ -15,8 +15,9 @@ import { KeyMod, KeyCode, KeyChord } from '../../../../base/common/keyCodes.js';
+ import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
+ import { getMultiSelectedResources, IExplorerService } from '../browser/files.js';
+ import { IEditorService } from '../../../services/editor/common/editorService.js';
+-import { revealResourcesInOS } from './fileCommands.js';
++import { revealResourcesInOS, openResourcesInOSApp } from './fileCommands.js';
+ import { MenuRegistry, MenuId } from '../../../../platform/actions/common/actions.js';
++import { CommandsRegistry } from '../../../../platform/commands/common/commands.js';
+ import { ResourceContextKey } from '../../../common/contextkeys.js';
+ import { appendToCommandPalette, appendEditorTitleContextMenuItem } from '../browser/fileActions.contribution.js';
+ import { SideBySideEditor, EditorResourceAccessor } from '../../../common/editor.js';
+@@ -114,3 +115,38 @@ MenuRegistry.appendMenuItem(MenuId.ChatInlineResourceAnchorContext, {
+ 	command: revealInOsCommand,
+ 	when: REVEAL_IN_OS_WHEN_CONTEXT
+ });
++
++// ─── Arclen: "Open in App" — open a file in its OS-default application ──────────────────────────
++// (.pptx -> PowerPoint, .xlsx -> Excel, .pdf -> default reader). Saves M&A analysts the
++// "Reveal in File Explorer then double-click" round-trip. The file engine stays untouched.
++
++const OPEN_IN_OS_APP_COMMAND_ID = 'arclen.openInDefaultApp';
++const OPEN_IN_OS_APP_LABEL = nls.localize2('arclenOpenInApp', "Open in App");
++const OPEN_IN_OS_APP_WHEN_CONTEXT = ResourceContextKey.Scheme.isEqualTo(Schemas.file);
++
++CommandsRegistry.registerCommand(OPEN_IN_OS_APP_COMMAND_ID, (accessor: ServicesAccessor, resource: URI | object) => {
++	const resources = getMultiSelectedResources(resource, accessor.get(IListService), accessor.get(IEditorService), accessor.get(IEditorGroupsService), accessor.get(IExplorerService));
++	openResourcesInOSApp(resources, accessor.get(INativeHostService));
++});
++
++const openInOsAppCommand = {
++	id: OPEN_IN_OS_APP_COMMAND_ID,
++	title: OPEN_IN_OS_APP_LABEL.value
++};
++MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
++	group: 'navigation',
++	order: 8, // Arclen: top of the navigation group (above Open to the Side/Reveal) — deliverables-first
++	command: openInOsAppCommand,
++	when: OPEN_IN_OS_APP_WHEN_CONTEXT
++});
++MenuRegistry.appendMenuItem(MenuId.OpenEditorsContext, {
++	group: 'navigation',
++	order: 8, // Arclen: top of the navigation group
++	command: openInOsAppCommand,
++	when: OPEN_IN_OS_APP_WHEN_CONTEXT
++});
++appendToCommandPalette({
++	id: OPEN_IN_OS_APP_COMMAND_ID,
++	title: OPEN_IN_OS_APP_LABEL,
++	category: category
++}, OPEN_IN_OS_APP_WHEN_CONTEXT);
+diff --git a/src/vs/workbench/contrib/files/electron-browser/fileCommands.ts b/src/vs/workbench/contrib/files/electron-browser/fileCommands.ts
+index c158f46..c5df9d4 100644
+--- a/src/vs/workbench/contrib/files/electron-browser/fileCommands.ts
++++ b/src/vs/workbench/contrib/files/electron-browser/fileCommands.ts
+@@ -28,6 +28,21 @@ export function revealResourcesInOS(resources: URI[], nativeHostService: INative
+ 	}
+ }
+ 
++// Arclen: open the given file resources in their OS-default application (.pptx -> PowerPoint,
++// .xlsx -> Excel, .pdf -> the default reader, …). Mirrors revealResourcesInOS but hands each file
++// to its OS-associated app instead of revealing it in the file manager. The file ENGINE is
++// untouched — this is purely a convenience so analysts skip the "Reveal then double-click" dance.
++export function openResourcesInOSApp(resources: URI[], nativeHostService: INativeHostService): void {
++	if (resources.length) {
++		sequence(resources.map(r => async () => {
++			const localUri = toLocalFileUri(r);
++			if (localUri) {
++				await nativeHostService.openPath(localUri.fsPath);
++			}
++		}));
++	}
++}
++
+ /**
+  * Converts a resource URI to a local file URI.
+  * For WSL remote resources, constructs a UNC path (e.g. \\wsl$\Ubuntu\...).
+diff --git a/src/vs/workbench/test/electron-browser/workbenchTestServices.ts b/src/vs/workbench/test/electron-browser/workbenchTestServices.ts
+index c56e45f..2e8db6a 100644
+--- a/src/vs/workbench/test/electron-browser/workbenchTestServices.ts
++++ b/src/vs/workbench/test/electron-browser/workbenchTestServices.ts
+@@ -131,6 +131,7 @@ export class TestNativeHostService implements INativeHostService {
+ 	async pickFolderAndOpen(options: INativeOpenDialogOptions): Promise<void> { }
+ 	async pickWorkspaceAndOpen(options: INativeOpenDialogOptions): Promise<void> { }
+ 	async showItemInFolder(path: string): Promise<void> { }
++	async openPath(path: string): Promise<string> { return ''; }
+ 	async setRepresentedFilename(path: string): Promise<void> { }
+ 	async isAdmin(): Promise<boolean> { return false; }
+ 	async writeElevated(source: URI, target: URI): Promise<void> { }
