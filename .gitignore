@@ -34,4 +34,6 @@ dev/relaunch-test.png
 dev-launch*.log
 dev/.relaunch-launcher.bat
 dev/.arclen-dev.log
+dev/vendor/
+dev/claude-*.png
 .claude/.live-edits

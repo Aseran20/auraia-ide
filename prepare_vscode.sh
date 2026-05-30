@@ -141,6 +141,43 @@ setpath_json "product" "tunnelApplicationConfig" '{}'
 jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
+# ─── Arclen: bundle the official Claude Code extension (cockpit core) ──────────
+# `builtInExtensions` supports a LOCAL `vsix` (build/lib/builtInExtensions.ts →
+# ext.fromVsix), so we ship the GENUINE, UNMODIFIED Anthropic VSIX with no gallery
+# (marketplace is locked) and no network at extension-sync time. Per-user own-account
+# auth — see memory `claude-ext-bundling-decision`. fromVsix verifies the sha256, so a
+# tampered/wrong download fails the build loudly. We APPEND (jq `+=`) so the MS built-ins
+# (js-debug, …) survive — jq's `*` merge above REPLACES arrays, so this must run after it.
+# To bump: update version+sha256 (sha256 = `sha256sum` of the win32-x64 .vsix from Open VSX).
+ARCLEN_CC_VERSION="2.1.157"
+ARCLEN_CC_SHA256="d210b783ca432bb91f7bcd28d9e03c4ec49b0c19c5bcea3fc2d1ced18bdc0e15"
+ARCLEN_CC_VSIX="arclen-vendor/claude-code.vsix"   # relative to vscode/ (= build root)
+ARCLEN_CC_URL="https://open-vsx.org/api/Anthropic/claude-code/win32-x64/${ARCLEN_CC_VERSION}/file/Anthropic.claude-code-${ARCLEN_CC_VERSION}@win32-x64.vsix"
+
+mkdir -p "$( dirname "${ARCLEN_CC_VSIX}" )"
+if [[ ! -f "${ARCLEN_CC_VSIX}" ]] || ! echo "${ARCLEN_CC_SHA256}  ${ARCLEN_CC_VSIX}" | sha256sum -c - >/dev/null 2>&1 ; then
+  echo "Arclen: fetching Claude Code ${ARCLEN_CC_VERSION} (win32-x64) from Open VSX..."
+  curl -fSL --retry 3 -o "${ARCLEN_CC_VSIX}" "${ARCLEN_CC_URL}"
+  echo "${ARCLEN_CC_SHA256}  ${ARCLEN_CC_VSIX}" | sha256sum -c - \
+    || { echo "Arclen: Claude Code VSIX sha256 mismatch — aborting"; exit 1; }
+fi
+
+jsonTmp=$( jq --arg v "${ARCLEN_CC_VERSION}" --arg s "${ARCLEN_CC_SHA256}" --arg x "${ARCLEN_CC_VSIX}" '
+  .builtInExtensions += [{
+    name: "anthropic.claude-code",
+    version: $v,
+    sha256: $s,
+    vsix: $x,
+    repo: "https://open-vsx.org/extension/Anthropic/claude-code",
+    platforms: ["win32"],
+    metadata: {
+      id: "anthropic.claude-code",
+      publisherId: { publisherId: "anthropic", publisherName: "Anthropic", displayName: "Anthropic", flags: "" },
+      publisherDisplayName: "Anthropic"
+    }
+  }]' product.json )
+echo "${jsonTmp}" > product.json && unset jsonTmp
+
 cat product.json
 # }}}
 
