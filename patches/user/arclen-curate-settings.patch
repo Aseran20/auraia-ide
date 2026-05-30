@@ -1,8 +1,21 @@
 diff --git a/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts b/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
-index c754843..1ac299d 100644
+index c754843..11575f7 100644
 --- a/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
 +++ b/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
-@@ -1493,7 +1493,15 @@ export class SettingsEditor2 extends EditorPane {
+@@ -777,6 +777,12 @@ export class SettingsEditor2 extends EditorPane {
+ 		const targetWidgetContainer = DOM.append(headerControlsContainer, $('.settings-target-container'));
+ 		this.settingsTargetsWidget = this._register(this.instantiationService.createInstance(SettingsTargetsWidget, targetWidgetContainer, { enableRemoteSettings: true }));
+ 		this.settingsTargetsWidget.settingsTarget = ConfigurationTarget.USER_LOCAL;
++		// Arclen: hide the User / Workspace / Remote / Folder scope switcher. Analysts edit ONE
++		// consistent config (User scope, the default) — per-workspace setting overrides are a
++		// developer concept that adds "why is this different here?" confusion. The widget stays
++		// instantiated and pinned to USER_LOCAL; workspace settings still LOAD if present (engine
++		// intact) — only the GUI scope-switcher is removed (still editable via .vscode/settings.json).
++		targetWidgetContainer.style.display = 'none';
+ 		this._register(this.settingsTargetsWidget.onDidTargetChange(target => this.onDidSettingsTargetChange(target)));
+ 		this._register(DOM.addDisposableListener(targetWidgetContainer, DOM.EventType.KEY_DOWN, e => {
+ 			const event = new StandardKeyboardEvent(e);
+@@ -1493,7 +1499,15 @@ export class SettingsEditor2 extends EditorPane {
  			}
  		}
  
