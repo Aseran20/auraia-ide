@@ -1,0 +1,147 @@
+diff --git a/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts b/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
+index 5d1c11f..b68d172 100644
+--- a/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
++++ b/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
+@@ -27,20 +27,19 @@ export interface ITOCEntry<T> {
+ 	hide?: boolean;
+ }
+ 
++// Arclen: analyst-focused "Commonly Used" — the first group an M&A analyst sees when
++// opening Settings. Replaced the upstream dev-leaning defaults (formatOnSave, defaultFormatter,
++// tabSize, files.exclude…) with theme/font/save + the Claude Code (chat.*) knobs that matter
++// for the cockpit. Engine untouched — any other setting is still reachable via search/JSON.
+ const COMMONLY_USED_SETTINGS: readonly string[] = [
++	'workbench.colorTheme',
+ 	'editor.fontSize',
+-	'editor.formatOnSave',
+-	'files.autoSave',
+-	'GitHub.copilot-chat.manageExtension',
+-	'editor.defaultFormatter',
+ 	'editor.fontFamily',
+ 	'editor.wordWrap',
+-	'chat.agent.maxRequests',
+-	'files.exclude',
+-	'workbench.colorTheme',
+-	'editor.tabSize',
+ 	'editor.mouseWheelZoom',
+-	'editor.formatOnPaste'
++	'files.autoSave',
++	'chat.fontSize',
++	'chat.agent.maxRequests'
+ ];
+ 
+ export function getCommonlyUsedData(settingGroups: ISettingsGroup[]): ITOCEntry<ISetting> {
+@@ -150,17 +149,17 @@ export const tocData: ITOCEntry<string> = {
+ 				{
+ 					id: 'workbench/zenmode',
+ 					label: localize('zenMode', "Zen Mode"),
+-					settings: ['zenmode.*']
++					settings: ['zenmode.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'workbench/screencastmode',
+ 					label: localize('screencastMode', "Screencast Mode"),
+-					settings: ['screencastMode.*']
++					settings: ['screencastMode.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'workbench/browser',
+ 					label: localize('browser', "Browser"),
+-					settings: ['workbench.browser.*']
++					settings: ['workbench.browser.*'], hide: true /* Arclen */
+ 				}
+ 			]
+ 		},
+@@ -312,22 +311,22 @@ export const tocData: ITOCEntry<string> = {
+ 				{
+ 					id: 'features/debug',
+ 					label: localize('debug', "Debug"),
+-					settings: ['debug.*', 'launch']
++					settings: ['debug.*', 'launch'], hide: true /* Arclen: dev surface hidden from Settings nav — engine intact, still reachable via search/JSON */
+ 				},
+ 				{
+ 					id: 'features/testing',
+ 					label: localize('testing', "Testing"),
+-					settings: ['testing.*']
++					settings: ['testing.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/scm',
+ 					label: localize('scm', "Source Control"),
+-					settings: ['scm.*']
++					settings: ['scm.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/extensions',
+ 					label: localize('extensions', "Extensions"),
+-					settings: ['extensions.*']
++					settings: ['extensions.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/terminal',
+@@ -337,27 +336,27 @@ export const tocData: ITOCEntry<string> = {
+ 				{
+ 					id: 'features/task',
+ 					label: localize('task', "Task"),
+-					settings: ['task.*']
++					settings: ['task.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/problems',
+ 					label: localize('problems', "Problems"),
+-					settings: ['problems.*']
++					settings: ['problems.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/output',
+ 					label: localize('output', "Output"),
+-					settings: ['output.*']
++					settings: ['output.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/comments',
+ 					label: localize('comments', "Comments"),
+-					settings: ['comments.*']
++					settings: ['comments.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/remote',
+ 					label: localize('remote', "Remote"),
+-					settings: ['remote.*']
++					settings: ['remote.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/timeline',
+@@ -367,12 +366,12 @@ export const tocData: ITOCEntry<string> = {
+ 				{
+ 					id: 'features/notebook',
+ 					label: localize('notebook', 'Notebook'),
+-					settings: ['notebook.*', 'interactiveWindow.*']
++					settings: ['notebook.*', 'interactiveWindow.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/mergeEditor',
+ 					label: localize('mergeEditor', 'Merge Editor'),
+-					settings: ['mergeEditor.*']
++					settings: ['mergeEditor.*'], hide: true /* Arclen */
+ 				},
+ 				{
+ 					id: 'features/issueReporter',
+@@ -384,7 +383,7 @@ export const tocData: ITOCEntry<string> = {
+ 		},
+ 		{
+ 			id: 'application',
+-			label: localize('application', "Application"),
++			label: localize('application', "Application"), hide: true, /* Arclen: whole Application category (Proxy/Keyboard/Update/Telemetry/Sync/Network/Experimental) hidden */
+ 			children: [
+ 				{
+ 					id: 'application/http',
+@@ -432,7 +431,7 @@ export const tocData: ITOCEntry<string> = {
+ 		{
+ 			id: 'security',
+ 			label: localize('security', "Security"),
+-			settings: ['security.*'],
++			settings: ['security.*'], hide: true, /* Arclen: Security/Workspace-Trust hidden (trust already disabled) */
+ 			children: [
+ 				{
+ 					id: 'security/workspace',

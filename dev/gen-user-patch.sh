@@ -27,9 +27,12 @@
 #   • File paths are relative to vscode/ (e.g. src/vs/...), matching the +++ b/ patch paths.
 #   • The target NAME's sort position determines which existing user patches are treated as
 #     "already applied" — name it the same way the build will sort it (arclen-*).
-#   • Generated context uses literal "Arclen" (not !!APP_NAME!!); that applies fine since the
-#     build substitutes placeholders to the same value. Hand-swap to placeholders only if you
-#     need the patch portable across a future APP_NAME change.
+#   • Brand context is auto-placeholder-ized: any CONTEXT/REMOVED line our patch inherits
+#     from a prior patch's brand substitution (e.g. "Arclen" that 00-brand wrote over "VS Code")
+#     is rewritten back to its !!PLACEHOLDER!! form, so the patch applies in BOTH the real
+#     (substituted) build AND check-patches.sh's non-substituted tree. This kills the
+#     "brand-context placeholder trap" (retro 2026-05-30) at the source. Added (+) lines are
+#     left verbatim — they are your deliberate content; write !!APP_NAME!! yourself if needed.
 
 set -uo pipefail
 
@@ -162,6 +165,39 @@ git -C "${SCRATCH}" add -A
 git -C "${SCRATCH}" commit -q -m baseline --allow-empty
 ok "baseline committed"
 
+# ─── Brand resolved→placeholder map (read from the prior patches themselves) ───
+# WHY: check-patches.sh applies base patches WITHOUT placeholder substitution, while the
+# baseline above is substituted (placeholders resolved to "Arclen"). Any CONTEXT/REMOVED
+# line our patch inherits from a brand substitution therefore reads "Arclen" here but
+# "!!APP_NAME!!" in check-patches' tree → the patch's context mismatches and check-patches
+# cries "does not apply" on a patch the real build accepts (the "brand-context placeholder
+# trap", retro 2026-05-30 — once ~15 min + a near-miss brand regression).
+#
+# The mapping comes straight from the SOURCE: every '+' added line of a prior patch that
+# carries a !!PLACEHOLDER!! becomes, after substitution, a resolved line that appears in our
+# baseline as context. So resolved=substitute(placeholder). We read those lines directly
+# (no re-apply — an earlier attempt rebuilt a non-substituted baseline and got a FALSE map
+# when a prior patch's raw replay partially failed). Lossless by construction; verified by a
+# round-trip below.
+step "Mapping brand placeholders from prior patches (to placeholder-ize context)"
+BRANDMAP="${SCRATCH}/.brandmap"; : > "${BRANDMAP}"
+SEP=$'\x1f'
+if [[ ${#APPLICABLE[@]} -gt 0 ]]; then
+  PH="${SCRATCH}/.ph"; RS="${SCRATCH}/.rs"
+  # placeholder content lines: '+' adds that contain a !!...!! token (drop the +++ header).
+  grep -h '^+' "${APPLICABLE[@]}" 2>/dev/null | grep -v '^+++ ' | grep '!!' | sed 's/^+//' | sort -u > "${PH}"
+  if [[ -s "${PH}" ]]; then
+    cp "${PH}" "${RS}"; substitute "${RS}"            # resolved = substitute(placeholder), line-aligned
+    # key=resolved  value=placeholder ; keep only lines substitution actually changed.
+    paste -d "${SEP}" "${RS}" "${PH}" | awk -F"${SEP}" 'NF==2 && $1!=$2' > "${BRANDMAP}"
+  fi
+fi
+if [[ -s "${BRANDMAP}" ]]; then
+  ok "brand placeholder lines available for context rewrite: $(grep -c . "${BRANDMAP}")"
+else
+  echo "  no brand placeholders in prior patches → nothing to placeholder-ize"
+fi
+
 # ─── Overlay live edits & diff ────────────────────────────────────────────────
 step "Diffing your live vscode/ edits against the baseline"
 for f in "${FILES[@]}"; do
@@ -190,6 +226,34 @@ if git -C "${SCRATCH}" apply --check --ignore-whitespace "${REPO_ROOT}/${OUT}"; 
   ok "applies cleanly onto base+windows+prior-user baseline"
 else
   die "generated patch does not apply onto its own baseline (corruption?) — patch was still written" 5
+fi
+
+# ─── Placeholder-ize brand context (see mapping note above) ────────────────────
+# Validation above used the literal-Arclen patch against the SUBSTITUTED baseline (so it
+# must run first). Now rewrite brand-substituted CONTEXT/REMOVED lines to !!PLACEHOLDER!!
+# form. Added (+) lines are left verbatim. We prove correctness by ROUND-TRIP: substituting
+# the placeholder form must reproduce the already-validated literal form byte-for-byte —
+# which means the real build (substitutes user patches → literal, validated) AND
+# check-patches.sh (no subst → placeholder, matches the no-subst tree) both apply it.
+if [[ -s "${BRANDMAP}" ]]; then
+  step "Placeholder-izing brand context → !!PLACEHOLDER!! form"
+  cp "${REPO_ROOT}/${OUT}" "${SCRATCH}/.out.literal"     # fallback if the round-trip regresses
+  awk -v mapfile="${BRANDMAP}" -v sep="${SEP}" '
+    BEGIN { while ((getline line < mapfile) > 0) { i=index(line,sep); if(i>0){ map[substr(line,1,i-1)]=substr(line,i+1) } } }
+    /^diff / || /^index / || /^--- / || /^\+\+\+ / || /^@@/ { print; next }   # headers untouched
+    /^ / || /^-/ { p=substr($0,1,1); r=substr($0,2); if (r in map) { print p map[r]; next } print; next }
+    { print }
+  ' "${SCRATCH}/.out.literal" > "${REPO_ROOT}/${OUT}"
+
+  # Round-trip: substitute(placeholder form) must equal the validated literal form.
+  cp "${REPO_ROOT}/${OUT}" "${SCRATCH}/.rt"; substitute "${SCRATCH}/.rt"
+  if diff -q "${SCRATCH}/.rt" "${SCRATCH}/.out.literal" >/dev/null 2>&1; then
+    n=$(grep -c '!!' "${REPO_ROOT}/${OUT}" || true)
+    ok "round-trips to the validated literal form (${n} placeholder line(s)) → applies in both build & check-patches.sh"
+  else
+    cp "${SCRATCH}/.out.literal" "${REPO_ROOT}/${OUT}"
+    printf '%b  ! placeholder round-trip mismatch — kept the literal-Arclen patch (safe fallback)%b\n' "$red" "$reset"
+  fi
 fi
 
 # Clear the promoted files from the live-edits ledger (written by the arclen-track-edits

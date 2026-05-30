@@ -13,6 +13,7 @@ set -euo pipefail
 
 green='\033[0;32m'
 red='\033[0;31m'
+yellow='\033[0;33m'
 reset='\033[0m'
 
 # We cd into a scratch clone later; capture the invocation dir now so patch paths
@@ -68,12 +69,41 @@ fi
 for i in "${!USER_PATCHES[@]}";   do USER_PATCHES[$i]="$(abspath "${USER_PATCHES[$i]}")"; done
 for i in "${!PREREQ_PATCHES[@]}"; do PREREQ_PATCHES[$i]="$(abspath "${PREREQ_PATCHES[$i]}")"; done
 
+# ─── Conditional-label support (avoid crying wolf on user-patch dependencies) ──
+# This script applies BASE patches as prereqs, but NOT prior USER patches. So a user
+# patch whose context depends on an earlier user patch (e.g. a comment that patch added)
+# legitimately fails --check here even though the real build applies it fine. That's a
+# false alarm — dev/gen-user-patch.sh validates such patches authoritatively (it replays
+# the full base+windows+prior-user order). We detect the dependency and label it ⚠ rather
+# than ✗, and exclude it from the hard-fail exit. (Brand-context mismatches are NOT in this
+# bucket — gen-user-patch.sh now placeholder-izes those so they apply here too.)
+ALL_USER_SORTED=()
+while IFS= read -r -d '' f; do ALL_USER_SORTED+=("$(abspath "$f")"); done \
+  < <(find patches/user -name '*.patch' -print0 2>/dev/null | sort -z)
+
+prior_user_dep() {  # $1 = abs patch path → echoes a prior user patch sharing a file, else nothing
+  local target="$1" tname tfiles u uname uf
+  tname="$(basename "$target")"
+  tfiles="$(grep -h '^+++ b/' "$target" | sed 's|^+++ b/||' | sort -u)"
+  for u in "${ALL_USER_SORTED[@]}"; do
+    uname="$(basename "$u")"
+    [[ "$uname" < "$tname" ]] || continue          # only patches that sort BEFORE ours
+    while IFS= read -r uf; do
+      printf '%s\n' "${tfiles}" | grep -qxF "$uf" && { echo "$uname"; return 0; }
+    done < <(grep -h '^+++ b/' "$u" | sed 's|^+++ b/||' | sort -u)
+  done
+  return 1
+}
+
 # ─── Collect all files to sparse-checkout ────────────────────────────────────
 
 ALL_FILES=$(
   {
     grep -h '^+++ b/' "${USER_PATCHES[@]}"
     [[ ${#PREREQ_PATCHES[@]} -gt 0 ]] && grep -h '^+++ b/' "${PREREQ_PATCHES[@]}"
+    true   # keep the group's exit 0: an empty PREREQ makes the [[ ]] && grep return 1,
+           # which (under pipefail) would poison the pipe and abort via set -e before any
+           # check runs — a single patch overlapping no base patch then crashed silently.
   } | sed 's|^+++ b/||' | sort -u
 )
 
@@ -117,6 +147,7 @@ fi
 echo "Checking user patches..."
 PASS=0
 FAIL=0
+COND=0
 
 for patch in "${USER_PATCHES[@]}"; do
   name=$(basename "${patch}")
@@ -124,15 +155,28 @@ for patch in "${USER_PATCHES[@]}"; do
     echo -e "  ${green}✓${reset} ${name}"
     ((PASS++)) || true
   else
-    echo -e "  ${red}✗${reset} ${name}:"
-    git apply --ignore-whitespace "${patch}" 2>&1 \
-      | grep -E '^error:|^patch failed' \
-      | head -5 \
-      | sed 's/^/    /'
-    ((FAIL++)) || true
+    dep="$(prior_user_dep "${patch}" || true)"
+    if [[ -n "${dep}" ]]; then
+      echo -e "  ${yellow}⚠${reset} ${name}  (conditional: depends on prior user patch ${dep} — not checkable here; dev/gen-user-patch.sh is authoritative)"
+      ((COND++)) || true
+    else
+      echo -e "  ${red}✗${reset} ${name}:"
+      # `|| true`: git apply exits 128 on a corrupt patch / 1 on a clean miss; under
+      # set -e + pipefail that aborts the whole script mid-loop (skipping the tally and
+      # remaining patches). Keep it non-fatal so we report every failure and exit 1 cleanly.
+      git apply --ignore-whitespace "${patch}" 2>&1 \
+        | grep -E '^error:|^patch failed' \
+        | head -5 \
+        | sed 's/^/    /' || true
+      ((FAIL++)) || true
+    fi
   fi
 done
 
 echo ""
-echo "Result: ${PASS} passed, ${FAIL} failed"
+if [[ "${COND}" -gt 0 ]]; then
+  echo "Result: ${PASS} passed, ${FAIL} failed, ${COND} conditional (user-patch deps — validate with dev/gen-user-patch.sh)"
+else
+  echo "Result: ${PASS} passed, ${FAIL} failed"
+fi
 [[ "${FAIL}" -eq 0 ]]

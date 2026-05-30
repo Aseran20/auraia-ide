@@ -710,6 +710,6 @@
     "chat.editor.fontFamily": "'IBM Plex Mono', Consolas, Menlo, Monaco, monospace",
     "workbench.editor.showTabs": "none",
     "workbench.editor.editorActionsLocation": "hidden",
-    "claudeCode.preferredLocation": "sidebar"
+    "claudeCode.preferredLocation": "panel"
   }
 }
