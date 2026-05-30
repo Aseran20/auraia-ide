@@ -225,6 +225,21 @@ done
 Monitor settings: `persistent: false`, `timeout_ms: 1500000` (~25 min headroom). Heartbeat is
 90s so it stays well under the auto-stop volume cap.
 
+⚠️ **drvfs blindness — the Monitor (WSL) can't see a build.log the Windows `tee` CREATES after it
+starts (hit 2026-05-30).** The Monitor/Bash tools run under WSL; `/mnt/c` is a drvfs mount with a
+**negative-dentry cache** — once WSL stats `build.log` and finds it missing, it can keep reporting
+"No such file" for a while even after the Windows-side `tee build.log` creates it. So if you `rm`/
+`Remove-Item build.log` right before launching (fresh file) the WSL Monitor sits in its `[ ! -f ]`
+wait-loop forever and self-exits with a false "never appeared", while PowerShell sees the file fine.
+Two robust fixes, pick one:
+- **`touch "$log"` from the SAME Bash/WSL context immediately before launching the build** — this
+  creates the dentry on the Windows FS, so the Windows `tee` truncates+writes that same inode and the
+  WSL Monitor reads it. (Don't `rm` it first.) Cheapest; keeps the Monitor pattern above intact.
+- **Watch via a PowerShell `run_in_background` loop instead of the WSL Monitor** — PowerShell always
+  sees the Windows FS. Use this when you want a milestone like "patches applied → compile started"
+  (`Get-Content $log -Raw` + `-match 'failed to apply patch'` / `'vscode-min-prepack'`). The
+  background-task exit notification still covers final completion either way.
+
 ⚠️ **Hard-won lesson — keep `fail_re` NARROW.** During the native-module rebuild phase (npm ci /
 electron-rebuild of `@vscode/spdlog`, `node-addon-api`, etc.) the log emits **`gyp ERR! not ok`,
 `npm error gyp`, and `error MSB3491: ... being used by another process`** — and then **npm

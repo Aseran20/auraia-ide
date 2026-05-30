@@ -13,36 +13,6 @@ index 3f491f4..6f9f59b 100644
  					},
  					keybinding: {
  						weight: KeybindingWeight.WorkbenchContrib,
-@@ -840,12 +840,8 @@ class PreferencesActionsContribution extends Disposable implements IWorkbenchCon
- 							when: ResourceContextKey.Resource.isEqualTo(that.userDataProfileService.currentProfile.keybindingsResource.toString()),
- 							group: 'navigation',
- 							order: 1,
--						},
--						{
--							id: MenuId.GlobalActivity,
--							group: '2_configuration',
--							order: 4
- 						}
-+						// Arclen: "Keyboard Shortcuts" removed from the gear (Manage) menu — dev concept.
- 					]
- 				});
- 			}
-@@ -855,14 +851,7 @@ class PreferencesActionsContribution extends Disposable implements IWorkbenchCon
- 				return accessor.get(IPreferencesService).openGlobalKeybindingSettings(false, { query, groupId });
- 			}
- 		}));
--		this._register(MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
--			command: {
--				id,
--				title: nls.localize('keyboardShortcuts', "Keyboard Shortcuts"),
--			},
--			group: '2_configuration',
--			order: 4
--		}));
-+		// Arclen: "Keyboard Shortcuts" also removed from File›Preferences. Command stays in the palette.
- 		this._register(registerAction2(class extends Action2 {
- 			constructor() {
- 				super({
 diff --git a/src/vs/workbench/services/preferences/common/preferencesEditorInput.ts b/src/vs/workbench/services/preferences/common/preferencesEditorInput.ts
 index 56b36e1..6f252ee 100644
 --- a/src/vs/workbench/services/preferences/common/preferencesEditorInput.ts
