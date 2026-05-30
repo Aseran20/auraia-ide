@@ -112,7 +112,7 @@ On mélangeait deux choses sous « tabs/sessions ». Elles sont distinctes :
 
 **✅ Implémenté puis SIMPLIFIÉ (patch `arclen-show-open-editors`, 2026-05-30)** — décision : *pas* d'extension (les extensions VS Code ne peuvent PAS rendre de vrais onglets — pas d'accès DOM ; toutes sont soit une liste = le natif, soit un hack CSS fragile). On utilise le **natif Open Editors**, qu'on possède :
 1. **Onglets horizontaux cachés par défaut** — `"workbench.editor.showTabs":"none"` dans `product.json` `configurationDefaults` (marche grâce au patch fondation `arclen-product-config-defaults`, cf. §9 ; pas de hack source).
-2. **Open Editors visible par défaut** — `explorerViewlet.ts` : `hideByDefault: false`. **C'est tout ce que fait le patch désormais** (1 ligne).
+2. **Open Editors visible + NON-MASQUABLE** — `explorerViewlet.ts` : `hideByDefault: false` + `canToggleVisibility: false`. Non-masquable car, avec `showTabs:"none"`, Open Editors est le **seul** moyen de voir/switcher les éléments de la zone éditeur (terminaux `defaultLocation:"editor"`, fichiers) — la cacher = « perdre » ses terminaux ouverts (incident relevé 2026-05-30).
 
 > **Simplification 2026-05-30** : l'ancien patch `arclen-open-editors-vtabs` ajoutait aussi (a) des lignes plus hautes (28px) et (b) du CSS custom (`.open-editors` : barre d'accent sur l'actif, hover, séparateurs, gras). Jugé **over-engineered et à faible valeur** — la sélection native suffit à montrer le fichier actif. Les deux ont été **retirés** ; Open Editors retombe sur le **style de liste natif, identique à l'arborescence** juste en dessous. Patch renommé `arclen-open-editors-vtabs` → `arclen-show-open-editors` (le nom « vtabs » sur-promettait).
 
@@ -142,7 +142,7 @@ Pour que A ne soit pas « on verra » :
 
 | # | Candidat | Bucket | Mécanisme pressenti | Statut |
 |---|---|---|---|---|
-| AD1 | Bundler extension officielle Claude Code + chat à droite par défaut | B/C | défaut + bundle (Niv. 0) | ⬜ prêt à faire |
+| AD1 | Bundler extension officielle Claude Code + chat à droite par défaut | B/C | défaut + bundle (Niv. 0) | ✅ **fait 2026-05-30** (built-in via `builtInExtensions` vsix local ; `claudeCode.preferredLocation:"sidebar"`) — **reste : vérifier sur build `-s`** |
 | AD2 | Bundler/forker Claude Manager (hub sessions) | C | extension OSS (Niv. 1) | ⬜ après dogfood |
 | AD3 | Patch layout triptyque fichiers\|sessions\|chat | B | patch (Niv. 2) | 🔬 SP3 |
 | AD4 | Spike API `chatSessionsProvider` dans le fork | B | POC | 🔬 SP1 |

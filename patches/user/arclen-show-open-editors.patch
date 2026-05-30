@@ -1,14 +1,20 @@
 diff --git a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
-index ecc6af4..d1b5409 100644
+index ecc6af4..a37af21 100644
 --- a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
 +++ b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
-@@ -114,7 +114,9 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
- 			canToggleVisibility: true,
+@@ -111,10 +111,14 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
+ 			ctorDescriptor: new SyncDescriptor(OpenEditorsView),
+ 			containerIcon: openEditorsViewIcon,
+ 			order: 0,
+-			canToggleVisibility: true,
++			// Arclen: non-hideable — with horizontal editor tabs off (showTabs:"none"),
++			// Open Editors is the ONLY way to see/switch editor-area items (terminals,
++			// files). If a user hid it they'd "lose" their open terminals. So it can't
++			// be toggled off; shown by default (hideByDefault:false) for fresh profiles.
++			canToggleVisibility: false,
  			canMoveView: true,
  			collapsed: false,
 -			hideByDefault: true,
-+			// Arclen: show Open Editors by default — it's our vertical "tabs" surface
-+			// (horizontal editor tabs are off via product.json showTabs:"none").
 +			hideByDefault: false,
  			focusCommand: {
  				id: 'workbench.files.action.focusOpenEditorsView',
