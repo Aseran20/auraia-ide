@@ -1,0 +1,15 @@
+diff --git a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
+index ecc6af4..d1b5409 100644
+--- a/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
++++ b/src/vs/workbench/contrib/files/browser/explorerViewlet.ts
+@@ -114,7 +114,9 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
+ 			canToggleVisibility: true,
+ 			canMoveView: true,
+ 			collapsed: false,
+-			hideByDefault: true,
++			// Arclen: show Open Editors by default — it's our vertical "tabs" surface
++			// (horizontal editor tabs are off via product.json showTabs:"none").
++			hideByDefault: false,
+ 			focusCommand: {
+ 				id: 'workbench.files.action.focusOpenEditorsView',
+ 				keybindings: { primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyK, KeyCode.KeyE) }

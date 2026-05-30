@@ -110,11 +110,11 @@ On mélangeait deux choses sous « tabs/sessions ». Elles sont distinctes :
 
 **Synergie clé** : dans l'extension officielle, *chaque session Claude s'ouvre aussi comme un onglet d'éditeur*. Donc fichiers + sessions saturent la même barre horizontale. → **rendre les onglets d'éditeur verticaux résout les DEUX d'un coup.** C'est pourquoi AD5 remonte en candidat *early* (pas un simple spike différé).
 
-**✅ Implémenté (patch `arclen-open-editors-vtabs`, 2026-05-29)** — décision : *pas* d'extension (les extensions VS Code ne peuvent PAS rendre de vrais onglets — pas d'accès DOM ; toutes sont soit une liste = le natif, soit un hack CSS fragile). On restyle donc le **natif Open Editors**, qu'on possède :
+**✅ Implémenté puis SIMPLIFIÉ (patch `arclen-show-open-editors`, 2026-05-30)** — décision : *pas* d'extension (les extensions VS Code ne peuvent PAS rendre de vrais onglets — pas d'accès DOM ; toutes sont soit une liste = le natif, soit un hack CSS fragile). On utilise le **natif Open Editors**, qu'on possède :
 1. **Onglets horizontaux cachés par défaut** — `"workbench.editor.showTabs":"none"` dans `product.json` `configurationDefaults` (marche grâce au patch fondation `arclen-product-config-defaults`, cf. §9 ; pas de hack source).
-2. **Open Editors visible par défaut** — `explorerViewlet.ts` : `hideByDefault: false`.
-3. **Lignes plus hautes (28px)** — `openEditorsView.ts` : `FONT.sidebarSize22` → `sidebarSize28` (3 usages ; scale toujours avec la police).
-4. **Accent « onglet actif » + hover + séparateurs** — `style.css` : bloc `.open-editors` (vars de thème → suit Arclen Dark).
+2. **Open Editors visible par défaut** — `explorerViewlet.ts` : `hideByDefault: false`. **C'est tout ce que fait le patch désormais** (1 ligne).
+
+> **Simplification 2026-05-30** : l'ancien patch `arclen-open-editors-vtabs` ajoutait aussi (a) des lignes plus hautes (28px) et (b) du CSS custom (`.open-editors` : barre d'accent sur l'actif, hover, séparateurs, gras). Jugé **over-engineered et à faible valeur** — la sélection native suffit à montrer le fichier actif. Les deux ont été **retirés** ; Open Editors retombe sur le **style de liste natif, identique à l'arborescence** juste en dessous. Patch renommé `arclen-open-editors-vtabs` → `arclen-show-open-editors` (le nom « vtabs » sur-promettait).
 
 > ⚠️ **Cause racine (résolue)** : `product.json` `configurationDefaults` est **web-only** upstream → **ignoré dans le `.exe` desktop**, donc minimap/trust/showTabs/etc. étaient TOUS morts en packagé (pas seulement showTabs). Résolu globalement par le patch **fondation `arclen-product-config-defaults`** (cf. §9). Depuis : un réglage dans `product.json` suffit, plus de hack source.
 >
@@ -146,7 +146,7 @@ Pour que A ne soit pas « on verra » :
 | AD2 | Bundler/forker Claude Manager (hub sessions) | C | extension OSS (Niv. 1) | ⬜ après dogfood |
 | AD3 | Patch layout triptyque fichiers\|sessions\|chat | B | patch (Niv. 2) | 🔬 SP3 |
 | AD4 | Spike API `chatSessionsProvider` dans le fork | B | POC | 🔬 SP1 |
-| AD5 | **Onglets verticaux** (fichiers + sessions) | A→B léger | natif Open Editors + CSS + mini-patch hauteur | ✅ **fait** (patch `arclen-open-editors-vtabs`, 2026-05-29) — vérifié profil neuf |
+| AD5 | **Onglets verticaux** (fichiers + sessions) | A→B léger | natif Open Editors `hideByDefault:false` (CSS + hauteur retirés 2026-05-30, over-engineered) | ✅ **fait** (patch `arclen-show-open-editors`) — style natif, identique à l'arbo |
 | AD6 | Aperçu livrables PPTX/XLSX (ou « ouvrir dans Office ») | A | extension / tasks | ⏸ cf. chantier E2 |
 | AD7 | Boutons-actions (tasks → « Générer data pack ») | B | tasks + extension | ⏸ cf. chantier E3 |
 | AD8 | Pont repo COM (PPT/Excel) | B | à définir | ⏸ cf. chantier E4 |
