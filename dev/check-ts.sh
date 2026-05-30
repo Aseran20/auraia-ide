@@ -12,6 +12,16 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT/vscode" 2>/dev/null || { echo "✗ vscode/ not found — populate it with a build first."; exit 2; }
 [ -d node_modules ] || { echo "✗ vscode/node_modules missing — run a build first."; exit 2; }
 
+# ── Self-healing: never let tsgo orphans pile up and lag the whole PC ─────────
+# tsgo (the native type-checker) is spawned by compile-check-ts-native. If a run is
+# interrupted (Ctrl-C) or force-killed (a killed background task), tsgo can orphan and
+# then linger pegging CPU/RAM — past runs left 3 stray tsgo (>800 MB) that lagged the
+# machine. This is a ONE-SHOT check → no tsgo should be alive when we start: sweep any
+# stray one first, and kill ours too if we get interrupted. (taskkill = these are
+# Windows processes; MSYS_NO_PATHCONV stops Git Bash mangling the /F /IM flags.)
+MSYS_NO_PATHCONV=1 taskkill /F /IM tsgo.exe >/dev/null 2>&1 || true
+trap 'MSYS_NO_PATHCONV=1 taskkill /F /IM tsgo.exe >/dev/null 2>&1 || true' INT TERM
+
 echo "[check-ts] tsgo --noEmit on src/ (~25s)..."
 out="$(npm run --silent compile-check-ts-native 2>&1)"; rc=$?
 

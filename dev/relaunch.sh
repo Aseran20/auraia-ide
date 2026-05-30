@@ -79,6 +79,9 @@ if [[ "$DO_KILL" -eq 1 ]]; then
   # that lingered so we never accumulate. /T also takes its child tree.
   MSYS_NO_PATHCONV=1 taskkill /F /T /FI "WINDOWTITLE eq VSCode Dev*" >/dev/null 2>&1 \
     && ok "closed leftover dev console(s)" || true
+  # Double filet: sweep any orphaned tsgo (the type-checker leaks if a check-ts was
+  # interrupted/force-killed). Harmless when none — keeps the PC from accumulating lag.
+  MSYS_NO_PATHCONV=1 taskkill /F /IM tsgo.exe >/dev/null 2>&1 && ok "swept stray tsgo" || true
   # Give the OS a moment to release the CDP port before relaunch.
   sleep 1
 fi
