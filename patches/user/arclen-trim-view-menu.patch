@@ -1,0 +1,21 @@
+diff --git a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
+index 442c25d..1aaad1c 100644
+--- a/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
++++ b/src/vs/workbench/browser/parts/titlebar/menubar.contribution.ts
+@@ -29,15 +29,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+ 
+ // Arclen: Selection menu hidden — text-selection submenu not relevant for M&A analysts
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarMainMenu, {
+-	submenu: MenuId.MenubarViewMenu,
+-	title: {
+-		value: 'View',
+-		original: 'View',
+-		mnemonicTitle: localize({ key: 'mView', comment: ['&& denotes a mnemonic'] }, "&&View")
+-	},
+-	order: 4
+-});
++// Arclen: View menu hidden — every entry is a code/editor toggle. Command Palette stays on Ctrl+Shift+P.
+ 
+ // Arclen: Go menu hidden — code-navigation submenu not relevant for M&A analysts
+ 

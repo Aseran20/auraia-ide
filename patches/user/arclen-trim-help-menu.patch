@@ -1,0 +1,336 @@
+diff --git a/src/vs/workbench/browser/actions/helpActions.ts b/src/vs/workbench/browser/actions/helpActions.ts
+index 7785400..ba5ab23 100644
+--- a/src/vs/workbench/browser/actions/helpActions.ts
++++ b/src/vs/workbench/browser/actions/helpActions.ts
+@@ -9,7 +9,7 @@ import { isMacintosh, isLinux, language, isWeb } from '../../../base/common/plat
+ import { ITelemetryService } from '../../../platform/telemetry/common/telemetry.js';
+ import { IOpenerService } from '../../../platform/opener/common/opener.js';
+ import { URI } from '../../../base/common/uri.js';
+-import { MenuId, Action2, registerAction2, MenuRegistry } from '../../../platform/actions/common/actions.js';
++import { Action2, registerAction2 } from '../../../platform/actions/common/actions.js';
+ import { KeyChord, KeyMod, KeyCode } from '../../../base/common/keyCodes.js';
+ import { IProductService } from '../../../platform/product/common/productService.js';
+ import { ServicesAccessor } from '../../../platform/instantiation/common/instantiation.js';
+@@ -38,11 +38,7 @@ class KeybindingsReferenceAction extends Action2 {
+ 				when: null,
+ 				primary: KeyChord(KeyMod.CtrlCmd | KeyCode.KeyK, KeyMod.CtrlCmd | KeyCode.KeyR)
+ 			},
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '2_reference',
+-				order: 1
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -71,11 +67,7 @@ class OpenIntroductoryVideosUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '2_reference',
+-				order: 2
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -103,11 +95,7 @@ class OpenTipsAndTricksUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '2_reference',
+-				order: 3
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -135,11 +123,7 @@ class OpenDocumentationUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '1_welcome',
+-				order: 3
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -190,11 +174,7 @@ class OpenYouTubeUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '3_feedback',
+-				order: 1
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -222,11 +202,7 @@ class OpenRequestFeatureUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '3_feedback',
+-				order: 2
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -254,11 +230,7 @@ class OpenLicenseUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '4_legal',
+-				order: 1
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -292,11 +264,7 @@ class OpenPrivacyStatementUrlAction extends Action2 {
+ 			},
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '4_legal',
+-				order: 2
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 
+@@ -321,12 +289,7 @@ class GetStartedWithAccessibilityFeatures extends Action2 {
+ 			category: Categories.Help,
+ 			f1: true,
+ 			precondition: IsSessionsWindowContext.negate(),
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '1_welcome',
+-				order: 6,
+-				when: IsSessionsWindowContext.negate()
+-			}
++			// Arclen: removed from Help menu (kept in command palette).
+ 		});
+ 	}
+ 	run(accessor: ServicesAccessor): void {
+@@ -355,15 +318,7 @@ class AskVSCodeCopilot extends Action2 {
+ 	}
+ }
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+-	command: {
+-		id: AskVSCodeCopilot.ID,
+-		title: localize2('askVScode', 'Ask @vscode'),
+-	},
+-	order: 7,
+-	group: '1_welcome',
+-	when: ContextKeyExpr.and(ContextKeyExpr.equals('chatSetupHidden', false), ContextKeyExpr.equals('chatSetupDisabledInWorkspace', false), IsSessionsWindowContext.negate())
+-});
++// Arclen: "Ask @vscode" removed from Help menu (Copilot surface). Command stays registered.
+ 
+ // --- Actions Registration
+ 
+diff --git a/src/vs/workbench/contrib/issue/common/issue.contribution.ts b/src/vs/workbench/contrib/issue/common/issue.contribution.ts
+index 0c1effb..ca4e931 100644
+--- a/src/vs/workbench/contrib/issue/common/issue.contribution.ts
++++ b/src/vs/workbench/contrib/issue/common/issue.contribution.ts
+@@ -4,7 +4,7 @@
+  *--------------------------------------------------------------------------------------------*/
+ 
+ import { Disposable } from '../../../../base/common/lifecycle.js';
+-import { localize, localize2 } from '../../../../nls.js';
++import { localize2 } from '../../../../nls.js';
+ import { ICommandAction } from '../../../../platform/action/common/action.js';
+ import { Categories } from '../../../../platform/action/common/actionCommonCategories.js';
+ import { MenuId, MenuRegistry } from '../../../../platform/actions/common/actions.js';
+@@ -120,13 +120,6 @@ export class BaseIssueContribution extends Disposable implements IWorkbenchContr
+ 
+ 		this._register(MenuRegistry.appendMenuItem(MenuId.CommandPalette, { command: reportIssue }));
+ 
+-		this._register(MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+-			group: '3_feedback',
+-			command: {
+-				id: OpenIssueReporterActionId,
+-				title: localize({ key: 'miReportIssue', comment: ['&& denotes a mnemonic', 'Translate this to "Report Issue in English" in all languages please!'] }, "Report &&Issue")
+-			},
+-			order: 3
+-		}));
++		// Arclen: "Report Issue" removed from Help menu (dev/support surface). Command stays in the palette.
+ 	}
+ }
+diff --git a/src/vs/workbench/contrib/processExplorer/browser/processExplorer.contribution.ts b/src/vs/workbench/contrib/processExplorer/browser/processExplorer.contribution.ts
+index cab5708..e08aa86 100644
+--- a/src/vs/workbench/contrib/processExplorer/browser/processExplorer.contribution.ts
++++ b/src/vs/workbench/contrib/processExplorer/browser/processExplorer.contribution.ts
+@@ -11,7 +11,7 @@ import { IEditorSerializer, EditorExtensions, IEditorFactoryRegistry, GroupIdent
+ import { EditorInput } from '../../../common/editor/editorInput.js';
+ import { IEditorResolverService, RegisteredEditorPriority } from '../../../services/editor/common/editorResolverService.js';
+ import { ProcessExplorerEditorInput } from './processExplorerEditorInput.js';
+-import { Action2, MenuId, MenuRegistry, registerAction2 } from '../../../../platform/actions/common/actions.js';
++import { Action2, registerAction2 } from '../../../../platform/actions/common/actions.js';
+ import { Categories } from '../../../../platform/action/common/actionCommonCategories.js';
+ import { AUX_WINDOW_GROUP, IEditorService } from '../../../services/editor/common/editorService.js';
+ import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
+@@ -160,14 +160,6 @@ class OpenProcessExplorer extends Action2 {
+ 
+ registerAction2(OpenProcessExplorer);
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+-	group: '5_tools',
+-	command: {
+-		id: OpenProcessExplorer.ID,
+-		title: localize({ key: 'miOpenProcessExplorerer', comment: ['&& denotes a mnemonic'] }, "Open &&Process Explorer")
+-	},
+-	when: supported,
+-	order: 2
+-});
++// Arclen: Open Process Explorer removed from Help menu (diagnostic dev tool). Command stays registered.
+ 
+ //#endregion
+diff --git a/src/vs/workbench/contrib/quickaccess/browser/quickAccess.contribution.ts b/src/vs/workbench/contrib/quickaccess/browser/quickAccess.contribution.ts
+index 051836b..568a2f3 100644
+--- a/src/vs/workbench/contrib/quickaccess/browser/quickAccess.contribution.ts
++++ b/src/vs/workbench/contrib/quickaccess/browser/quickAccess.contribution.ts
+@@ -61,14 +61,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarViewMenu, {
+ 	order: 1
+ });
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+-	group: '1_welcome',
+-	command: {
+-		id: ShowAllCommandsAction.ID,
+-		title: localize({ key: 'miShowAllCommands', comment: ['&& denotes a mnemonic'] }, "Show All Commands")
+-	},
+-	order: 2
+-});
++// Arclen: "Show All Commands" removed from Help menu — redundant with Ctrl+Shift+P. Palette unchanged.
+ 
+ MenuRegistry.appendMenuItem(MenuId.MenubarViewMenu, {
+ 	group: '1_open',
+diff --git a/src/vs/workbench/contrib/update/browser/update.contribution.ts b/src/vs/workbench/contrib/update/browser/update.contribution.ts
+index 777207d..4b57987 100644
+--- a/src/vs/workbench/contrib/update/browser/update.contribution.ts
++++ b/src/vs/workbench/contrib/update/browser/update.contribution.ts
+@@ -50,12 +50,8 @@ export class ShowReleaseNotesAction extends Action2 {
+ 				mnemonicTitle: localize({ key: 'mshowReleaseNotes', comment: ['&& denotes a mnemonic'] }, "Show &&Release Notes"),
+ 			},
+ 			category: { value: product.nameShort, original: product.nameShort },
+-			f1: true,
+-			menu: [{
+-				id: MenuId.MenubarHelpMenu,
+-				group: '1_welcome',
+-				order: 5,
+-			}]
++			f1: true
++			// Arclen: "Show Release Notes" removed from Help menu. Command stays in the palette.
+ 		});
+ 	}
+ 
+diff --git a/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts b/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts
+index dacf859..b45a76b 100644
+--- a/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts
++++ b/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStarted.contribution.ts
+@@ -7,7 +7,7 @@ import { localize, localize2 } from '../../../../nls.js';
+ import { GettingStartedInputSerializer, GettingStartedPage, inWelcomeContext } from './gettingStarted.js';
+ import { Registry } from '../../../../platform/registry/common/platform.js';
+ import { EditorExtensions, IEditorFactoryRegistry } from '../../../common/editor.js';
+-import { MenuId, registerAction2, Action2 } from '../../../../platform/actions/common/actions.js';
++import { registerAction2, Action2 } from '../../../../platform/actions/common/actions.js';
+ import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
+ import { ContextKeyExpr, IContextKeyService, RawContextKey } from '../../../../platform/contextkey/common/contextkey.js';
+ import { IEditorService, SIDE_GROUP } from '../../../services/editor/common/editorService.js';
+@@ -44,11 +44,7 @@ registerAction2(class extends Action2 {
+ 			title: localize2('miWelcome', 'Welcome'),
+ 			category: Categories.Help,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '1_welcome',
+-				order: 1,
+-			},
++			// Arclen: "Welcome" removed from Help menu. Command stays in the palette.
+ 			metadata: {
+ 				description: localize2('minWelcomeDescription', 'Opens a Walkthrough to help you get started in !!APP_NAME!!.')
+ 			}
+@@ -204,11 +200,7 @@ registerAction2(class extends Action2 {
+ 			title: localize2('welcome.showAllWalkthroughs', 'Open Walkthrough...'),
+ 			category,
+ 			f1: true,
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '1_welcome',
+-				order: 3,
+-			},
++			// Arclen: "Open Walkthrough…" removed from Help menu. Command stays in the palette.
+ 		});
+ 	}
+ 
+diff --git a/src/vs/workbench/contrib/welcomeWalkthrough/browser/walkThrough.contribution.ts b/src/vs/workbench/contrib/welcomeWalkthrough/browser/walkThrough.contribution.ts
+index 1a1f1e1..7792104 100644
+--- a/src/vs/workbench/contrib/welcomeWalkthrough/browser/walkThrough.contribution.ts
++++ b/src/vs/workbench/contrib/welcomeWalkthrough/browser/walkThrough.contribution.ts
+@@ -12,7 +12,7 @@ import { EditorWalkThroughAction, EditorWalkThroughInputSerializer } from './edi
+ import { Registry } from '../../../../platform/registry/common/platform.js';
+ import { EditorExtensions, IEditorFactoryRegistry } from '../../../common/editor.js';
+ import { SyncDescriptor } from '../../../../platform/instantiation/common/descriptors.js';
+-import { MenuRegistry, MenuId, registerAction2 } from '../../../../platform/actions/common/actions.js';
++import { registerAction2 } from '../../../../platform/actions/common/actions.js';
+ import { registerWorkbenchContribution2 } from '../../../common/contributions.js';
+ import { IEditorPaneRegistry, EditorPaneDescriptor } from '../../../browser/editor.js';
+ import { KeybindingsRegistry } from '../../../../platform/keybinding/common/keybindingsRegistry.js';
+@@ -39,11 +39,4 @@ KeybindingsRegistry.registerCommandAndKeybindingRule(WalkThroughPageUp);
+ 
+ KeybindingsRegistry.registerCommandAndKeybindingRule(WalkThroughPageDown);
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+-	group: '1_welcome',
+-	command: {
+-		id: 'workbench.action.showInteractivePlayground',
+-		title: localize({ key: 'miPlayground', comment: ['&& denotes a mnemonic'] }, "Editor Playgrou&&nd")
+-	},
+-	order: 3
+-});
++// Arclen: "Editor Playground" removed from Help menu (code-learning surface). Command stays in the palette.
+diff --git a/src/vs/workbench/electron-browser/actions/developerActions.ts b/src/vs/workbench/electron-browser/actions/developerActions.ts
+index f56a9d2..3d448ee 100644
+--- a/src/vs/workbench/electron-browser/actions/developerActions.ts
++++ b/src/vs/workbench/electron-browser/actions/developerActions.ts
+@@ -6,7 +6,7 @@
+ import { localize, localize2 } from '../../../nls.js';
+ import { INativeHostService } from '../../../platform/native/common/native.js';
+ import { IEditorService } from '../../services/editor/common/editorService.js';
+-import { Action2, MenuId } from '../../../platform/actions/common/actions.js';
++import { Action2 } from '../../../platform/actions/common/actions.js';
+ import { Categories } from '../../../platform/action/common/actionCommonCategories.js';
+ import { ServicesAccessor } from '../../../platform/instantiation/common/instantiation.js';
+ import { IWorkbenchEnvironmentService } from '../../services/environment/common/environmentService.js';
+@@ -33,12 +33,8 @@ export class ToggleDevToolsAction extends Action2 {
+ 				when: IsDevelopmentContext,
+ 				primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyI,
+ 				mac: { primary: KeyMod.CtrlCmd | KeyMod.Alt | KeyCode.KeyI }
+-			},
+-			menu: {
+-				id: MenuId.MenubarHelpMenu,
+-				group: '5_tools',
+-				order: 1
+ 			}
++			// Arclen: Toggle Developer Tools removed from Help menu (dev surface). Command + keybinding stay.
+ 		});
+ 	}
+ 

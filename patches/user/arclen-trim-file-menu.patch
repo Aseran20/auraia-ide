@@ -1,0 +1,126 @@
+diff --git a/src/vs/workbench/browser/actions/windowActions.ts b/src/vs/workbench/browser/actions/windowActions.ts
+index 9db25c4..b5f8737 100644
+--- a/src/vs/workbench/browser/actions/windowActions.ts
++++ b/src/vs/workbench/browser/actions/windowActions.ts
+@@ -425,12 +425,9 @@ class NewWindowAction extends Action2 {
+ 				weight: KeybindingWeight.WorkbenchContrib,
+ 				primary: isWeb ? (isWindows ? KeyChord(KeyMod.CtrlCmd | KeyCode.KeyK, KeyMod.Shift | KeyCode.KeyN) : KeyMod.CtrlCmd | KeyMod.Alt | KeyMod.Shift | KeyCode.KeyN) : KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyN,
+ 				secondary: isWeb ? [KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyN] : undefined
+-			},
+-			menu: {
+-				id: MenuId.MenubarFileMenu,
+-				group: '1_new',
+-				order: 3,
+ 			}
++			// Arclen: New Window removed from the File menu (opens a confusing second window for
++			// analysts). Command + Ctrl+Shift+N keybinding stay registered.
+ 		});
+ 	}
+ 
+diff --git a/src/vs/workbench/browser/actions/workspaceActions.ts b/src/vs/workbench/browser/actions/workspaceActions.ts
+index 795ac6e..53e27a5 100644
+--- a/src/vs/workbench/browser/actions/workspaceActions.ts
++++ b/src/vs/workbench/browser/actions/workspaceActions.ts
+@@ -376,45 +376,9 @@ MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+ 	when: ContextKeyExpr.and(IsMacNativeContext, OpenFolderWorkspaceSupportContext)
+ });
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	group: '2_open',
+-	command: {
+-		id: OpenWorkspaceAction.ID,
+-		title: localize({ key: 'miOpenWorkspace', comment: ['&& denotes a mnemonic'] }, "Open Wor&&kspace from File...")
+-	},
+-	order: 3,
+-	when: EnterMultiRootWorkspaceSupportContext
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	group: '3_workspace',
+-	command: {
+-		id: ADD_ROOT_FOLDER_COMMAND_ID,
+-		title: localize({ key: 'miAddFolderToWorkspace', comment: ['&& denotes a mnemonic'] }, "A&&dd Folder to Workspace...")
+-	},
+-	when: ContextKeyExpr.and(ContextKeyExpr.or(EnterMultiRootWorkspaceSupportContext, WorkbenchStateContext.isEqualTo('workspace')), IsSessionsWindowContext.negate()),
+-	order: 1
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	group: '3_workspace',
+-	command: {
+-		id: SaveWorkspaceAsAction.ID,
+-		title: localize('miSaveWorkspaceAs', "Save Workspace As...")
+-	},
+-	order: 2,
+-	when: ContextKeyExpr.and(EnterMultiRootWorkspaceSupportContext, IsSessionsWindowContext.negate())
+-});
+-
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	group: '3_workspace',
+-	command: {
+-		id: DuplicateWorkspaceInNewWindowAction.ID,
+-		title: localize('duplicateWorkspace', "Duplicate Workspace")
+-	},
+-	order: 3,
+-	when: ContextKeyExpr.and(EnterMultiRootWorkspaceSupportContext, IsSessionsWindowContext.negate())
+-});
++// Arclen: multi-root "workspace" file operations hidden — Open Workspace from File / Add Folder
++// to Workspace / Save Workspace As / Duplicate Workspace are code-project concepts. Commands stay
++// registered (palette + API) so the engine and Open Recent workspaces keep working.
+ 
+ MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+ 	group: '6_close',
+@@ -426,12 +390,5 @@ MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+ 	when: ContextKeyExpr.and(WorkbenchStateContext.isEqualTo('folder'), EmptyWorkspaceSupportContext, IsSessionsWindowContext.negate())
+ });
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	group: '6_close',
+-	command: {
+-		id: CloseWorkspaceAction.ID,
+-		title: localize({ key: 'miCloseWorkspace', comment: ['&& denotes a mnemonic'] }, "Close &&Workspace")
+-	},
+-	order: 3,
+-	when: ContextKeyExpr.and(WorkbenchStateContext.isEqualTo('workspace'), EmptyWorkspaceSupportContext, IsSessionsWindowContext.negate())
+-});
++// Arclen: "Close Workspace" hidden — multi-root workspace concept. "Close Folder" (closes the
++// active mandate) is kept above. Command stays registered.
+diff --git a/src/vs/workbench/browser/parts/editor/editor.contribution.ts b/src/vs/workbench/browser/parts/editor/editor.contribution.ts
+index 55b2e78..6f1649a 100644
+--- a/src/vs/workbench/browser/parts/editor/editor.contribution.ts
++++ b/src/vs/workbench/browser/parts/editor/editor.contribution.ts
+@@ -698,13 +698,8 @@ MenuRegistry.appendMenuItem(MenuId.MenubarRecentMenu, {
+ 	order: 1
+ });
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-	title: localize('miShare', "Share"),
+-	submenu: MenuId.MenubarShare,
+-	group: '45_share',
+-	order: 1,
+-	when: IsSessionsWindowContext.negate()
+-});
++// Arclen: "Share" submenu hidden from the File menu — share providers aren't part of the analyst
++// workflow (and the submenu is empty without them). Share commands stay registered.
+ 
+ // Layout menu
+ MenuRegistry.appendMenuItem(MenuId.MenubarViewMenu, {
+diff --git a/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts b/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
+index 4f071ed..ad0ffda 100644
+--- a/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
++++ b/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
+@@ -198,12 +198,8 @@ export class UserDataProfilesWorkbenchContribution extends Disposable implements
+ 	}
+ 
+ 	private registerOpenProfileSubMenu(): void {
+-		MenuRegistry.appendMenuItem(MenuId.MenubarFileMenu, {
+-			title: localize('New Profile Window', "New Window with Profile"),
+-			submenu: OpenProfileMenu,
+-			group: '1_new',
+-			order: 4,
+-		});
++		// Arclen: "New Window with Profile" hidden from the File menu (new-window + profiles concept,
++		// not relevant for analysts). The OpenProfileMenu + profile commands stay registered.
+ 	}
+ 
+ 	private readonly profilesDisposable = this._register(new MutableDisposable<DisposableStore>());

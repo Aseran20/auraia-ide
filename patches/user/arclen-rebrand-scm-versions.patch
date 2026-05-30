@@ -1,0 +1,22 @@
+diff --git a/src/vs/workbench/contrib/scm/browser/scm.contribution.ts b/src/vs/workbench/contrib/scm/browser/scm.contribution.ts
+index c5cdc79..8cd6c7a 100644
+--- a/src/vs/workbench/contrib/scm/browser/scm.contribution.ts
++++ b/src/vs/workbench/contrib/scm/browser/scm.contribution.ts
+@@ -55,7 +55,7 @@ const sourceControlViewIcon = registerIcon('source-control-view-icon', Codicon.s
+ 
+ const viewContainer = Registry.as<IViewContainersRegistry>(ViewContainerExtensions.ViewContainersRegistry).registerViewContainer({
+ 	id: VIEWLET_ID,
+-	title: localize2('source control', 'Source Control'),
++	title: localize2('source control', 'Versions'), // Arclen: git Source Control rebranded "Versions" for analysts (engine intact)
+ 	ctorDescriptor: new SyncDescriptor(SCMViewPaneContainer),
+ 	storageId: 'workbench.scm.views.state',
+ 	icon: sourceControlViewIcon,
+@@ -65,7 +65,7 @@ const viewContainer = Registry.as<IViewContainersRegistry>(ViewContainerExtensio
+ }, ViewContainerLocation.Sidebar, { doNotRegisterOpenCommand: true });
+ 
+ const viewsRegistry = Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry);
+-const containerTitle = localize('source control view', "Source Control");
++const containerTitle = localize('source control view', "Versions"); // Arclen: rebranded
+ 
+ viewsRegistry.registerViewWelcomeContent(VIEW_PANE_ID, {
+ 	content: localize('no open repo', "No source control providers registered."),

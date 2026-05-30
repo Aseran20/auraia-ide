@@ -1,0 +1,22 @@
+diff --git a/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts b/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
+index 1cea988..e62d982 100644
+--- a/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
++++ b/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
+@@ -8,7 +8,6 @@ import { CancellationToken } from '../../../../base/common/cancellation.js';
+ import { IStringDictionary } from '../../../../base/common/collections.js';
+ import { onUnexpectedError } from '../../../../base/common/errors.js';
+ import { Event } from '../../../../base/common/event.js';
+-import { KeyCode, KeyMod } from '../../../../base/common/keyCodes.js';
+ import { mnemonicButtonLabel } from '../../../../base/common/labels.js';
+ import { Disposable, DisposableStore, IDisposable, isDisposable } from '../../../../base/common/lifecycle.js';
+ import { Schemas } from '../../../../base/common/network.js';
+@@ -119,7 +118,8 @@ export const VIEW_CONTAINER = Registry.as<IViewContainersRegistry>(ViewContainer
+ 		openCommandActionDescriptor: {
+ 			id: VIEWLET_ID,
+ 			mnemonicTitle: localize({ key: 'miViewExtensions', comment: ['&& denotes a mnemonic'] }, "E&&xtensions"),
+-			keybindings: { primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyX },
++			// Arclen: Ctrl+Shift+X keybinding removed — it re-revealed the hidden Extensions icon in the
++			// activity bar. Marketplace is curated by us; the viewlet command stays registered (palette/API).
+ 			order: 4,
+ 		},
+ 		ctorDescriptor: new SyncDescriptor(ExtensionsViewPaneContainer),

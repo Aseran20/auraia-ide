@@ -1,0 +1,83 @@
+diff --git a/src/vs/editor/contrib/clipboard/browser/clipboard.ts b/src/vs/editor/contrib/clipboard/browser/clipboard.ts
+index 3763993..69c2ebd 100644
+--- a/src/vs/editor/contrib/clipboard/browser/clipboard.ts
++++ b/src/vs/editor/contrib/clipboard/browser/clipboard.ts
+@@ -110,7 +110,7 @@ export const CopyAction = supportsCopy ? registerCommand(new MultiCommand({
+ 	}]
+ })) : undefined;
+ 
+-MenuRegistry.appendMenuItem(MenuId.MenubarEditMenu, { submenu: MenuId.MenubarCopy, title: nls.localize2('copy as', "Copy As"), group: '2_ccp', order: 3 });
++// Arclen: "Copy As" submenu hidden from the Edit menu — format-specific copy is a code concern. Cut/Copy/Paste stay.
+ MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextCopy, title: nls.localize2('copy as', "Copy As"), group: CLIPBOARD_CONTEXT_MENU_GROUP, order: 3 });
+ MenuRegistry.appendMenuItem(MenuId.EditorContext, { submenu: MenuId.EditorContextShare, title: nls.localize2('share', "Share"), group: '11_share', order: -1, when: ContextKeyExpr.and(ContextKeyExpr.notEquals('resourceScheme', 'output'), EditorContextKeys.editorTextFocus) });
+ MenuRegistry.appendMenuItem(MenuId.ExplorerContext, { submenu: MenuId.ExplorerContextShare, title: nls.localize2('share', "Share"), group: '11_share', order: -1 });
+diff --git a/src/vs/editor/contrib/comment/browser/comment.ts b/src/vs/editor/contrib/comment/browser/comment.ts
+index 4b2a146..7a3d2d9 100644
+--- a/src/vs/editor/contrib/comment/browser/comment.ts
++++ b/src/vs/editor/contrib/comment/browser/comment.ts
+@@ -5,7 +5,6 @@
+ 
+ import { KeyChord, KeyCode, KeyMod } from '../../../../base/common/keyCodes.js';
+ import * as nls from '../../../../nls.js';
+-import { MenuId } from '../../../../platform/actions/common/actions.js';
+ import { KeybindingWeight } from '../../../../platform/keybinding/common/keybindingsRegistry.js';
+ import { ICodeEditor } from '../../../browser/editorBrowser.js';
+ import { EditorAction, IActionOptions, registerEditorAction, ServicesAccessor } from '../../../browser/editorExtensions.js';
+@@ -89,12 +88,7 @@ class ToggleCommentLineAction extends CommentLineAction {
+ 				primary: KeyMod.CtrlCmd | KeyCode.Slash,
+ 				weight: KeybindingWeight.EditorContrib
+ 			},
+-			menuOpts: {
+-				menuId: MenuId.MenubarEditMenu,
+-				group: '5_insert',
+-				title: nls.localize({ key: 'miToggleLineComment', comment: ['&& denotes a mnemonic'] }, "&&Toggle Line Comment"),
+-				order: 1
+-			},
++			// Arclen: Toggle Line Comment hidden from Edit menu (code concern). Command + Ctrl+/ stay.
+ 			canTriggerInlineEdits: true,
+ 		});
+ 	}
+@@ -145,12 +139,7 @@ class BlockCommentAction extends EditorAction {
+ 				linux: { primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyA },
+ 				weight: KeybindingWeight.EditorContrib
+ 			},
+-			menuOpts: {
+-				menuId: MenuId.MenubarEditMenu,
+-				group: '5_insert',
+-				title: nls.localize({ key: 'miToggleBlockComment', comment: ['&& denotes a mnemonic'] }, "Toggle &&Block Comment"),
+-				order: 2
+-			},
++			// Arclen: Toggle Block Comment hidden from Edit menu (code concern). Command + keybinding stay.
+ 			canTriggerInlineEdits: true,
+ 		});
+ 	}
+diff --git a/src/vs/workbench/contrib/emmet/browser/actions/expandAbbreviation.ts b/src/vs/workbench/contrib/emmet/browser/actions/expandAbbreviation.ts
+index ba98845..adf7a69 100644
+--- a/src/vs/workbench/contrib/emmet/browser/actions/expandAbbreviation.ts
++++ b/src/vs/workbench/contrib/emmet/browser/actions/expandAbbreviation.ts
+@@ -8,9 +8,7 @@ import { registerEditorAction } from '../../../../../editor/browser/editorExtens
+ import { EditorContextKeys } from '../../../../../editor/common/editorContextKeys.js';
+ import { KeyCode } from '../../../../../base/common/keyCodes.js';
+ import { ContextKeyExpr } from '../../../../../platform/contextkey/common/contextkey.js';
+-import { IsSessionsWindowContext } from '../../../../common/contextkeys.js';
+ import { KeybindingWeight } from '../../../../../platform/keybinding/common/keybindingsRegistry.js';
+-import { MenuId } from '../../../../../platform/actions/common/actions.js';
+ 
+ class ExpandAbbreviationAction extends EmmetEditorAction {
+ 
+@@ -28,14 +26,8 @@ class ExpandAbbreviationAction extends EmmetEditorAction {
+ 					ContextKeyExpr.has('config.emmet.triggerExpansionOnTab')
+ 				),
+ 				weight: KeybindingWeight.EditorContrib
+-			},
+-			menuOpts: {
+-				menuId: MenuId.MenubarEditMenu,
+-				group: '5_insert',
+-				title: nls.localize({ key: 'miEmmetExpandAbbreviation', comment: ['&& denotes a mnemonic'] }, "Emmet: E&&xpand Abbreviation"),
+-				order: 3,
+-				when: IsSessionsWindowContext.negate()
+ 			}
++			// Arclen: Emmet "Expand Abbreviation" hidden from the Edit menu (HTML/CSS code tool). Command stays.
+ 		});
+ 
+ 	}

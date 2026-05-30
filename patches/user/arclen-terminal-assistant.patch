@@ -144,10 +144,16 @@ index 97485af..82d5cb2 100644
  	canToggleVisibility: true,
  	canMoveView: true,
 diff --git a/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts b/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
-index 4e645b1..908a171 100644
+index 4e645b1..5b43dc0 100644
 --- a/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
 +++ b/src/vs/workbench/contrib/terminal/browser/terminalMenus.ts
-@@ -52,19 +52,6 @@ export function setupTerminalMenus(): void {
+@@ -47,61 +47,24 @@ export function setupTerminalMenus(): void {
+ 					group: TerminalMenuBarGroup.Create,
+ 					command: {
+ 						id: TerminalCommandId.New,
+-						title: localize({ key: 'miNewTerminal', comment: ['&& denotes a mnemonic'] }, "&&New Terminal")
++						title: localize({ key: 'miNewTerminal', comment: ['&& denotes a mnemonic'] }, "&&New Session")
+ 					},
  					order: 1
  				}
  			},
@@ -167,7 +173,14 @@ index 4e645b1..908a171 100644
  			{
  				id: MenuId.MenubarTerminalMenu,
  				item: {
-@@ -78,30 +65,6 @@ export function setupTerminalMenus(): void {
+ 					group: TerminalMenuBarGroup.Create,
+ 					command: {
+ 						id: TerminalCommandId.Split,
+-						title: localize({ key: 'miSplitTerminal', comment: ['&& denotes a mnemonic'] }, "&&Split Terminal"),
++						title: localize({ key: 'miSplitTerminal', comment: ['&& denotes a mnemonic'] }, "&&Split"),
+ 						precondition: ContextKeyExpr.has(TerminalContextKeyStrings.IsOpen)
+ 					},
+ 					order: 2,
  					when: TerminalContextKeys.processSupported
  				}
  			},

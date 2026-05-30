@@ -1,0 +1,231 @@
+diff --git a/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts b/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
+index e62d982..e8fd754 100644
+--- a/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
++++ b/src/vs/workbench/contrib/extensions/browser/extensions.contribution.ts
+@@ -46,7 +46,7 @@ import { IUriIdentityService } from '../../../../platform/uriIdentity/common/uri
+ import { IUserDataProfilesService } from '../../../../platform/userDataProfile/common/userDataProfile.js';
+ import { EditorPaneDescriptor, IEditorPaneRegistry } from '../../../browser/editor.js';
+ import { Extensions as ConfigurationMigrationExtensions, IConfigurationMigrationRegistry } from '../../../common/configuration.js';
+-import { IsSessionsWindowContext, ResourceContextKey, WorkbenchStateContext } from '../../../common/contextkeys.js';
++import { ResourceContextKey, WorkbenchStateContext } from '../../../common/contextkeys.js';
+ import { IWorkbenchContribution, IWorkbenchContributionsRegistry, registerWorkbenchContribution2, Extensions as WorkbenchExtensions, WorkbenchPhase } from '../../../common/contributions.js';
+ import { EditorExtensions } from '../../../common/editor.js';
+ import { IViewContainersRegistry, Extensions as ViewContainerExtensions, ViewContainerLocation } from '../../../common/views.js';
+@@ -650,23 +650,8 @@ class ExtensionsContributions extends Disposable implements IWorkbenchContributi
+ 
+ 	// Global actions
+ 	private registerGlobalActions(): void {
+-		this._register(MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
+-			command: {
+-				id: VIEWLET_ID,
+-				title: localize({ key: 'miPreferencesExtensions', comment: ['&& denotes a mnemonic'] }, "&&Extensions")
+-			},
+-			group: '2_configuration',
+-			order: 3,
+-			when: IsSessionsWindowContext.negate()
+-		}));
+-		this._register(MenuRegistry.appendMenuItem(MenuId.GlobalActivity, {
+-			command: {
+-				id: VIEWLET_ID,
+-				title: localize('showExtensions', "Extensions")
+-			},
+-			group: '2_configuration',
+-			order: 3
+-		}));
++		// Arclen: "Extensions" removed from the gear (Manage) menu + File›Preferences — marketplace is
++		// curated by us and the activity-bar icon is hidden (A5). Viewlet command stays registered.
+ 
+ 		this.registerExtensionAction({
+ 			id: 'workbench.extensions.action.focusExtensionsView',
+diff --git a/src/vs/workbench/contrib/preferences/browser/preferences.contribution.ts b/src/vs/workbench/contrib/preferences/browser/preferences.contribution.ts
+index 3f491f4..f4a8649 100644
+--- a/src/vs/workbench/contrib/preferences/browser/preferences.contribution.ts
++++ b/src/vs/workbench/contrib/preferences/browser/preferences.contribution.ts
+@@ -840,12 +840,8 @@ class PreferencesActionsContribution extends Disposable implements IWorkbenchCon
+ 							when: ResourceContextKey.Resource.isEqualTo(that.userDataProfileService.currentProfile.keybindingsResource.toString()),
+ 							group: 'navigation',
+ 							order: 1,
+-						},
+-						{
+-							id: MenuId.GlobalActivity,
+-							group: '2_configuration',
+-							order: 4
+ 						}
++						// Arclen: "Keyboard Shortcuts" removed from the gear (Manage) menu — dev concept.
+ 					]
+ 				});
+ 			}
+@@ -855,14 +851,7 @@ class PreferencesActionsContribution extends Disposable implements IWorkbenchCon
+ 				return accessor.get(IPreferencesService).openGlobalKeybindingSettings(false, { query, groupId });
+ 			}
+ 		}));
+-		this._register(MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
+-			command: {
+-				id,
+-				title: nls.localize('keyboardShortcuts', "Keyboard Shortcuts"),
+-			},
+-			group: '2_configuration',
+-			order: 4
+-		}));
++		// Arclen: "Keyboard Shortcuts" also removed from File›Preferences. Command stays in the palette.
+ 		this._register(registerAction2(class extends Action2 {
+ 			constructor() {
+ 				super({
+diff --git a/src/vs/workbench/contrib/snippets/browser/commands/configureSnippets.ts b/src/vs/workbench/contrib/snippets/browser/commands/configureSnippets.ts
+index 6add030..09217a3 100644
+--- a/src/vs/workbench/contrib/snippets/browser/commands/configureSnippets.ts
++++ b/src/vs/workbench/contrib/snippets/browser/commands/configureSnippets.ts
+@@ -10,7 +10,6 @@ import { URI } from '../../../../../base/common/uri.js';
+ import { ILanguageService } from '../../../../../editor/common/languages/language.js';
+ import { getIconClassesForLanguageId } from '../../../../../editor/common/services/getIconClasses.js';
+ import * as nls from '../../../../../nls.js';
+-import { MenuId } from '../../../../../platform/actions/common/actions.js';
+ import { IFileService } from '../../../../../platform/files/common/files.js';
+ import { ServicesAccessor } from '../../../../../platform/instantiation/common/instantiation.js';
+ import { ILabelService } from '../../../../../platform/label/common/label.js';
+@@ -251,11 +250,9 @@ export class ConfigureSnippetsAction extends SnippetsAction {
+ 				...nls.localize2('userSnippets', "Snippets"),
+ 				mnemonicTitle: nls.localize({ key: 'miOpenSnippets', comment: ['&& denotes a mnemonic'] }, "&&Snippets"),
+ 			},
+-			f1: true,
+-			menu: [
+-				{ id: MenuId.MenubarPreferencesMenu, group: '2_configuration', order: 5 },
+-				{ id: MenuId.GlobalActivity, group: '2_configuration', order: 5 },
+-			]
++			f1: true
++			// Arclen: "Snippets" removed from the gear (Manage) menu + File›Preferences — code concept.
++			// Command stays registered (palette: "Configure Snippets").
+ 		});
+ 	}
+ 
+diff --git a/src/vs/workbench/contrib/tasks/browser/task.contribution.ts b/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
+index b9abd4a..d138295 100644
+--- a/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
++++ b/src/vs/workbench/contrib/tasks/browser/task.contribution.ts
+@@ -287,26 +287,8 @@ class UserTasksGlobalActionContribution extends Disposable implements IWorkbench
+ 	}
+ 
+ 	private registerActions() {
+-		const id = 'workbench.action.tasks.openUserTasks';
+-		const title = nls.localize('tasks', "Tasks");
+-		this._register(MenuRegistry.appendMenuItem(MenuId.GlobalActivity, {
+-			command: {
+-				id,
+-				title
+-			},
+-			when: TaskExecutionSupportedContext,
+-			group: '2_configuration',
+-			order: 6
+-		}));
+-		this._register(MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
+-			command: {
+-				id,
+-				title
+-			},
+-			when: TaskExecutionSupportedContext,
+-			group: '2_configuration',
+-			order: 6
+-		}));
++		// Arclen: "Tasks" removed from the gear (Manage) menu + File›Preferences — dev concept.
++		// The task ENGINE and commands stay registered (palette + API).
+ 	}
+ }
+ workbenchRegistry.registerWorkbenchContribution(UserTasksGlobalActionContribution, LifecyclePhase.Restored);
+diff --git a/src/vs/workbench/contrib/themes/browser/themes.contribution.ts b/src/vs/workbench/contrib/themes/browser/themes.contribution.ts
+index efee386..8928006 100644
+--- a/src/vs/workbench/contrib/themes/browser/themes.contribution.ts
++++ b/src/vs/workbench/contrib/themes/browser/themes.contribution.ts
+@@ -5,7 +5,7 @@
+ 
+ import { localize, localize2 } from '../../../../nls.js';
+ import { KeyMod, KeyChord, KeyCode } from '../../../../base/common/keyCodes.js';
+-import { MenuRegistry, MenuId, Action2, registerAction2, ISubmenuItem } from '../../../../platform/actions/common/actions.js';
++import { MenuRegistry, MenuId, Action2, registerAction2 } from '../../../../platform/actions/common/actions.js';
+ import { equalsIgnoreCase } from '../../../../base/common/strings.js';
+ import { Registry } from '../../../../platform/registry/common/platform.js';
+ import { Categories } from '../../../../platform/action/common/actionCommonCategories.js';
+@@ -900,18 +900,9 @@ registerAction2(class extends Action2 {
+ });
+ 
+ const ThemesSubMenu = new MenuId('ThemesSubMenu');
+-MenuRegistry.appendMenuItem(MenuId.GlobalActivity, {
+-	title: localize('themes', "Themes"),
+-	submenu: ThemesSubMenu,
+-	group: '2_configuration',
+-	order: 7
+-} satisfies ISubmenuItem);
+-MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
+-	title: localize({ key: 'miSelectTheme', comment: ['&& denotes a mnemonic'] }, "&&Themes"),
+-	submenu: ThemesSubMenu,
+-	group: '2_configuration',
+-	order: 7
+-} satisfies ISubmenuItem);
++// Arclen: "Themes" submenu removed from the gear (Manage) menu + File›Preferences — Arclen Dark is
++// the default look, and theme switching stays fully reachable via the palette ("Preferences: Color
++// Theme"). The ThemesSubMenu + its commands stay registered below (engine intact).
+ 
+ MenuRegistry.appendMenuItem(ThemesSubMenu, {
+ 	command: {
+diff --git a/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts b/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
+index ad0ffda..530d4e9 100644
+--- a/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
++++ b/src/vs/workbench/contrib/userDataProfile/browser/userDataProfile.ts
+@@ -7,7 +7,6 @@ import { Disposable, DisposableStore, IDisposable, MutableDisposable } from '../
+ import { isWeb } from '../../../../base/common/platform.js';
+ import { ServicesAccessor } from '../../../../editor/browser/editorExtensions.js';
+ import { localize, localize2 } from '../../../../nls.js';
+-import { IsSessionsWindowContext } from '../../../common/contextkeys.js';
+ import { Action2, MenuId, MenuRegistry, registerAction2 } from '../../../../platform/actions/common/actions.js';
+ import { ContextKeyExpr, ContextKeyExpression, IContextKey, IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
+ import { IUserDataProfile, IUserDataProfilesService } from '../../../../platform/userDataProfile/common/userDataProfile.js';
+@@ -174,27 +173,8 @@ export class UserDataProfilesWorkbenchContribution extends Disposable implements
+ 	}
+ 
+ 	private registerProfileSubMenu(): void {
+-		const getProfilesTitle = () => {
+-			return localize('profiles', "Profile ({0})", this.userDataProfileService.currentProfile.name);
+-		};
+-		MenuRegistry.appendMenuItem(MenuId.GlobalActivity, {
+-			get title() {
+-				return getProfilesTitle();
+-			},
+-			submenu: ProfilesMenu,
+-			group: '2_configuration',
+-			order: 1,
+-			when: HAS_PROFILES_CONTEXT
+-		});
+-		MenuRegistry.appendMenuItem(MenuId.MenubarPreferencesMenu, {
+-			get title() {
+-				return getProfilesTitle();
+-			},
+-			submenu: ProfilesMenu,
+-			group: '2_configuration',
+-			order: 1,
+-			when: ContextKeyExpr.and(HAS_PROFILES_CONTEXT, IsSessionsWindowContext.negate())
+-		});
++		// Arclen: "Profiles" submenu removed from the gear (Manage) menu + File›Preferences — dev concept.
++		// Profile commands + ProfilesMenu stay registered (palette + API).
+ 	}
+ 
+ 	private registerOpenProfileSubMenu(): void {
+@@ -363,18 +343,8 @@ export class UserDataProfilesWorkbenchContribution extends Disposable implements
+ 						mnemonicTitle: localize({ key: 'miOpenProfiles', comment: ['&& denotes a mnemonic'] }, "&&Profiles"),
+ 					},
+ 					menu: [
+-						{
+-							id: MenuId.GlobalActivity,
+-							group: '2_configuration',
+-							order: 1,
+-							when: HAS_PROFILES_CONTEXT.negate()
+-						},
+-						{
+-							id: MenuId.MenubarPreferencesMenu,
+-							group: '2_configuration',
+-							order: 1,
+-							when: ContextKeyExpr.and(HAS_PROFILES_CONTEXT.negate(), IsSessionsWindowContext.negate())
+-						},
++						// Arclen: "Profiles" removed from the gear (Manage) menu + File›Preferences (dev concept).
++						// Kept inside the ProfilesMenu submenu so profile management stays reachable.
+ 						{
+ 							id: ProfilesMenu,
+ 							group: '1_manage',
