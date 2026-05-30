@@ -1,5 +1,26 @@
+diff --git a/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts b/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
+index c754843..1ac299d 100644
+--- a/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
++++ b/src/vs/workbench/contrib/preferences/browser/settingsEditor2.ts
+@@ -1493,7 +1493,15 @@ export class SettingsEditor2 extends EditorPane {
+ 			}
+ 		}
+ 
+-		resolvedSettingsRoot.children!.push(await createTocTreeForExtensionSettings(this.extensionService, extensionSettingsGroups, filter));
++		// Arclen Strict: keep ONLY first-party / bundled extensions in the curated Settings nav
++		// (Claude Code today; future Arclen-bundled ids go here). Every other installed extension's
++		// settings stay fully searchable but out of the browse tree — deny-by-default cockpit.
++		const arclenKeptExtensionIds = ['anthropic.claude-code'];
++		const keptExtensionSettingsGroups = extensionSettingsGroups.filter(group =>
++			arclenKeptExtensionIds.some(id => group.extensionInfo?.id?.toLowerCase() === id.toLowerCase()));
++		if (keptExtensionSettingsGroups.length) {
++			resolvedSettingsRoot.children!.push(await createTocTreeForExtensionSettings(this.extensionService, keptExtensionSettingsGroups, filter));
++		}
+ 
+ 		resolvedSettingsRoot.children!.unshift(getCommonlyUsedData(groups));
+ 
 diff --git a/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts b/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
-index 5d1c11f..b68d172 100644
+index 5d1c11f..23de23a 100644
 --- a/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
 +++ b/src/vs/workbench/contrib/preferences/browser/settingsLayout.ts
 @@ -27,20 +27,19 @@ export interface ITOCEntry<T> {
@@ -31,7 +52,53 @@ index 5d1c11f..b68d172 100644
  ];
  
  export function getCommonlyUsedData(settingGroups: ISettingsGroup[]): ITOCEntry<ISetting> {
-@@ -150,17 +149,17 @@ export const tocData: ITOCEntry<string> = {
+@@ -70,10 +69,35 @@ export const tocData: ITOCEntry<string> = {
+ 	id: 'root',
+ 	label: 'root',
+ 	children: [
++		{
++			// Arclen: the curated, analyst-first section. Placed FIRST so it consumes its
++			// settings from the pool (first-match-wins, settingsTree.ts) — they render here with
++			// native widgets and do NOT duplicate under the native categories below. This is the
++			// substrate for "Arclen Preferences": real settings, read by the engine, zero custom UI.
++			id: 'arclen',
++			label: localize('arclenCategory', "Arclen"),
++			children: [
++				{
++					id: 'arclen/appearance',
++					label: localize('arclenAppearance', "Appearance"),
++					settings: ['workbench.colorTheme', 'editor.fontSize', 'editor.fontFamily', 'editor.mouseWheelZoom', 'window.zoomLevel']
++				},
++				{
++					id: 'arclen/deliverables',
++					label: localize('arclenDeliverables', "Files & Deliverables"),
++					settings: ['files.autoSave', 'files.autoSaveDelay', 'editor.wordWrap']
++				},
++				{
++					id: 'arclen/assistant',
++					label: localize('arclenAssistant', "Assistant"),
++					settings: ['chat.fontSize', 'chat.agent.maxRequests']
++				}
++			]
++		},
+ 		{
+ 			id: 'editor',
+ 			label: localize('textEditor', "Text Editor"),
+-			settings: ['editor.*'],
++			settings: ['editor.*'], hide: true, /* Arclen Strict: raw dev editor tree hidden from nav — analyst essentials live in Arclen/Commonly Used; everything still reachable via search/JSON */
+ 			children: [
+ 				{
+ 					id: 'editor/cursor',
+@@ -125,7 +149,7 @@ export const tocData: ITOCEntry<string> = {
+ 		{
+ 			id: 'workbench',
+ 			label: localize('workbench', "Workbench"),
+-			settings: ['workbench.*'],
++			settings: ['workbench.*'], hide: true, /* Arclen Strict */
+ 			children: [
+ 				{
+ 					id: 'workbench/appearance',
+@@ -150,24 +174,24 @@ export const tocData: ITOCEntry<string> = {
  				{
  					id: 'workbench/zenmode',
  					label: localize('zenMode', "Zen Mode"),
@@ -52,7 +119,33 @@ index 5d1c11f..b68d172 100644
  				}
  			]
  		},
-@@ -312,22 +311,22 @@ export const tocData: ITOCEntry<string> = {
+ 		{
+ 			id: 'window',
+ 			label: localize('window', "Window"),
+-			settings: ['window.*'],
++			settings: ['window.*'], hide: true, /* Arclen Strict */
+ 			children: [
+ 				{
+ 					id: 'window/newWindow',
+@@ -178,7 +202,7 @@ export const tocData: ITOCEntry<string> = {
+ 		},
+ 		{
+ 			id: 'chat',
+-			label: localize('chat', "Chat"),
++			label: localize('chat', "Chat"), hide: true, /* Arclen Strict: raw 100+ chat knobs hidden from nav; the Claude Code extension's own settings stay browsable under Extensions, key knobs curated in Arclen/Assistant, rest searchable */
+ 			children: [
+ 				{
+ 					id: 'chat/agent',
+@@ -287,7 +311,7 @@ export const tocData: ITOCEntry<string> = {
+ 		},
+ 		{
+ 			id: 'features',
+-			label: localize('features', "Features"),
++			label: localize('features', "Features"), hide: true, /* Arclen Strict: whole Features tree hidden from nav (Explorer/Search/Terminal/Debug/…); searchable */
+ 			children: [
+ 				{
+ 					id: 'features/accessibilitySignals',
+@@ -312,22 +336,22 @@ export const tocData: ITOCEntry<string> = {
  				{
  					id: 'features/debug',
  					label: localize('debug', "Debug"),
@@ -79,7 +172,7 @@ index 5d1c11f..b68d172 100644
  				},
  				{
  					id: 'features/terminal',
-@@ -337,27 +336,27 @@ export const tocData: ITOCEntry<string> = {
+@@ -337,27 +361,27 @@ export const tocData: ITOCEntry<string> = {
  				{
  					id: 'features/task',
  					label: localize('task', "Task"),
@@ -112,7 +205,7 @@ index 5d1c11f..b68d172 100644
  				},
  				{
  					id: 'features/timeline',
-@@ -367,12 +366,12 @@ export const tocData: ITOCEntry<string> = {
+@@ -367,12 +391,12 @@ export const tocData: ITOCEntry<string> = {
  				{
  					id: 'features/notebook',
  					label: localize('notebook', 'Notebook'),
@@ -127,7 +220,7 @@ index 5d1c11f..b68d172 100644
  				},
  				{
  					id: 'features/issueReporter',
-@@ -384,7 +383,7 @@ export const tocData: ITOCEntry<string> = {
+@@ -384,7 +408,7 @@ export const tocData: ITOCEntry<string> = {
  		},
  		{
  			id: 'application',
@@ -136,7 +229,7 @@ index 5d1c11f..b68d172 100644
  			children: [
  				{
  					id: 'application/http',
-@@ -432,7 +431,7 @@ export const tocData: ITOCEntry<string> = {
+@@ -432,7 +456,7 @@ export const tocData: ITOCEntry<string> = {
  		{
  			id: 'security',
  			label: localize('security', "Security"),
