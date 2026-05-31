@@ -174,8 +174,39 @@ the Monitor (below) at the same time:
 
 ```powershell
 $bash = "C:\Program Files\Git\bin\bash.exe"   # <-- the REAL Git Bash. See trap below.
-& $bash -c "cd '/c/path/to/repo' && ./dev/build-checked.sh -s"   # tees + truthful exit internally
+& $bash -c "cd '/c/path/to/repo' && ./dev/build-safe.sh -s"   # warm + throttled (see below)
 ```
+
+### Local build flow — fast + anti-crash (added 2026-05-31, after a build OOM-crashed the PC)
+
+The build's two heaviest phases are **`npm ci`** (a *clean* reinstall + native rebuilds — a 40-proc
+per-extension storm) and the **gulp compile** (`vscode-min-prepack`). Together with everything else
+running they can exceed RAM and **hard-crash the machine**. Two mechanisms fix this — use them:
+
+- **`npm ci` is now GUARDED** (`prepare_vscode.sh`): it is **skipped when `node_modules` already
+  matches `package-lock.json`** (a sha stamp at `vscode/node_modules/.arclen-npm-ci.sha`). Our
+  patches never touch `package-lock.json`, so **`-s` builds are now genuinely WARM** — reset →
+  re-apply patches → *skip npm ci* → compile → pack. Force a clean reinstall with
+  `FORCE_NPM_CI=1` or by deleting `vscode/node_modules`. A cold build (`rm -rf vscode*`) re-installs
+  + re-stamps automatically.
+- **`dev/build-safe.sh`** wraps `build-checked.sh` and caps the footprint to fit RAM: sets
+  `NODE_OPTIONS` heap to ~40% of physical RAM (cap 6 GB, below upstream's 8 GB) and `JOBS`/`npm_config_jobs`
+  to ¼ cores (cap 4). `dev/build.sh` + `build.sh` now honor a caller-set `NODE_OPTIONS`. It reduces —
+  not eliminates — crash risk: **free RAM first** (`dev/dev-cleanup.sh`, close spare editors / the MCP
+  server swarm). If the compile instead dies with a clean *"JavaScript heap out of memory"*, bump it:
+  `NODE_OPTIONS=--max-old-space-size=8192 dev/build-safe.sh -s`.
+
+**Which build to run:**
+| Situation | Command | Cost |
+|---|---|---|
+| Iterating on the `.exe` (patches already promoted) | `dev/build-safe.sh -s` | warm: compile+pack only (~8-12 min), no npm storm |
+| First build ever / upstream commit bumped / `node_modules` corrupt | `dev/build-safe.sh` | cold: clone+npm+compile+pack (~25-30 min) |
+| A build died in **compile/pack** (network, crash) and the tree was already prepared | `dev/resume-build.sh` | re-runs gulp compile + Windows pack only; falls back to `-s` on stale state |
+
+`-s` still does `git reset --hard` on `vscode/` first (the destructive-build guard enforces you
+promote live edits to patches beforehand). All three are syntax-validated; the **first real run
+validates the npm-ci skip end-to-end** (cold build stamps → warm `-s` should print
+"skipping npm ci (warm build)" and still produce a working `.exe`).
 
 **Fast standalone TS gate: `dev/check-ts.sh` (~25-70s).** Runs `tsgo --noEmit` on the patched tree.
 Catches noUnusedLocals (TS6133) / missing imports / type errors — the class that silently fails

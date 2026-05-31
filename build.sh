@@ -12,7 +12,8 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
 
   cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
-  export NODE_OPTIONS="--max-old-space-size=8192"
+  # Arclen: honor a caller-set NODE_OPTIONS (dev/build-safe.sh lowers it on RAM-tight machines).
+  export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=8192}"
   export VSCODE_PUBLISH_COUNTER=1
 
   npm run gulp vscode-min-prepack

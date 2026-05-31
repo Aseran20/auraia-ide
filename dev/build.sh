@@ -72,7 +72,9 @@ else
   export VSCODE_ARCH="x64"
 fi
 
-export NODE_OPTIONS="--max-old-space-size=8192"
+# Arclen: honor a caller-set NODE_OPTIONS (dev/build-safe.sh lowers the heap on RAM-tight
+# machines to avoid OOM-crashing the PC); default to upstream's 8192 when unset.
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=8192}"
 
 echo "OS_NAME=\"${OS_NAME}\""
 echo "SKIP_SOURCE=\"${SKIP_SOURCE}\""
