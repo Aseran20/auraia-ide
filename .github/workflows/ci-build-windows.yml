@@ -111,6 +111,12 @@ jobs:
       RELEASE_VERSION: ${{ needs.compile.outputs.RELEASE_VERSION }}
       SHOULD_BUILD_REH: no
       SHOULD_BUILD_REH_WEB: no
+      # Arclen: skip the MSI installer. build/windows/msi/vscodium.wxs hardcodes VSCODIUM.EXE
+      # (apply_branding doesn't rebrand the .wxs), so WiX light.exe fails LGHT0094 for the Arclen
+      # binary. The portable ZIP + Inno system/user Setup.exe (the real .exe) are still produced.
+      # Proper fix = rebrand the .wxs EXE references; tracked in .claude/harness-backlog.md.
+      SHOULD_BUILD_MSI: 'no'
+      SHOULD_BUILD_MSI_NOUP: 'no'
       VSCODE_ARCH: ${{ matrix.vscode_arch }}
     outputs:
       RELEASE_VERSION: ${{ env.RELEASE_VERSION }}

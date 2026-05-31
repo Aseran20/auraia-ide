@@ -6,6 +6,7 @@ Tooling/automation to make Arclen dev faster & less error-prone. Cross-project m
 Format: `- [ ] <fix> — <why / incident> — mechanism — effort: <S/M/L>`
 
 ## Open
+- [ ] **Rebrand the MSI `.wxs` (VSCODIUM.EXE → Arclen) so `SHOULD_BUILD_MSI` can be re-enabled** — `build/windows/msi/vscodium.wxs` hardcodes `TargetFile="VSCODIUM.EXE"` in ~18 file-type-association `<Verb>` elements, and `apply_branding.sh` doesn't touch the `.wxs`, so WiX `light.exe` fails `LGHT0094: Unresolved reference to symbol 'File:VSCODIUM.EXE'` for the Arclen binary. Surfaced 2026-05-31 by the GitHub `build (x64)` job at *Prepare assets* (only reachable once the woff2 compile fix landed; arm64 doesn't build MSI so it passed). Currently worked around by `SHOULD_BUILD_MSI: 'no'` in ci-build-windows.yml (portable ZIP + Inno Setup.exe still produced — enough for smoke-tests). Proper fix: rebrand the `.wxs` EXE symbol via apply_branding (or a patch) so the MSI installer builds. Needed only if Arclen ships an `.msi`. — mechanism: apply_branding sed + branding.sh value — effort: M
 - [ ] **`dev/promote.sh` (turnkey promote helper)** — `gen-user-patch.sh` already does the hard part
   (baseline reconstruction + validation), but you still have to name the modified files by hand. A wrapper
   that runs `git -C vscode status` (or reads `.claude/.live-edits`) to LIST candidate files and prints a
