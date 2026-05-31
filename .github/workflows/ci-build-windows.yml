@@ -70,6 +70,19 @@ jobs:
       - name: Clone VSCode repo
         run: ./get_repo.sh
 
+      # Arclen: cache vscode/node_modules so the heavy `npm ci` (clean reinstall + native rebuilds —
+      # the slowest phase) is skipped on a cache hit. Keyed on the upstream package-lock, which our
+      # patches never change. Pairs with prepare_vscode.sh's npm-ci guard: the cached node_modules
+      # carries the .arclen-npm-ci.sha stamp, so the guard sees a match and skips npm ci entirely.
+      # On a stale/partial restore (different lock) the guard simply re-runs npm ci — safe either way.
+      - name: Cache vscode/node_modules
+        uses: actions/cache@v4
+        with:
+          path: vscode/node_modules
+          key: vscode-node-modules-${{ runner.os }}-x64-${{ hashFiles('vscode/package-lock.json') }}
+          restore-keys: |
+            vscode-node-modules-${{ runner.os }}-x64-
+
       - name: Build
         env:
           SHOULD_BUILD: yes
