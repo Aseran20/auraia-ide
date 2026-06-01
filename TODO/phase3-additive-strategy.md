@@ -2,7 +2,7 @@
 
 > **Décision « une fois pour toute »** — brainstorm 2026-05-29.
 > Répond à : *une fois l'app dé-scarée (propre mais nue), qu'est-ce qu'on AJOUTE ?*
-> Compagnons : `chantier-arclen.md` (vision, section E), `TODO.md` (carte des surfaces, bloc Phase 3 différé).
+> Compagnons : `chantier-arclen.md` (vision, section E), `TRACKER.md` (carte des surfaces, bloc Phase 3 différé), `TODO.md` (backlog actionnable).
 > **Principe gravé inchangé : on simplifie la SURFACE humaine, le MOTEUR reste 100 % intact pour Claude Code.**
 
 ---
@@ -29,7 +29,7 @@
 - Concrètement : on ne construit pas dans le vide, mais on va *chercher activement* les frictions sur le terrain (dogfood) plutôt que d'« attendre qu'elles arrivent ».
 
 ### D2 — « Extensions verrouillées » = **curation, pas interdiction**
-- Le verrou marketplace (déjà posé, cf. `TODO.md` A5) empêche **l'utilisateur** d'ajouter du tiers.
+- Le verrou marketplace (déjà posé, cf. `TRACKER.md` A5) empêche **l'utilisateur** d'ajouter du tiers.
 - **Nous (Arclen)** pouvons pré-installer (bundler) n'importe quelle extension de notre choix.
 - Conséquence : le chemin « extension tierce pré-installée » n'a plus d'astérisque — il est légitime et souvent le plus rapide.
 

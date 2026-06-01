@@ -15,7 +15,7 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 # rm -rf extensions/copilot
 
-# Arclen — built-in extension trimming is DEFERRED (see TODO/TODO.md "built-ins").
+# Arclen — built-in extension trimming is DEFERRED (see TODO/TRACKER.md "built-ins").
 # Built-ins use TypeScript project references between each other, so `rm -rf extensions/<x>`
 # breaks any dependent extension's compile (TS5058) — verified: emmet AND github-authentication
 # are both referenced. Clean removal needs untangling the reference graph (remove dependents /
