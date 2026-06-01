@@ -1,0 +1,17 @@
+diff --git a/extensions/git/src/repository.ts b/extensions/git/src/repository.ts
+index 53d694b..3941699 100644
+--- a/extensions/git/src/repository.ts
++++ b/extensions/git/src/repository.ts
+@@ -1077,8 +1077,10 @@ export class Repository implements Disposable {
+ 
+ 		const statusBar = new StatusBarCommands(this, remoteSourcePublisherRegistry);
+ 		this.disposables.push(statusBar);
+-		statusBar.onDidChange(() => this._sourceControl.statusBarCommands = statusBar.commands, null, this.disposables);
+-		this._sourceControl.statusBarCommands = statusBar.commands;
++		// Arclen: do NOT publish the git branch/sync items into the status bar — the de-scared cockpit
++		// keeps all "code" chrome out of the footer (mirrors arclen-trim-status-bar.patch for the
++		// workbench-side items). The StatusBarCommands instance is kept so git stays fully intact;
++		// we simply never feed its commands to the source-control status bar.
+ 
+ 		this.commitCommandCenter = new CommitCommandsCenter(globalState, this, postCommitCommandsProviderRegistry);
+ 		this.disposables.push(this.commitCommandCenter);

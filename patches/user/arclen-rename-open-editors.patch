@@ -1,0 +1,22 @@
+diff --git a/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts b/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
+index 33cae40..f1a2568 100644
+--- a/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
++++ b/src/vs/workbench/contrib/files/browser/views/openEditorsView.ts
+@@ -65,7 +65,7 @@ export class OpenEditorsView extends ViewPane {
+ 	private static readonly DEFAULT_VISIBLE_OPEN_EDITORS = 9;
+ 	private static readonly DEFAULT_MIN_VISIBLE_OPEN_EDITORS = 0;
+ 	static readonly ID = 'workbench.explorer.openEditorsView';
+-	static readonly NAME: ILocalizedString = nls.localize2({ key: 'openEditors', comment: ['Open is an adjective'] }, "Open Editors");
++	static readonly NAME: ILocalizedString = nls.localize2('openEditors', "Sessions & Documents");
+ 
+ 	private dirtyCountElement!: HTMLElement;
+ 	private listRefreshScheduler: RunOnceScheduler | undefined;
+@@ -824,7 +824,7 @@ class OpenEditorsDragAndDrop implements IListDragAndDrop<OpenEditor | IEditorGro
+ class OpenEditorsAccessibilityProvider implements IListAccessibilityProvider<OpenEditor | IEditorGroup> {
+ 
+ 	getWidgetAriaLabel(): string {
+-		return nls.localize('openEditors', "Open Editors");
++		return nls.localize('openEditors', "Sessions & Documents");
+ 	}
+ 
+ 	getAriaLabel(element: OpenEditor | IEditorGroup): string | null {

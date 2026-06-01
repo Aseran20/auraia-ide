@@ -2,6 +2,7 @@ vscode*
 VS*/*
 VSCode*
 VSCodium*
+dist-arclen/
 .DS_Store
 *.env
 assets/
@@ -36,4 +37,5 @@ dev/.relaunch-launcher.bat
 dev/.arclen-dev.log
 dev/vendor/
 dev/claude-*.png
+dev/*.png
 .claude/.live-edits

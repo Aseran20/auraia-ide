@@ -45,12 +45,14 @@ setpath_json() {
 
 setpath "product" "checksumFailMoreInfoUrl" "https://go.microsoft.com/fwlink/?LinkId=828886"
 setpath "product" "documentationUrl" "https://go.microsoft.com/fwlink/?LinkID=533484#vscode"
-# Arclen: marketplace LOCKED — no extensionsGallery. M&A analysts get a curated, pre-installed
-# extension set (incl. Claude Code); they cannot browse/install arbitrary extensions, and the
-# Extensions icon is already hidden (patches/user/arclen-clean-activity-bar.patch). Bundled
-# extensions still load (they don't need a gallery). To re-enable, restore the setpath_json below.
+# Arclen: marketplace ENABLED (Open VSX) — re-activated 2026-06-01 so the operator can browse and
+# install extensions freely while Arclen is in personal use. The Extensions icon is also restored
+# (patches/user/arclen-clean-activity-bar.patch). NOTE: this is Open VSX, NOT the Microsoft
+# marketplace (a VSCodium fork can't legally use the MS gallery) — the catalogue is narrower and
+# some MS extensions (e.g. Pylance) are absent or differ. Bundled built-ins load without a gallery.
+# To LOCK the marketplace again for the shipped product, re-comment the setpath_json below.
 # NOTE: not touched by apply_branding.sh (it only rewrites single-value `setpath` lines).
-# setpath_json "product" "extensionsGallery" '{"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item", "latestUrlTemplate": "https://open-vsx.org/vscode/gallery/{publisher}/{name}/latest", "controlUrl": "https://raw.githubusercontent.com/EclipseFdn/publish-extensions/refs/heads/master/extension-control/extensions.json"}'
+setpath_json "product" "extensionsGallery" '{"serviceUrl": "https://open-vsx.org/vscode/gallery", "itemUrl": "https://open-vsx.org/vscode/item", "latestUrlTemplate": "https://open-vsx.org/vscode/gallery/{publisher}/{name}/latest", "controlUrl": "https://raw.githubusercontent.com/EclipseFdn/publish-extensions/refs/heads/master/extension-control/extensions.json"}'
 
 setpath "product" "introductoryVideosUrl" "https://go.microsoft.com/fwlink/?linkid=832146"
 setpath "product" "keyboardShortcutsUrlLinux" "https://go.microsoft.com/fwlink/?linkid=832144"

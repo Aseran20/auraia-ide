@@ -1,0 +1,32 @@
+diff --git a/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts b/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
+index e05b71b..abf5512 100644
+--- a/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
++++ b/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
+@@ -225,6 +225,16 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
+ 
+ 	private getGlobalCommandPicks(): ICommandQuickPick[] {
+ 		const globalCommandPicks: ICommandQuickPick[] = [];
++		// Arclen: de-scared Command Palette — hide developer/"code" command groups by default so M&A
++		// analysts aren't shown debugging / notebook / language-tooling actions. Matched case-
++		// insensitively (substring) against each command's CATEGORY only: coarse and safe — it never
++		// touches generic File/Edit/View/Settings/Extensions/Terminal/Git/Claude commands (those have
++		// another or no category). Edit this list to refine. Palette LISTING only — keybindings and
++		// programmatic command execution are unaffected.
++		const arclenHiddenCategories = [
++			'developer', 'debug', 'task', 'test', 'notebook', 'snippet',
++			'emmet', 'typescript', 'javascript', 'references', 'merge', 'ports'
++		];
+ 		const scopedContextKeyService = this.editorService.activeEditorPane?.scopedContextKeyService || this.editorGroupService.activeGroup.scopedContextKeyService;
+ 		const globalCommandsMenu = this.menuService.getMenuActions(MenuId.CommandPalette, scopedContextKeyService);
+ 		const globalCommandsMenuActions = globalCommandsMenu
+@@ -238,6 +248,10 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
+ 
+ 			// Category
+ 			const category = typeof action.item.category === 'string' ? action.item.category : action.item.category?.value;
++			// Arclen: skip developer/"code" command groups in the palette (see arclenHiddenCategories above).
++			if (category && arclenHiddenCategories.some(c => category.toLowerCase().includes(c))) {
++				continue;
++			}
+ 			if (category) {
+ 				label = localize('commandWithCategory', "{0}: {1}", category, label);
+ 			}

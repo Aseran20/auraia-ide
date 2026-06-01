@@ -66,12 +66,12 @@ index bc6003e..9df9623 100644
  	private getViewContainers(): readonly ViewContainer[] {
 -		return this.viewDescriptorService.getViewContainersByLocation(this.location);
 +		// Arclen: hide developer view containers from the composite bars — the activity bar
-+		// (Run & Debug, Extensions) AND the bottom panel (Problems, Output, Debug Console, Ports).
++		// (Run & Debug) AND the bottom panel (Problems, Output, Debug Console, Ports).
 +		// Containers stay registered: views, commands, logging and the extension host remain intact
 +		// for Claude Code; only the human-facing tab/icon is removed. Terminal is NOT hidden (it's
 +		// the Assistant) — it moves to the editor area via terminal.integrated.defaultLocation.
 +		const arclenHiddenContainers = new Set([
-+			'workbench.view.debug', 'workbench.view.extensions',
++			'workbench.view.debug',
 +			'workbench.panel.markers', 'workbench.panel.output', 'workbench.panel.repl', '~remote.forwardedPortsContainer'
 +		]);
 +		return this.viewDescriptorService.getViewContainersByLocation(this.location)
@@ -88,7 +88,7 @@ index bc6003e..9df9623 100644
 +		// pinned in storage before this build can't survive in the activity bar or the panel.
 +		// Mirrors the live filter in getViewContainers().
 +		const arclenHiddenContainers = new Set([
-+			'workbench.view.debug', 'workbench.view.extensions',
++			'workbench.view.debug',
 +			'workbench.panel.markers', 'workbench.panel.output', 'workbench.panel.repl', '~remote.forwardedPortsContainer'
 +		]);
 +		return this._cachedViewContainers.filter(c => !arclenHiddenContainers.has(c.id));
