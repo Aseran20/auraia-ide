@@ -11,9 +11,9 @@ Run this at the start of any dev session. It loads the key constraints so you do
 
 ## The golden rule
 
-**Local only. No CI until we need an installeur.**
+**Local for dev. CI for the distributable AND for packaging-artifact verification.**
 
-CI takes 60 min and costs money. Every feature, patch, UI tweak, and setting change is developed and tested locally. CI is triggered once, manually, when we're ready to distribute.
+CI takes ~60 min and costs money, so every feature, patch, UI tweak, and setting change is developed and tested locally via the live loop. **But packaging / branding artifacts** — `.exe` metadata (CompanyName/copyright via `electron.ts` rcedit), installer name/publisher (`code.iss`), bundled built-ins — **do not exist in the dev tree and must be verified on the CI artifact at release, not via a local `-s` build.** Don't add a "local full build" lane to the routine: it's slow like CI but yields a throwaway portable app, never the real `ArclenSetup.exe` (= `prepare_assets.sh` → Inno Setup, CI-only). Decided 2026-06-04 (a local `-s` launched to eyeball branding metadata was killed in favour of CI-at-release). CI is triggered manually when distributing.
 
 ## The iteration loop (the REAL one, validated 2026-05-28)
 
@@ -103,8 +103,8 @@ After this, the loop above works.
 1. Edit the file directly in `vscode/src/...` (NOT the patch file)
 2. Transpile + reload via the loop above
 3. Once validated visually, **promote to a patch** (see "Generating user patches" below)
-4. `dev/build.sh -s` only when you want to verify the packaged `.exe` — not for normal dev
-5. CI only when distributing
+4. `dev/build.sh -s` is **no longer the routine** for branding/`.exe` verification — verify those on the **CI artifact at release** (decided 2026-06-04); reserve local `-s` for debugging the build *itself*
+5. CI for the distributable installer **and** packaging-artifact checks
 
 ## Generating user patches — the tricky part
 

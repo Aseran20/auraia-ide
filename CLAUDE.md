@@ -32,9 +32,15 @@ This is a VSCodium-style **script-driven build**, not an in-repo source tree:
 
 **Two artifacts, different purposes**: `vscode/` is for **iteration** (transpile → Ctrl+R). `VSCode-win32-x64/Arclen.exe` is for **distribution smoke-tests**. You almost never need the `.exe` during dev.
 
-## Local-only philosophy
+## Local-only philosophy — three lanes, no fourth
 
-CI is **only** for producing a distributable `.exe`. Never push to master to test a build. The lightweight `.github/workflows/check-patches.yml` (push on `patches/`) is fine — it's a ~1 min guard.
+1. **Dev iteration** (renderer, UI, features, settings, theme — ~95% of the work) → the **live loop** (`transpile` + Ctrl+R, or `dev/relaunch.sh` for CSS/theme/`product.json`). Never full-build for these.
+2. **Packaging / branding artifacts** (`.exe` CompanyName/copyright from `electron.ts` rcedit, installer name/publisher from `code.iss`, bundled built-ins) → these **do not exist in the dev tree** (dev runs stock `vscode/.build/electron/Arclen.exe`); they only materialise at package time. **Verify them on the CI artifact at release — NOT via a local full build.**
+3. **Distributable** (`ArclenSetup.exe`) → **CI only** (`ci-build-windows.yml`). The local Windows build (`CI_BUILD=no`) does `min-packing` (the portable app) but **never runs `prepare_assets.sh`** (Inno Setup → the real installer). That is how `dist-arclen/` was made.
+
+**No "local full build" lane in the routine.** It is the worst of both — slow like CI, but yields a throwaway portable app instead of the real installer. (Decided 2026-06-04, after a local `-s` was launched to eyeball branding metadata and killed in favour of CI-at-release.) The one defensible local `-s` is debugging the build *itself*.
+
+CI is **otherwise only** for producing a distributable. Never push to master to test a build. The lightweight `.github/workflows/check-patches.yml` (push on `patches/`) is fine — it's a ~1 min guard.
 
 ## Validation gates — what to run, in what order
 
@@ -81,7 +87,7 @@ All theme colours + font defaults live in **`branding/arclen-tokens.json`**. `de
 - Do not produce user patches with `cd vscode && git diff`. Use `dev/gen-user-patch.sh`.
 - Do not re-run `dev/build.sh` after a mid-compile failure — resume the gulp step directly (see `arclen-dev`).
 - Do not trust the build's exit code under a raw `| tee` pipeline — `tee` masks it. Use `dev/build-checked.sh`, or read `build.log` for the terminal-state line.
-- Do not trigger `ci-build-windows.yml` for development. Local-only.
+- Do not trigger `ci-build-windows.yml` to test features/dev — that's the live loop. DO use it (at release) for the distributable installer **and** for verifying packaging/branding artifacts (`.exe` metadata, `code.iss`). Do **not** run a local full build to "check branding" — defer to the CI artifact (see "Local-only philosophy").
 - Do not install VS 2026; node-gyp 11.x can't detect it.
 
 ## Risky actions — confirm before doing

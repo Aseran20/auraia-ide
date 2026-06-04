@@ -9,7 +9,6 @@
 - [x] Masquer le walkthrough "Get started" de l'extension Claude sur le Welcome - polish onboarding (TRACKER AD1) - effort: S
 
 ## Avant distribution externe (a grouper, re-package requis)
-- [ ] Re-verrouiller les extensions: Ctrl+Shift+X, marketplace, auto-update - rouverts pour usage perso, a fermer pour le produit (TRACKER A5) - effort: S
 - [x] Passe branding installeur + copyright electron.ts - publisher/licence/logo wizard fuient "VSCodium" (TRACKER section 9, IN1-IN4) - effort: L
 
 ## Au fil de l'eau
