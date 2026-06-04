@@ -374,10 +374,12 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   # snapcraft.yaml
   sed -i 's|Visual Studio Code|VSCodium|' resources/linux/rpm/code.spec.template
 elif [[ "${OS_NAME}" == "windows" ]]; then
-  # code.iss — Arclen: publisher, URLs and setup filename (the VSCodium pipeline hardcoded its own brand here)
+  # code.iss — Arclen: rebrand the installer's publisher + URLs (VSCodium hardcoded MS values here).
+  # Do NOT rename OutputBaseFilename: prepare_assets.sh expects Inno to emit VSCodeSetup.exe, then it
+  # mv's that to assets/${APP_NAME}Setup-<arch>-<ver>.exe (= the final ArclenSetup installer). Renaming
+  # OutputBaseFilename here desyncs that mv → "mv: cannot stat VSCodeSetup.exe" (CI failure 2026-06-04).
   sed -i "s|https://code.visualstudio.com|https://github.com/${GH_REPO_PATH}|" build/win32/code.iss
   sed -i "s|Microsoft Corporation|${ORG_NAME}|" build/win32/code.iss
-  sed -i "s|OutputBaseFilename=VSCodeSetup|OutputBaseFilename=${APP_NAME}Setup|" build/win32/code.iss
 fi
 
 cd ..
