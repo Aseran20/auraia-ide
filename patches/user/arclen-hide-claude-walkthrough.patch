@@ -1,0 +1,33 @@
+diff --git a/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts b/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts
+index ac89ae8..55dc43d 100644
+--- a/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts
++++ b/src/vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedService.ts
+@@ -48,6 +48,16 @@ export const hiddenEntriesConfigurationKey = 'workbench.welcomePage.hiddenCatego
+ export const walkthroughMetadataConfigurationKey = 'workbench.welcomePage.walkthroughMetadata';
+ export type WalkthroughMetaDataType = Map<string, { firstSeen: number; stepIDs: string[]; manaullyOpened: boolean }>;
+ 
++// Arclen: third-party "Get started" walkthroughs we suppress from the Welcome page. The Claude Code
++// extension (manifest publisher "Anthropic", id "Anthropic.claude-code") contributes a single
++// developer-oriented walkthrough ("claude-code-walkthrough" / "Get started with Claude Code"); Arclen
++// ships its own onboarding instead, so we never register it. Matched case-INSENSITIVELY against the
++// "<extensionId>#" prefix of the category id: VS Code extension ids are compared case-insensitively
++// and this publisher capitalises ("Anthropic"), so identifier.value reads "Anthropic.claude-code#…".
++// Prefix (not full id) so it survives the extension bumping its internal walkthrough id. The
++// extension, its commands, and the walkthrough engine all stay intact — only this Welcome surface goes.
++const arclenHiddenWalkthroughSources = ['anthropic.claude-code#'];
++
+ const BUILT_IN_SOURCE = localize('builtin', "Built-In");
+ 
+ export interface IWalkthrough {
+@@ -321,6 +331,11 @@ export class WalkthroughsService extends Disposable implements IWalkthroughsServ
+ 		await Promise.all(extension.contributes?.walkthroughs?.map(async (walkthrough, index) => {
+ 			const categoryID = extension.identifier.value + '#' + walkthrough.id;
+ 
++			// Arclen: skip suppressed third-party walkthroughs (see arclenHiddenWalkthroughSources).
++			if (arclenHiddenWalkthroughSources.some(prefix => categoryID.toLowerCase().startsWith(prefix))) {
++				return;
++			}
++
+ 			const isNewlyInstalled = !this.metadata.get(categoryID);
+ 			if (isNewlyInstalled) {
+ 				this.metadata.set(categoryID, { firstSeen: +new Date(), stepIDs: walkthrough.steps?.map(s => s.id) ?? [], manaullyOpened: false });
