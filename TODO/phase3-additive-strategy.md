@@ -142,7 +142,7 @@ Pour que A ne soit pas « on verra » :
 
 | # | Candidat | Bucket | Mécanisme pressenti | Statut |
 |---|---|---|---|---|
-| AD1 | Bundler extension officielle Claude Code + chat à droite par défaut | B/C | défaut + bundle (Niv. 0) | ✅ **fait 2026-05-30** (built-in via `builtInExtensions` vsix local ; `claudeCode.preferredLocation:"sidebar"`) — **reste : vérifier sur build `-s`** |
+| AD1 | Bundler extension officielle Claude Code + chat à droite par défaut | B/C | défaut + bundle (Niv. 0) | ✅ **fait 2026-05-30** (built-in via `builtInExtensions` vsix local ; `claudeCode.preferredLocation:"panel"` — **corrigé de "sidebar" 2026-06-04**, le flux réel = onglet centre). **2026-06-04** : vsix **2.1.157→2.1.162** (Open VSX, sha256 ✓) + **auto-update** (`builtInExtensionsEnabledWithAutoUpdates`) + walkthrough masqué ; live-confirmé (charge + centre + picker vide). Reste : vérif `.exe` packagé `-s`. |
 | AD2 | Bundler/forker Claude Manager (hub sessions) | C | extension OSS (Niv. 1) | ⬜ après dogfood |
 | AD3 | Patch layout triptyque fichiers\|sessions\|chat | B | patch (Niv. 2) | 🔬 SP3 |
 | AD4 | Spike API `chatSessionsProvider` dans le fork | B | POC | 🔬 SP1 |
