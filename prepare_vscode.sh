@@ -279,11 +279,16 @@ node build/npm/preinstall.ts
 #    so iterative .exe rebuilds reuse node_modules → compile+pack only. Force a clean reinstall
 #    with FORCE_NPM_CI=1 or by deleting vscode/node_modules. The stamp lives INSIDE node_modules
 #    so it dies with it (a cold build that rm -rf's vscode/ re-installs + re-stamps).
+#    The `-d build/node_modules` is LOAD-BEARING, do not remove: VS Code's build deps (ternary-stream
+#    &c, imported by build/lib/*.ts) install there via npm ci's postinstall, NOT in root node_modules.
+#    CI caches only the ROOT node_modules (with the stamp inside) — so a CI cache-hit restores root +
+#    stamp while build/node_modules is ABSENT. Without this check the guard skips npm ci and gulp dies
+#    "Cannot find package 'ternary-stream'" at vscode-min-prepack (every master push, 2026-06-04).
 #    NOTE: apply_branding.sh only seds the `setpath "product"` lines of this file, so this guard
 #    block is safe from the brand propagator. ──
 ARCLEN_NPM_STAMP="node_modules/.arclen-npm-ci.sha"
 ARCLEN_LOCK_SHA="$( sha256sum package-lock.json 2>/dev/null | cut -d' ' -f1 )"
-if [[ "${FORCE_NPM_CI:-0}" != "1" && -n "${ARCLEN_LOCK_SHA}" && -d node_modules && -f "${ARCLEN_NPM_STAMP}" && "$( cat "${ARCLEN_NPM_STAMP}" 2>/dev/null )" == "${ARCLEN_LOCK_SHA}" ]]; then
+if [[ "${FORCE_NPM_CI:-0}" != "1" && -n "${ARCLEN_LOCK_SHA}" && -d node_modules && -d build/node_modules && -f "${ARCLEN_NPM_STAMP}" && "$( cat "${ARCLEN_NPM_STAMP}" 2>/dev/null )" == "${ARCLEN_LOCK_SHA}" ]]; then
   echo "Arclen: node_modules already matches package-lock — skipping npm ci (warm build). FORCE_NPM_CI=1 to override."
 else
   mv .npmrc .npmrc.bak
