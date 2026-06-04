@@ -25,6 +25,15 @@ The local build is the **wrong oracle** for these: both passed locally and only 
 
 **Also seen (cosmetic, not fixed yet):** the CI workflow forces `ORG_NAME=${{ github.repository_owner }}` (= `Aseran20`), so the shipped `.exe` CompanyName/copyright read "Aseran20" not "Arclen" (`dev/build.sh` uses `ORG_NAME=Arclen` locally, so it only shows on CI builds). Fix when batching: pin `ORG_NAME: Arclen` in `ci-build-windows.yml`.
 
+## Producing the distributable installer (CI only)
+
+The `.exe` installer is **CI-only** (`prepare_assets.sh` → Inno Setup never runs in a local build). To cut one:
+- **`gh workflow run ci-build-windows.yml --ref master -f generate_assets=true`** — assets generate **only** on `workflow_dispatch` with `generate_assets=true`. A normal push runs compile+build but produces **no installer**; a `.md`-only push doesn't trigger CI at all (`paths-ignore: "**/*.md"`).
+- ~50-60 min, 2 jobs: `compile` (npm ci + `vscode-min-prepack`) → `build` matrix x64/arm64 (`package.sh` min-packing + `prepare_assets.sh` Inno). MSI is disabled (`SHOULD_BUILD_MSI=no`, see harness-backlog); portable ZIP + Inno system/user Setup.exe are produced.
+- Download: **`gh run download <id> -n bin-x64`** → `ArclenSetup-x64-<ver>.exe` (system), `ArclenUserSetup-…exe` (user, no admin — recommend this for daily-drive), `Arclen-win32-x64-<ver>.zip` (portable), CLI tarball.
+- **Check CI isn't already red first** (`gh run list --workflow=ci-build-windows.yml`): it runs on every non-`.md` master push but **nobody watches it** (local-only philosophy), so it can sit red for hours.
+- The local build is a **false-green** for the CI-only traps — see « CI build gotchas » above before dispatching.
+
 ## The iteration loop (the REAL one, validated 2026-05-28)
 
 **Critical: `npm run watch` does NOT emit JS in this config.** `useEsbuildTranspile=false` is set, so the `watch-client-transpile` task becomes a no-op (`[watch] esbuild transpile disabled. Keeping process alive as no-op`). `watch-client` only does `tsgo --noEmit` (type check). So watch alone never refreshes `out/`.
