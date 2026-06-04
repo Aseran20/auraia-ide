@@ -10,6 +10,7 @@
 
 ## Avant distribution externe (a grouper, re-package requis)
 - [x] Passe branding installeur + copyright electron.ts - publisher/licence/logo wizard fuient "VSCodium" (TRACKER section 9, IN1-IN4) - effort: L
+- [ ] CI: pin ORG_NAME=Arclen (au lieu de github.repository_owner) - .exe CompanyName/copyright affichent "Aseran20" sur les builds CI (TRACKER IN1) - effort: S
 
 ## Au fil de l'eau
 - [ ] Passe vocab: etats vides + titres restants en anglais M&A - coherence langue produit (TRACKER V1/E2) - effort: M

@@ -15,6 +15,16 @@ Run this at the start of any dev session. It loads the key constraints so you do
 
 CI takes ~60 min and costs money, so every feature, patch, UI tweak, and setting change is developed and tested locally via the live loop. **But packaging / branding artifacts** — `.exe` metadata (CompanyName/copyright via `electron.ts` rcedit), installer name/publisher (`code.iss`), bundled built-ins — **do not exist in the dev tree and must be verified on the CI artifact at release, not via a local `-s` build.** Don't add a "local full build" lane to the routine: it's slow like CI but yields a throwaway portable app, never the real `ArclenSetup.exe` (= `prepare_assets.sh` → Inno Setup, CI-only). Decided 2026-06-04 (a local `-s` launched to eyeball branding metadata was killed in favour of CI-at-release). CI is triggered manually when distributing.
 
+## CI build gotchas (the 2 that failed every master push — fixed 2026-06-04)
+
+The local build is the **wrong oracle** for these: both passed locally and only surfaced on the CI runner (clean machine, fresh `node_modules`, the Inno asset step the local build never runs). Found while building the first daily-driver installer.
+
+1. **The npm-ci warm-build guard must also require `build/node_modules`** (`prepare_vscode.sh`). The guard skipped `npm ci` when root `node_modules` + the lock-sha stamp matched. But VS Code's build deps (`ternary-stream` &c, imported by `build/lib/*.ts`) live in **`build/node_modules`**, populated by npm ci's postinstall — and the CI cache (`ci-build-windows.yml`) caches **only root `node_modules`** (stamp inside). So a CI cache-hit restored root + stamp while `build/node_modules` was ABSENT → guard skipped npm ci → `vscode-min-prepack` died `Cannot find package 'ternary-stream'` (~2 min in, every push). Local was fine because `build/node_modules` persists on disk there. Fix: guard also tests `-d build/node_modules` (commit `282f45f`).
+
+2. **Do NOT rename `code.iss` `OutputBaseFilename`** (`prepare_vscode.sh` windows block). The final installer name `ArclenSetup-<arch>-<ver>.exe` comes from `prepare_assets.sh`'s `mv "…/system-setup/VSCodeSetup.exe" → assets/${APP_NAME}Setup-…exe` — so Inno MUST keep emitting `VSCodeSetup.exe`. Setting `OutputBaseFilename=ArclenSetup` made Inno emit `ArclenSetup.exe` → the `mv` failed `cannot stat VSCodeSetup.exe` → the "Prepare assets" step failed on both arches (Inno itself compiled fine). Keep the publisher + URL seds; NOT the filename one (commit `f51109b`).
+
+**Also seen (cosmetic, not fixed yet):** the CI workflow forces `ORG_NAME=${{ github.repository_owner }}` (= `Aseran20`), so the shipped `.exe` CompanyName/copyright read "Aseran20" not "Arclen" (`dev/build.sh` uses `ORG_NAME=Arclen` locally, so it only shows on CI builds). Fix when batching: pin `ORG_NAME: Arclen` in `ci-build-windows.yml`.
+
 ## The iteration loop (the REAL one, validated 2026-05-28)
 
 **Critical: `npm run watch` does NOT emit JS in this config.** `useEsbuildTranspile=false` is set, so the `watch-client-transpile` task becomes a no-op (`[watch] esbuild transpile disabled. Keeping process alive as no-op`). `watch-client` only does `tsgo --noEmit` (type check). So watch alone never refreshes `out/`.
