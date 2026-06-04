@@ -11,6 +11,8 @@
 ## Avant distribution externe (a grouper, re-package requis)
 - [x] Passe branding installeur + copyright electron.ts - publisher/licence/logo wizard fuient "VSCodium" (TRACKER section 9, IN1-IN4) - effort: L
 - [ ] CI: pin ORG_NAME=Arclen (au lieu de github.repository_owner) - .exe CompanyName/copyright affichent "Aseran20" sur les builds CI (TRACKER IN1) - effort: S
+- [ ] Remplacer les 14 inno-{big,small}-*.bmp wizard (logo VSCodium coral bleu) par des images Arclen - logo VSCodium visible dans l'installeur, confirme live (TRACKER IN3) - effort: M
+- [ ] Re-skin LICENSE.rtf au nom/couleurs Arclen (garder attributions MS+VSCodium) - licence brute VSCodium affichee a l'install (TRACKER IN2) - effort: S
 
 ## Au fil de l'eau
 - [ ] Passe vocab: etats vides + titres restants en anglais M&A - coherence langue produit (TRACKER V1/E2) - effort: M
