@@ -5,7 +5,7 @@
 
 ## Maintenant (cheap, fort impact)
 - [x] Affiner la blocklist Command Palette - elle masque aussi Reload Window et Toggle Dev Tools, utiles (TRACKER #14d) - effort: S
-- [ ] Retirer la commande clic-droit "Open Timeline" - no-op residuel, la vue est cachee (TRACKER E5) - effort: S
+- [x] Retirer la commande clic-droit "Open Timeline" - no-op residuel, la vue est cachee (TRACKER E5) - effort: S
 - [ ] Masquer le walkthrough "Get started" de l'extension Claude sur le Welcome - polish onboarding (TRACKER AD1) - effort: S
 
 ## Avant distribution externe (a grouper, re-package requis)
