@@ -151,8 +151,8 @@ echo "${jsonTmp}" > product.json && unset jsonTmp
 # tampered/wrong download fails the build loudly. We APPEND (jq `+=`) so the MS built-ins
 # (js-debug, …) survive — jq's `*` merge above REPLACES arrays, so this must run after it.
 # To bump: update version+sha256 (sha256 = `sha256sum` of the win32-x64 .vsix from Open VSX).
-ARCLEN_CC_VERSION="2.1.157"
-ARCLEN_CC_SHA256="d210b783ca432bb91f7bcd28d9e03c4ec49b0c19c5bcea3fc2d1ced18bdc0e15"
+ARCLEN_CC_VERSION="2.1.162"
+ARCLEN_CC_SHA256="8c63def615be76ab62093ee0d86b8ef2f112850d223d810cfb2b2f720833ca5b"
 ARCLEN_CC_VSIX="arclen-vendor/claude-code.vsix"   # relative to vscode/ (= build root)
 ARCLEN_CC_URL="https://open-vsx.org/api/Anthropic/claude-code/win32-x64/${ARCLEN_CC_VERSION}/file/Anthropic.claude-code-${ARCLEN_CC_VERSION}@win32-x64.vsix"
 
@@ -178,6 +178,19 @@ jsonTmp=$( jq --arg v "${ARCLEN_CC_VERSION}" --arg s "${ARCLEN_CC_SHA256}" --arg
       publisherDisplayName: "Anthropic"
     }
   }]' product.json )
+echo "${jsonTmp}" > product.json && unset jsonTmp
+
+# Arclen: let the bundled Claude Code self-update via the gallery (Open VSX) while the marketplace
+# UI stays locked. `builtInExtensionsEnabledWithAutoUpdates` is VS Code's native allowlist of
+# built-ins permitted to receive gallery updates (extensionsWorkbenchService.ts — a System ext in
+# stable can't update unless it's listed; MS uses it for GitHub.copilot-chat). So Claude tracks
+# Anthropic's Open VSX releases without re-opening the Extensions view; the bundled vsix above is
+# just the floor/offline version. Append idempotently so any upstream entry survives.
+jsonTmp=$( jq '
+  if (.builtInExtensionsEnabledWithAutoUpdates // []) | index("anthropic.claude-code")
+  then .
+  else .builtInExtensionsEnabledWithAutoUpdates = ((.builtInExtensionsEnabledWithAutoUpdates // []) + ["anthropic.claude-code"])
+  end' product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
 cat product.json
@@ -302,16 +315,16 @@ cp package.json{,.bak}
 
 setpath "package" "version" "${RELEASE_VERSION%-insider}"
 
-replace 's|Microsoft Corporation|VSCodium|' package.json
+replace "s|Microsoft Corporation|${ORG_NAME}|" package.json
 
 cp resources/server/manifest.json{,.bak}
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "resources/server/manifest" "name" "VSCodium - Insiders"
-  setpath "resources/server/manifest" "short_name" "VSCodium - Insiders"
+  setpath "resources/server/manifest" "name" "${APP_NAME} - Insiders"
+  setpath "resources/server/manifest" "short_name" "${APP_NAME} - Insiders"
 else
-  setpath "resources/server/manifest" "name" "VSCodium"
-  setpath "resources/server/manifest" "short_name" "VSCodium"
+  setpath "resources/server/manifest" "name" "${APP_NAME}"
+  setpath "resources/server/manifest" "short_name" "${APP_NAME}"
 fi
 
 # announcements
@@ -319,8 +332,8 @@ replace "s|\\[\\/\\* BUILTIN_ANNOUNCEMENTS \\*\\/\\]|$( tr -d '\n' < ../announce
 
 ../undo_telemetry.sh
 
-replace 's|Microsoft Corporation|VSCodium|' build/lib/electron.ts
-replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
+replace "s|Microsoft Corporation|${ORG_NAME}|" build/lib/electron.ts
+replace "s|([0-9]) Microsoft|\1 ${ORG_NAME}|" build/lib/electron.ts
 
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
@@ -356,9 +369,10 @@ if [[ "${OS_NAME}" == "linux" ]]; then
   # snapcraft.yaml
   sed -i 's|Visual Studio Code|VSCodium|' resources/linux/rpm/code.spec.template
 elif [[ "${OS_NAME}" == "windows" ]]; then
-  # code.iss
-  sed -i 's|https://code.visualstudio.com|https://vscodium.com|' build/win32/code.iss
-  sed -i 's|Microsoft Corporation|VSCodium|' build/win32/code.iss
+  # code.iss — Arclen: publisher, URLs and setup filename (the VSCodium pipeline hardcoded its own brand here)
+  sed -i "s|https://code.visualstudio.com|https://github.com/${GH_REPO_PATH}|" build/win32/code.iss
+  sed -i "s|Microsoft Corporation|${ORG_NAME}|" build/win32/code.iss
+  sed -i "s|OutputBaseFilename=VSCodeSetup|OutputBaseFilename=${APP_NAME}Setup|" build/win32/code.iss
 fi
 
 cd ..

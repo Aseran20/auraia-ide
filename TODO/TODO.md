@@ -10,7 +10,7 @@
 
 ## Avant distribution externe (a grouper, re-package requis)
 - [ ] Re-verrouiller les extensions: Ctrl+Shift+X, marketplace, auto-update - rouverts pour usage perso, a fermer pour le produit (TRACKER A5) - effort: S
-- [ ] Passe branding installeur + copyright electron.ts - publisher/licence/logo wizard fuient "VSCodium" (TRACKER section 9, IN1-IN4) - effort: L
+- [x] Passe branding installeur + copyright electron.ts - publisher/licence/logo wizard fuient "VSCodium" (TRACKER section 9, IN1-IN4) - effort: L
 
 ## Au fil de l'eau
 - [ ] Passe vocab: etats vides + titres restants en anglais M&A - coherence langue produit (TRACKER V1/E2) - effort: M
