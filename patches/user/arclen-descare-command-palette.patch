@@ -1,8 +1,8 @@
 diff --git a/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts b/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
-index e05b71b..abf5512 100644
+index e05b71b..08a4d52 100644
 --- a/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
 +++ b/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts
-@@ -225,6 +225,16 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
+@@ -225,6 +225,19 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
  
  	private getGlobalCommandPicks(): ICommandQuickPick[] {
  		const globalCommandPicks: ICommandQuickPick[] = [];
@@ -16,15 +16,18 @@ index e05b71b..abf5512 100644
 +			'developer', 'debug', 'task', 'test', 'notebook', 'snippet',
 +			'emmet', 'typescript', 'javascript', 'references', 'merge', 'ports'
 +		];
++		// Arclen: commands kept visible even though their category is hidden above — operator-useful
++		// (Reload Window after a crash, Toggle Developer Tools to inspect). Matched by exact command id.
++		const arclenAlwaysShow = ['workbench.action.reloadWindow', 'workbench.action.toggleDevTools'];
  		const scopedContextKeyService = this.editorService.activeEditorPane?.scopedContextKeyService || this.editorGroupService.activeGroup.scopedContextKeyService;
  		const globalCommandsMenu = this.menuService.getMenuActions(MenuId.CommandPalette, scopedContextKeyService);
  		const globalCommandsMenuActions = globalCommandsMenu
-@@ -238,6 +248,10 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
+@@ -238,6 +251,10 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
  
  			// Category
  			const category = typeof action.item.category === 'string' ? action.item.category : action.item.category?.value;
 +			// Arclen: skip developer/"code" command groups in the palette (see arclenHiddenCategories above).
-+			if (category && arclenHiddenCategories.some(c => category.toLowerCase().includes(c))) {
++			if (category && !arclenAlwaysShow.includes(action.item.id) && arclenHiddenCategories.some(c => category.toLowerCase().includes(c))) {
 +				continue;
 +			}
  			if (category) {
