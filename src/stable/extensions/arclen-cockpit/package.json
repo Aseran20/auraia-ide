@@ -1,0 +1,29 @@
+{
+	"name": "arclen-cockpit",
+	"displayName": "Arclen Cockpit",
+	"description": "Deal cockpit webview — renders the per-deal control tower (built by build_cockpit_view.py) and writes comments back to comments.json (the humain→Claude channel).",
+	"categories": [
+		"Other"
+	],
+	"version": "1.0.0",
+	"publisher": "arclen",
+	"license": "MIT",
+	"engines": {
+		"vscode": "*"
+	},
+	"main": "./extension.js",
+	"activationEvents": [],
+	"contributes": {
+		"commands": [
+			{
+				"command": "arclen-cockpit.open",
+				"title": "Open Deal Cockpit",
+				"category": "Arclen"
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Aseran20/auraia-ide.git"
+	}
+}
