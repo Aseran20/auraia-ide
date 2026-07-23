@@ -1,0 +1,8 @@
+[clean] out
+[transpile] src → out
+[transpile] Found 5927 files
+[resources] Copying all non-TS files to out...
+[resources] Copied 1277 files
+[transpile] Done in 9587ms
+
+✓ Total: 9712ms

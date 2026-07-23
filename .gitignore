@@ -39,3 +39,6 @@ dev/vendor/
 dev/claude-*.png
 dev/*.png
 .claude/.live-edits
+
+# Build artifacts binaires régénérables (rebuild pipeline)
+_artifacts/

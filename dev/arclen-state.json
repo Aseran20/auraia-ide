@@ -1,0 +1,43 @@
+{
+  "title": "Welcome - Arclen Dev",
+  "url": "vscode-file://vscode-app/c:/Users/AdrianTurion/devprojects/2-auraia/auraia-ide/vscode/out/vs/code/electron-browser/workbench/workbench-dev.html",
+  "activityBar": [
+    "Explorer (Ctrl+Shift+E)",
+    "Search (Ctrl+Shift+F)",
+    "Source Control (Ctrl+Shift+G)",
+    "Run and Debug (Ctrl+Shift+D)",
+    "Extensions (Ctrl+Shift+X)",
+    "Accounts",
+    "Manage"
+  ],
+  "menubarItems": [
+    "File",
+    "Edit",
+    "Terminal",
+    ""
+  ],
+  "statusBarLeft": [
+    "",
+    "0 0"
+  ],
+  "statusBarRight": [
+    ""
+  ],
+  "welcomeTitle": "Arclen Dev",
+  "welcomeSubtitle": "M&A Intelligence Platform",
+  "welcomeStartItems": [
+    "New File...",
+    "Open File...",
+    "Open Folder...",
+    "open a folder"
+  ],
+  "welcomeCategories": [],
+  "leaks": {
+    "microsoft": 0,
+    "vscodium": 1,
+    "codeOss": 0,
+    "vscodeBrand": 0,
+    "arclen": 4
+  },
+  "bodyTextSample": "File\nEdit\nTerminal\nSearch\nEXPLORER\nNO FOLDER OPENED\n\nYou have not yet opened a folder.\n\nOpen Folder\n\nOpening a folder will close all currently open editors. To keep them open, add a folder instead.\n\nYou can clone a repository locally.\n\nClone Repository\n\nTo learn more about how to use Git and source control in Arclen read our docs.\n\nOUTLINE\nTIMELINE\nWelcome\nArclen Dev\n\nM&A Intelligence Platform\n\nStart\nNew File...\nOpen File...\nOpen Folder...\nRecent\nYou have no recent folders,open a folderto start.\nWalkthroughs\nGet started with Arclen\nCustomize your editor, learn the basics, and start coding\nLearn the Fundamentals\nArclen Announcements\nSecuring VSCodium\nUse minReleaseAge with auto-update\n\nShow welcome page on startup\n\n 0 \n 0"
+}

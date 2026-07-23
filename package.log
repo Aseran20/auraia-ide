@@ -1,0 +1,2 @@
+++ cd cli
+./build_cli.sh: line 5: cd: cli: No such file or directory

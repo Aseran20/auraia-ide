@@ -1,0 +1,2878 @@
+++ cd cli
+++ export CARGO_NET_GIT_FETCH_WITH_CLI=true
+++ CARGO_NET_GIT_FETCH_WITH_CLI=true
++++ echo Arclen
++++ awk '{print tolower($0)}'
+++ export VSCODE_CLI_APP_NAME=arclen
+++ VSCODE_CLI_APP_NAME=arclen
++++ node -p 'require("../product.json").serverApplicationName'
+++ export VSCODE_CLI_BINARY_NAME=arclen-server
+++ VSCODE_CLI_BINARY_NAME=arclen-server
+++ export VSCODE_CLI_UPDATE_ENDPOINT=https://raw.githubusercontent.com/VSCodium/versions/refs/heads/master
+++ VSCODE_CLI_UPDATE_ENDPOINT=https://raw.githubusercontent.com/VSCodium/versions/refs/heads/master
+++ [[ stable == \i\n\s\i\d\e\r ]]
+++ export VSCODE_CLI_DOWNLOAD_ENDPOINT=https://github.com/VSCodium/vscodium/releases
+++ VSCODE_CLI_DOWNLOAD_ENDPOINT=https://github.com/VSCodium/vscodium/releases
++++ node -p 'require("../product.json").tunnelApplicationName'
+++ TUNNEL_APPLICATION_NAME=arclen-tunnel
++++ node -p 'require("../product.json").nameShort'
+++ NAME_SHORT=Arclen
+++ npm pack @vscode/openssl-prebuilt@0.0.11
+npm notice
+npm notice 📦  @vscode/openssl-prebuilt@0.0.11
+npm notice Tarball Contents
+npm notice 1.1kB LICENSE
+npm notice 1.1kB README.md
+npm notice 3.8kB out/arm-linux/include/openssl/aes.h
+npm notice 398B out/arm-linux/include/openssl/asn1_mac.h
+npm notice 61.0kB out/arm-linux/include/openssl/asn1.h
+npm notice 7.7kB out/arm-linux/include/openssl/asn1err.h
+npm notice 36.0kB out/arm-linux/include/openssl/asn1t.h
+npm notice 3.2kB out/arm-linux/include/openssl/async.h
+npm notice 842B out/arm-linux/include/openssl/asyncerr.h
+npm notice 39.9kB out/arm-linux/include/openssl/bio.h
+npm notice 3.1kB out/arm-linux/include/openssl/bioerr.h
+npm notice 2.7kB out/arm-linux/include/openssl/blowfish.h
+npm notice 23.8kB out/arm-linux/include/openssl/bn.h
+npm notice 1.9kB out/arm-linux/include/openssl/bnerr.h
+npm notice 1.7kB out/arm-linux/include/openssl/buffer.h
+npm notice 594B out/arm-linux/include/openssl/buffererr.h
+npm notice 5.1kB out/arm-linux/include/openssl/camellia.h
+npm notice 2.1kB out/arm-linux/include/openssl/cast.h
+npm notice 1.6kB out/arm-linux/include/openssl/cmac.h
+npm notice 1.7kB out/arm-linux/include/openssl/cmp_util.h
+npm notice 41.2kB out/arm-linux/include/openssl/cmp.h
+npm notice 6.2kB out/arm-linux/include/openssl/cmperr.h
+npm notice 34.1kB out/arm-linux/include/openssl/cms.h
+npm notice 6.7kB out/arm-linux/include/openssl/cmserr.h
+npm notice 1.4kB out/arm-linux/include/openssl/comp.h
+npm notice 813B out/arm-linux/include/openssl/comperr.h
+npm notice 1.4kB out/arm-linux/include/openssl/conf_api.h
+npm notice 10.6kB out/arm-linux/include/openssl/conf.h
+npm notice 2.2kB out/arm-linux/include/openssl/conferr.h
+npm notice 3.3kB out/arm-linux/include/openssl/configuration.h
+npm notice 1.2kB out/arm-linux/include/openssl/conftypes.h
+npm notice 48.7kB out/arm-linux/include/openssl/core_dispatch.h
+npm notice 29.4kB out/arm-linux/include/openssl/core_names.h
+npm notice 1.1kB out/arm-linux/include/openssl/core_object.h
+npm notice 8.1kB out/arm-linux/include/openssl/core.h
+npm notice 14.7kB out/arm-linux/include/openssl/crmf.h
+npm notice 2.0kB out/arm-linux/include/openssl/crmferr.h
+npm notice 24.1kB out/arm-linux/include/openssl/crypto.h
+npm notice 80.4kB out/arm-linux/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/arm-linux/include/openssl/cryptoerr.h
+npm notice 22.8kB out/arm-linux/include/openssl/ct.h
+npm notice 1.7kB out/arm-linux/include/openssl/cterr.h
+npm notice 5.8kB out/arm-linux/include/openssl/decoder.h
+npm notice 791B out/arm-linux/include/openssl/decodererr.h
+npm notice 8.5kB out/arm-linux/include/openssl/des.h
+npm notice 15.3kB out/arm-linux/include/openssl/dh.h
+npm notice 2.4kB out/arm-linux/include/openssl/dherr.h
+npm notice 12.5kB out/arm-linux/include/openssl/dsa.h
+npm notice 1.6kB out/arm-linux/include/openssl/dsaerr.h
+npm notice 1.5kB out/arm-linux/include/openssl/dtls1.h
+npm notice 8.8kB out/arm-linux/include/openssl/e_os2.h
+npm notice 1.0kB out/arm-linux/include/openssl/ebcdic.h
+npm notice 67.7kB out/arm-linux/include/openssl/ec.h
+npm notice 361B out/arm-linux/include/openssl/ecdh.h
+npm notice 361B out/arm-linux/include/openssl/ecdsa.h
+npm notice 5.4kB out/arm-linux/include/openssl/ecerr.h
+npm notice 5.5kB out/arm-linux/include/openssl/encoder.h
+npm notice 791B out/arm-linux/include/openssl/encodererr.h
+npm notice 38.8kB out/arm-linux/include/openssl/engine.h
+npm notice 2.8kB out/arm-linux/include/openssl/engineerr.h
+npm notice 22.0kB out/arm-linux/include/openssl/err.h
+npm notice 9.0kB out/arm-linux/include/openssl/ess.h
+npm notice 1.1kB out/arm-linux/include/openssl/esserr.h
+npm notice 103.9kB out/arm-linux/include/openssl/evp.h
+npm notice 7.4kB out/arm-linux/include/openssl/evperr.h
+npm notice 2.3kB out/arm-linux/include/openssl/fips_names.h
+npm notice 1.0kB out/arm-linux/include/openssl/fipskey.h
+npm notice 2.1kB out/arm-linux/include/openssl/hmac.h
+npm notice 5.3kB out/arm-linux/include/openssl/http.h
+npm notice 2.5kB out/arm-linux/include/openssl/httperr.h
+npm notice 3.0kB out/arm-linux/include/openssl/idea.h
+npm notice 5.6kB out/arm-linux/include/openssl/kdf.h
+npm notice 482B out/arm-linux/include/openssl/kdferr.h
+npm notice 14.6kB out/arm-linux/include/openssl/lhash.h
+npm notice 10.7kB out/arm-linux/include/openssl/macros.h
+npm notice 1.5kB out/arm-linux/include/openssl/md2.h
+npm notice 1.7kB out/arm-linux/include/openssl/md4.h
+npm notice 1.7kB out/arm-linux/include/openssl/md5.h
+npm notice 1.4kB out/arm-linux/include/openssl/mdc2.h
+npm notice 10.8kB out/arm-linux/include/openssl/modes.h
+npm notice 228.7kB out/arm-linux/include/openssl/obj_mac.h
+npm notice 6.8kB out/arm-linux/include/openssl/objects.h
+npm notice 782B out/arm-linux/include/openssl/objectserr.h
+npm notice 29.4kB out/arm-linux/include/openssl/ocsp.h
+npm notice 2.2kB out/arm-linux/include/openssl/ocsperr.h
+npm notice 515B out/arm-linux/include/openssl/opensslconf.h
+npm notice 3.2kB out/arm-linux/include/openssl/opensslv.h
+npm notice 562B out/arm-linux/include/openssl/ossl_typ.h
+npm notice 2.8kB out/arm-linux/include/openssl/param_build.h
+npm notice 7.3kB out/arm-linux/include/openssl/params.h
+npm notice 25.8kB out/arm-linux/include/openssl/pem.h
+npm notice 531B out/arm-linux/include/openssl/pem2.h
+npm notice 2.6kB out/arm-linux/include/openssl/pemerr.h
+npm notice 22.5kB out/arm-linux/include/openssl/pkcs7.h
+npm notice 3.0kB out/arm-linux/include/openssl/pkcs7err.h
+npm notice 19.4kB out/arm-linux/include/openssl/pkcs12.h
+npm notice 1.8kB out/arm-linux/include/openssl/pkcs12err.h
+npm notice 981B out/arm-linux/include/openssl/prov_ssl.h
+npm notice 8.3kB out/arm-linux/include/openssl/proverr.h
+npm notice 2.3kB out/arm-linux/include/openssl/provider.h
+npm notice 4.0kB out/arm-linux/include/openssl/rand.h
+npm notice 3.3kB out/arm-linux/include/openssl/randerr.h
+npm notice 2.4kB out/arm-linux/include/openssl/rc2.h
+npm notice 1.2kB out/arm-linux/include/openssl/rc4.h
+npm notice 2.9kB out/arm-linux/include/openssl/rc5.h
+npm notice 1.7kB out/arm-linux/include/openssl/ripemd.h
+npm notice 28.3kB out/arm-linux/include/openssl/rsa.h
+npm notice 5.7kB out/arm-linux/include/openssl/rsaerr.h
+npm notice 18.5kB out/arm-linux/include/openssl/safestack.h
+npm notice 4.0kB out/arm-linux/include/openssl/seed.h
+npm notice 4.1kB out/arm-linux/include/openssl/self_test.h
+npm notice 4.7kB out/arm-linux/include/openssl/sha.h
+npm notice 15.5kB out/arm-linux/include/openssl/srp.h
+npm notice 1.4kB out/arm-linux/include/openssl/srtp.h
+npm notice 125.0kB out/arm-linux/include/openssl/ssl.h
+npm notice 658B out/arm-linux/include/openssl/ssl2.h
+npm notice 14.8kB out/arm-linux/include/openssl/ssl3.h
+npm notice 27.0kB out/arm-linux/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/arm-linux/include/openssl/sslerr.h
+npm notice 3.3kB out/arm-linux/include/openssl/stack.h
+npm notice 15.2kB out/arm-linux/include/openssl/store.h
+npm notice 2.1kB out/arm-linux/include/openssl/storeerr.h
+npm notice 1.3kB out/arm-linux/include/openssl/symhacks.h
+npm notice 71.3kB out/arm-linux/include/openssl/tls1.h
+npm notice 10.4kB out/arm-linux/include/openssl/trace.h
+npm notice 19.8kB out/arm-linux/include/openssl/ts.h
+npm notice 3.1kB out/arm-linux/include/openssl/tserr.h
+npm notice 1.8kB out/arm-linux/include/openssl/txt_db.h
+npm notice 7.3kB out/arm-linux/include/openssl/types.h
+npm notice 19.3kB out/arm-linux/include/openssl/ui.h
+npm notice 1.4kB out/arm-linux/include/openssl/uierr.h
+npm notice 1.9kB out/arm-linux/include/openssl/whrlpool.h
+npm notice 52.1kB out/arm-linux/include/openssl/x509_vfy.h
+npm notice 71.6kB out/arm-linux/include/openssl/x509.h
+npm notice 3.3kB out/arm-linux/include/openssl/x509err.h
+npm notice 94.1kB out/arm-linux/include/openssl/x509v3.h
+npm notice 4.8kB out/arm-linux/include/openssl/x509v3err.h
+npm notice 5.9MB out/arm-linux/lib/libcrypto.a
+npm notice 735.5kB out/arm-linux/lib/libssl.a
+npm notice 329B out/arm-linux/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/arm-linux/lib/pkgconfig/libssl.pc
+npm notice 232B out/arm-linux/lib/pkgconfig/openssl.pc
+npm notice 3.8kB out/arm64-linux-musl/include/openssl/aes.h
+npm notice 398B out/arm64-linux-musl/include/openssl/asn1_mac.h
+npm notice 61.0kB out/arm64-linux-musl/include/openssl/asn1.h
+npm notice 7.7kB out/arm64-linux-musl/include/openssl/asn1err.h
+npm notice 36.0kB out/arm64-linux-musl/include/openssl/asn1t.h
+npm notice 3.2kB out/arm64-linux-musl/include/openssl/async.h
+npm notice 842B out/arm64-linux-musl/include/openssl/asyncerr.h
+npm notice 39.9kB out/arm64-linux-musl/include/openssl/bio.h
+npm notice 3.1kB out/arm64-linux-musl/include/openssl/bioerr.h
+npm notice 2.7kB out/arm64-linux-musl/include/openssl/blowfish.h
+npm notice 23.8kB out/arm64-linux-musl/include/openssl/bn.h
+npm notice 1.9kB out/arm64-linux-musl/include/openssl/bnerr.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/buffer.h
+npm notice 594B out/arm64-linux-musl/include/openssl/buffererr.h
+npm notice 5.1kB out/arm64-linux-musl/include/openssl/camellia.h
+npm notice 2.1kB out/arm64-linux-musl/include/openssl/cast.h
+npm notice 1.6kB out/arm64-linux-musl/include/openssl/cmac.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/cmp_util.h
+npm notice 41.2kB out/arm64-linux-musl/include/openssl/cmp.h
+npm notice 6.2kB out/arm64-linux-musl/include/openssl/cmperr.h
+npm notice 34.1kB out/arm64-linux-musl/include/openssl/cms.h
+npm notice 6.7kB out/arm64-linux-musl/include/openssl/cmserr.h
+npm notice 1.4kB out/arm64-linux-musl/include/openssl/comp.h
+npm notice 813B out/arm64-linux-musl/include/openssl/comperr.h
+npm notice 1.4kB out/arm64-linux-musl/include/openssl/conf_api.h
+npm notice 10.6kB out/arm64-linux-musl/include/openssl/conf.h
+npm notice 2.2kB out/arm64-linux-musl/include/openssl/conferr.h
+npm notice 3.3kB out/arm64-linux-musl/include/openssl/configuration.h
+npm notice 1.2kB out/arm64-linux-musl/include/openssl/conftypes.h
+npm notice 48.7kB out/arm64-linux-musl/include/openssl/core_dispatch.h
+npm notice 29.4kB out/arm64-linux-musl/include/openssl/core_names.h
+npm notice 1.1kB out/arm64-linux-musl/include/openssl/core_object.h
+npm notice 8.1kB out/arm64-linux-musl/include/openssl/core.h
+npm notice 14.7kB out/arm64-linux-musl/include/openssl/crmf.h
+npm notice 2.0kB out/arm64-linux-musl/include/openssl/crmferr.h
+npm notice 24.1kB out/arm64-linux-musl/include/openssl/crypto.h
+npm notice 80.4kB out/arm64-linux-musl/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/arm64-linux-musl/include/openssl/cryptoerr.h
+npm notice 22.8kB out/arm64-linux-musl/include/openssl/ct.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/cterr.h
+npm notice 5.8kB out/arm64-linux-musl/include/openssl/decoder.h
+npm notice 791B out/arm64-linux-musl/include/openssl/decodererr.h
+npm notice 8.5kB out/arm64-linux-musl/include/openssl/des.h
+npm notice 15.3kB out/arm64-linux-musl/include/openssl/dh.h
+npm notice 2.4kB out/arm64-linux-musl/include/openssl/dherr.h
+npm notice 12.5kB out/arm64-linux-musl/include/openssl/dsa.h
+npm notice 1.6kB out/arm64-linux-musl/include/openssl/dsaerr.h
+npm notice 1.5kB out/arm64-linux-musl/include/openssl/dtls1.h
+npm notice 8.8kB out/arm64-linux-musl/include/openssl/e_os2.h
+npm notice 1.0kB out/arm64-linux-musl/include/openssl/ebcdic.h
+npm notice 67.7kB out/arm64-linux-musl/include/openssl/ec.h
+npm notice 361B out/arm64-linux-musl/include/openssl/ecdh.h
+npm notice 361B out/arm64-linux-musl/include/openssl/ecdsa.h
+npm notice 5.4kB out/arm64-linux-musl/include/openssl/ecerr.h
+npm notice 5.5kB out/arm64-linux-musl/include/openssl/encoder.h
+npm notice 791B out/arm64-linux-musl/include/openssl/encodererr.h
+npm notice 38.8kB out/arm64-linux-musl/include/openssl/engine.h
+npm notice 2.8kB out/arm64-linux-musl/include/openssl/engineerr.h
+npm notice 22.0kB out/arm64-linux-musl/include/openssl/err.h
+npm notice 9.0kB out/arm64-linux-musl/include/openssl/ess.h
+npm notice 1.1kB out/arm64-linux-musl/include/openssl/esserr.h
+npm notice 103.9kB out/arm64-linux-musl/include/openssl/evp.h
+npm notice 7.4kB out/arm64-linux-musl/include/openssl/evperr.h
+npm notice 2.3kB out/arm64-linux-musl/include/openssl/fips_names.h
+npm notice 1.0kB out/arm64-linux-musl/include/openssl/fipskey.h
+npm notice 2.1kB out/arm64-linux-musl/include/openssl/hmac.h
+npm notice 5.3kB out/arm64-linux-musl/include/openssl/http.h
+npm notice 2.5kB out/arm64-linux-musl/include/openssl/httperr.h
+npm notice 3.0kB out/arm64-linux-musl/include/openssl/idea.h
+npm notice 5.6kB out/arm64-linux-musl/include/openssl/kdf.h
+npm notice 482B out/arm64-linux-musl/include/openssl/kdferr.h
+npm notice 14.6kB out/arm64-linux-musl/include/openssl/lhash.h
+npm notice 10.7kB out/arm64-linux-musl/include/openssl/macros.h
+npm notice 1.5kB out/arm64-linux-musl/include/openssl/md2.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/md4.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/md5.h
+npm notice 1.4kB out/arm64-linux-musl/include/openssl/mdc2.h
+npm notice 10.8kB out/arm64-linux-musl/include/openssl/modes.h
+npm notice 228.7kB out/arm64-linux-musl/include/openssl/obj_mac.h
+npm notice 6.8kB out/arm64-linux-musl/include/openssl/objects.h
+npm notice 782B out/arm64-linux-musl/include/openssl/objectserr.h
+npm notice 29.4kB out/arm64-linux-musl/include/openssl/ocsp.h
+npm notice 2.2kB out/arm64-linux-musl/include/openssl/ocsperr.h
+npm notice 515B out/arm64-linux-musl/include/openssl/opensslconf.h
+npm notice 3.2kB out/arm64-linux-musl/include/openssl/opensslv.h
+npm notice 562B out/arm64-linux-musl/include/openssl/ossl_typ.h
+npm notice 2.8kB out/arm64-linux-musl/include/openssl/param_build.h
+npm notice 7.3kB out/arm64-linux-musl/include/openssl/params.h
+npm notice 25.8kB out/arm64-linux-musl/include/openssl/pem.h
+npm notice 531B out/arm64-linux-musl/include/openssl/pem2.h
+npm notice 2.6kB out/arm64-linux-musl/include/openssl/pemerr.h
+npm notice 22.5kB out/arm64-linux-musl/include/openssl/pkcs7.h
+npm notice 3.0kB out/arm64-linux-musl/include/openssl/pkcs7err.h
+npm notice 19.4kB out/arm64-linux-musl/include/openssl/pkcs12.h
+npm notice 1.8kB out/arm64-linux-musl/include/openssl/pkcs12err.h
+npm notice 981B out/arm64-linux-musl/include/openssl/prov_ssl.h
+npm notice 8.3kB out/arm64-linux-musl/include/openssl/proverr.h
+npm notice 2.3kB out/arm64-linux-musl/include/openssl/provider.h
+npm notice 4.0kB out/arm64-linux-musl/include/openssl/rand.h
+npm notice 3.3kB out/arm64-linux-musl/include/openssl/randerr.h
+npm notice 2.4kB out/arm64-linux-musl/include/openssl/rc2.h
+npm notice 1.2kB out/arm64-linux-musl/include/openssl/rc4.h
+npm notice 2.9kB out/arm64-linux-musl/include/openssl/rc5.h
+npm notice 1.7kB out/arm64-linux-musl/include/openssl/ripemd.h
+npm notice 28.3kB out/arm64-linux-musl/include/openssl/rsa.h
+npm notice 5.7kB out/arm64-linux-musl/include/openssl/rsaerr.h
+npm notice 18.5kB out/arm64-linux-musl/include/openssl/safestack.h
+npm notice 4.0kB out/arm64-linux-musl/include/openssl/seed.h
+npm notice 4.1kB out/arm64-linux-musl/include/openssl/self_test.h
+npm notice 4.7kB out/arm64-linux-musl/include/openssl/sha.h
+npm notice 15.5kB out/arm64-linux-musl/include/openssl/srp.h
+npm notice 1.4kB out/arm64-linux-musl/include/openssl/srtp.h
+npm notice 125.0kB out/arm64-linux-musl/include/openssl/ssl.h
+npm notice 658B out/arm64-linux-musl/include/openssl/ssl2.h
+npm notice 14.8kB out/arm64-linux-musl/include/openssl/ssl3.h
+npm notice 27.0kB out/arm64-linux-musl/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/arm64-linux-musl/include/openssl/sslerr.h
+npm notice 3.3kB out/arm64-linux-musl/include/openssl/stack.h
+npm notice 15.2kB out/arm64-linux-musl/include/openssl/store.h
+npm notice 2.1kB out/arm64-linux-musl/include/openssl/storeerr.h
+npm notice 1.3kB out/arm64-linux-musl/include/openssl/symhacks.h
+npm notice 71.3kB out/arm64-linux-musl/include/openssl/tls1.h
+npm notice 10.4kB out/arm64-linux-musl/include/openssl/trace.h
+npm notice 19.8kB out/arm64-linux-musl/include/openssl/ts.h
+npm notice 3.1kB out/arm64-linux-musl/include/openssl/tserr.h
+npm notice 1.8kB out/arm64-linux-musl/include/openssl/txt_db.h
+npm notice 7.3kB out/arm64-linux-musl/include/openssl/types.h
+npm notice 19.3kB out/arm64-linux-musl/include/openssl/ui.h
+npm notice 1.4kB out/arm64-linux-musl/include/openssl/uierr.h
+npm notice 1.9kB out/arm64-linux-musl/include/openssl/whrlpool.h
+npm notice 52.1kB out/arm64-linux-musl/include/openssl/x509_vfy.h
+npm notice 71.6kB out/arm64-linux-musl/include/openssl/x509.h
+npm notice 3.3kB out/arm64-linux-musl/include/openssl/x509err.h
+npm notice 94.1kB out/arm64-linux-musl/include/openssl/x509v3.h
+npm notice 4.8kB out/arm64-linux-musl/include/openssl/x509v3err.h
+npm notice 10.0MB out/arm64-linux-musl/lib/libcrypto.a
+npm notice 1.3MB out/arm64-linux-musl/lib/libssl.a
+npm notice 320B out/arm64-linux-musl/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/arm64-linux-musl/lib/pkgconfig/libssl.pc
+npm notice 232B out/arm64-linux-musl/lib/pkgconfig/openssl.pc
+npm notice 3.8kB out/arm64-linux/include/openssl/aes.h
+npm notice 398B out/arm64-linux/include/openssl/asn1_mac.h
+npm notice 61.0kB out/arm64-linux/include/openssl/asn1.h
+npm notice 7.7kB out/arm64-linux/include/openssl/asn1err.h
+npm notice 36.0kB out/arm64-linux/include/openssl/asn1t.h
+npm notice 3.2kB out/arm64-linux/include/openssl/async.h
+npm notice 842B out/arm64-linux/include/openssl/asyncerr.h
+npm notice 39.9kB out/arm64-linux/include/openssl/bio.h
+npm notice 3.1kB out/arm64-linux/include/openssl/bioerr.h
+npm notice 2.7kB out/arm64-linux/include/openssl/blowfish.h
+npm notice 23.8kB out/arm64-linux/include/openssl/bn.h
+npm notice 1.9kB out/arm64-linux/include/openssl/bnerr.h
+npm notice 1.7kB out/arm64-linux/include/openssl/buffer.h
+npm notice 594B out/arm64-linux/include/openssl/buffererr.h
+npm notice 5.1kB out/arm64-linux/include/openssl/camellia.h
+npm notice 2.1kB out/arm64-linux/include/openssl/cast.h
+npm notice 1.6kB out/arm64-linux/include/openssl/cmac.h
+npm notice 1.7kB out/arm64-linux/include/openssl/cmp_util.h
+npm notice 41.2kB out/arm64-linux/include/openssl/cmp.h
+npm notice 6.2kB out/arm64-linux/include/openssl/cmperr.h
+npm notice 34.1kB out/arm64-linux/include/openssl/cms.h
+npm notice 6.7kB out/arm64-linux/include/openssl/cmserr.h
+npm notice 1.4kB out/arm64-linux/include/openssl/comp.h
+npm notice 813B out/arm64-linux/include/openssl/comperr.h
+npm notice 1.4kB out/arm64-linux/include/openssl/conf_api.h
+npm notice 10.6kB out/arm64-linux/include/openssl/conf.h
+npm notice 2.2kB out/arm64-linux/include/openssl/conferr.h
+npm notice 3.3kB out/arm64-linux/include/openssl/configuration.h
+npm notice 1.2kB out/arm64-linux/include/openssl/conftypes.h
+npm notice 48.7kB out/arm64-linux/include/openssl/core_dispatch.h
+npm notice 29.4kB out/arm64-linux/include/openssl/core_names.h
+npm notice 1.1kB out/arm64-linux/include/openssl/core_object.h
+npm notice 8.1kB out/arm64-linux/include/openssl/core.h
+npm notice 14.7kB out/arm64-linux/include/openssl/crmf.h
+npm notice 2.0kB out/arm64-linux/include/openssl/crmferr.h
+npm notice 24.1kB out/arm64-linux/include/openssl/crypto.h
+npm notice 80.4kB out/arm64-linux/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/arm64-linux/include/openssl/cryptoerr.h
+npm notice 22.8kB out/arm64-linux/include/openssl/ct.h
+npm notice 1.7kB out/arm64-linux/include/openssl/cterr.h
+npm notice 5.8kB out/arm64-linux/include/openssl/decoder.h
+npm notice 791B out/arm64-linux/include/openssl/decodererr.h
+npm notice 8.5kB out/arm64-linux/include/openssl/des.h
+npm notice 15.3kB out/arm64-linux/include/openssl/dh.h
+npm notice 2.4kB out/arm64-linux/include/openssl/dherr.h
+npm notice 12.5kB out/arm64-linux/include/openssl/dsa.h
+npm notice 1.6kB out/arm64-linux/include/openssl/dsaerr.h
+npm notice 1.5kB out/arm64-linux/include/openssl/dtls1.h
+npm notice 8.8kB out/arm64-linux/include/openssl/e_os2.h
+npm notice 1.0kB out/arm64-linux/include/openssl/ebcdic.h
+npm notice 67.7kB out/arm64-linux/include/openssl/ec.h
+npm notice 361B out/arm64-linux/include/openssl/ecdh.h
+npm notice 361B out/arm64-linux/include/openssl/ecdsa.h
+npm notice 5.4kB out/arm64-linux/include/openssl/ecerr.h
+npm notice 5.5kB out/arm64-linux/include/openssl/encoder.h
+npm notice 791B out/arm64-linux/include/openssl/encodererr.h
+npm notice 38.8kB out/arm64-linux/include/openssl/engine.h
+npm notice 2.8kB out/arm64-linux/include/openssl/engineerr.h
+npm notice 22.0kB out/arm64-linux/include/openssl/err.h
+npm notice 9.0kB out/arm64-linux/include/openssl/ess.h
+npm notice 1.1kB out/arm64-linux/include/openssl/esserr.h
+npm notice 103.9kB out/arm64-linux/include/openssl/evp.h
+npm notice 7.4kB out/arm64-linux/include/openssl/evperr.h
+npm notice 2.3kB out/arm64-linux/include/openssl/fips_names.h
+npm notice 1.0kB out/arm64-linux/include/openssl/fipskey.h
+npm notice 2.1kB out/arm64-linux/include/openssl/hmac.h
+npm notice 5.3kB out/arm64-linux/include/openssl/http.h
+npm notice 2.5kB out/arm64-linux/include/openssl/httperr.h
+npm notice 3.0kB out/arm64-linux/include/openssl/idea.h
+npm notice 5.6kB out/arm64-linux/include/openssl/kdf.h
+npm notice 482B out/arm64-linux/include/openssl/kdferr.h
+npm notice 14.6kB out/arm64-linux/include/openssl/lhash.h
+npm notice 10.7kB out/arm64-linux/include/openssl/macros.h
+npm notice 1.5kB out/arm64-linux/include/openssl/md2.h
+npm notice 1.7kB out/arm64-linux/include/openssl/md4.h
+npm notice 1.7kB out/arm64-linux/include/openssl/md5.h
+npm notice 1.4kB out/arm64-linux/include/openssl/mdc2.h
+npm notice 10.8kB out/arm64-linux/include/openssl/modes.h
+npm notice 228.7kB out/arm64-linux/include/openssl/obj_mac.h
+npm notice 6.8kB out/arm64-linux/include/openssl/objects.h
+npm notice 782B out/arm64-linux/include/openssl/objectserr.h
+npm notice 29.4kB out/arm64-linux/include/openssl/ocsp.h
+npm notice 2.2kB out/arm64-linux/include/openssl/ocsperr.h
+npm notice 515B out/arm64-linux/include/openssl/opensslconf.h
+npm notice 3.2kB out/arm64-linux/include/openssl/opensslv.h
+npm notice 562B out/arm64-linux/include/openssl/ossl_typ.h
+npm notice 2.8kB out/arm64-linux/include/openssl/param_build.h
+npm notice 7.3kB out/arm64-linux/include/openssl/params.h
+npm notice 25.8kB out/arm64-linux/include/openssl/pem.h
+npm notice 531B out/arm64-linux/include/openssl/pem2.h
+npm notice 2.6kB out/arm64-linux/include/openssl/pemerr.h
+npm notice 22.5kB out/arm64-linux/include/openssl/pkcs7.h
+npm notice 3.0kB out/arm64-linux/include/openssl/pkcs7err.h
+npm notice 19.4kB out/arm64-linux/include/openssl/pkcs12.h
+npm notice 1.8kB out/arm64-linux/include/openssl/pkcs12err.h
+npm notice 981B out/arm64-linux/include/openssl/prov_ssl.h
+npm notice 8.3kB out/arm64-linux/include/openssl/proverr.h
+npm notice 2.3kB out/arm64-linux/include/openssl/provider.h
+npm notice 4.0kB out/arm64-linux/include/openssl/rand.h
+npm notice 3.3kB out/arm64-linux/include/openssl/randerr.h
+npm notice 2.4kB out/arm64-linux/include/openssl/rc2.h
+npm notice 1.2kB out/arm64-linux/include/openssl/rc4.h
+npm notice 2.9kB out/arm64-linux/include/openssl/rc5.h
+npm notice 1.7kB out/arm64-linux/include/openssl/ripemd.h
+npm notice 28.3kB out/arm64-linux/include/openssl/rsa.h
+npm notice 5.7kB out/arm64-linux/include/openssl/rsaerr.h
+npm notice 18.5kB out/arm64-linux/include/openssl/safestack.h
+npm notice 4.0kB out/arm64-linux/include/openssl/seed.h
+npm notice 4.1kB out/arm64-linux/include/openssl/self_test.h
+npm notice 4.7kB out/arm64-linux/include/openssl/sha.h
+npm notice 15.5kB out/arm64-linux/include/openssl/srp.h
+npm notice 1.4kB out/arm64-linux/include/openssl/srtp.h
+npm notice 125.0kB out/arm64-linux/include/openssl/ssl.h
+npm notice 658B out/arm64-linux/include/openssl/ssl2.h
+npm notice 14.8kB out/arm64-linux/include/openssl/ssl3.h
+npm notice 27.0kB out/arm64-linux/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/arm64-linux/include/openssl/sslerr.h
+npm notice 3.3kB out/arm64-linux/include/openssl/stack.h
+npm notice 15.2kB out/arm64-linux/include/openssl/store.h
+npm notice 2.1kB out/arm64-linux/include/openssl/storeerr.h
+npm notice 1.3kB out/arm64-linux/include/openssl/symhacks.h
+npm notice 71.3kB out/arm64-linux/include/openssl/tls1.h
+npm notice 10.4kB out/arm64-linux/include/openssl/trace.h
+npm notice 19.8kB out/arm64-linux/include/openssl/ts.h
+npm notice 3.1kB out/arm64-linux/include/openssl/tserr.h
+npm notice 1.8kB out/arm64-linux/include/openssl/txt_db.h
+npm notice 7.3kB out/arm64-linux/include/openssl/types.h
+npm notice 19.3kB out/arm64-linux/include/openssl/ui.h
+npm notice 1.4kB out/arm64-linux/include/openssl/uierr.h
+npm notice 1.9kB out/arm64-linux/include/openssl/whrlpool.h
+npm notice 52.1kB out/arm64-linux/include/openssl/x509_vfy.h
+npm notice 71.6kB out/arm64-linux/include/openssl/x509.h
+npm notice 3.3kB out/arm64-linux/include/openssl/x509err.h
+npm notice 94.1kB out/arm64-linux/include/openssl/x509v3.h
+npm notice 4.8kB out/arm64-linux/include/openssl/x509v3err.h
+npm notice 10.1MB out/arm64-linux/lib/libcrypto.a
+npm notice 1.3MB out/arm64-linux/lib/libssl.a
+npm notice 320B out/arm64-linux/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/arm64-linux/lib/pkgconfig/libssl.pc
+npm notice 232B out/arm64-linux/lib/pkgconfig/openssl.pc
+npm notice 3.8kB out/arm64-osx/include/openssl/aes.h
+npm notice 398B out/arm64-osx/include/openssl/asn1_mac.h
+npm notice 61.0kB out/arm64-osx/include/openssl/asn1.h
+npm notice 7.7kB out/arm64-osx/include/openssl/asn1err.h
+npm notice 36.0kB out/arm64-osx/include/openssl/asn1t.h
+npm notice 3.2kB out/arm64-osx/include/openssl/async.h
+npm notice 842B out/arm64-osx/include/openssl/asyncerr.h
+npm notice 39.9kB out/arm64-osx/include/openssl/bio.h
+npm notice 3.1kB out/arm64-osx/include/openssl/bioerr.h
+npm notice 2.7kB out/arm64-osx/include/openssl/blowfish.h
+npm notice 23.8kB out/arm64-osx/include/openssl/bn.h
+npm notice 1.9kB out/arm64-osx/include/openssl/bnerr.h
+npm notice 1.7kB out/arm64-osx/include/openssl/buffer.h
+npm notice 594B out/arm64-osx/include/openssl/buffererr.h
+npm notice 5.1kB out/arm64-osx/include/openssl/camellia.h
+npm notice 2.1kB out/arm64-osx/include/openssl/cast.h
+npm notice 1.6kB out/arm64-osx/include/openssl/cmac.h
+npm notice 1.7kB out/arm64-osx/include/openssl/cmp_util.h
+npm notice 41.2kB out/arm64-osx/include/openssl/cmp.h
+npm notice 6.2kB out/arm64-osx/include/openssl/cmperr.h
+npm notice 34.1kB out/arm64-osx/include/openssl/cms.h
+npm notice 6.7kB out/arm64-osx/include/openssl/cmserr.h
+npm notice 1.4kB out/arm64-osx/include/openssl/comp.h
+npm notice 813B out/arm64-osx/include/openssl/comperr.h
+npm notice 1.4kB out/arm64-osx/include/openssl/conf_api.h
+npm notice 10.6kB out/arm64-osx/include/openssl/conf.h
+npm notice 2.2kB out/arm64-osx/include/openssl/conferr.h
+npm notice 3.4kB out/arm64-osx/include/openssl/configuration.h
+npm notice 1.2kB out/arm64-osx/include/openssl/conftypes.h
+npm notice 48.7kB out/arm64-osx/include/openssl/core_dispatch.h
+npm notice 29.4kB out/arm64-osx/include/openssl/core_names.h
+npm notice 1.1kB out/arm64-osx/include/openssl/core_object.h
+npm notice 8.1kB out/arm64-osx/include/openssl/core.h
+npm notice 14.7kB out/arm64-osx/include/openssl/crmf.h
+npm notice 2.0kB out/arm64-osx/include/openssl/crmferr.h
+npm notice 24.1kB out/arm64-osx/include/openssl/crypto.h
+npm notice 80.4kB out/arm64-osx/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/arm64-osx/include/openssl/cryptoerr.h
+npm notice 22.8kB out/arm64-osx/include/openssl/ct.h
+npm notice 1.7kB out/arm64-osx/include/openssl/cterr.h
+npm notice 5.8kB out/arm64-osx/include/openssl/decoder.h
+npm notice 791B out/arm64-osx/include/openssl/decodererr.h
+npm notice 8.5kB out/arm64-osx/include/openssl/des.h
+npm notice 15.3kB out/arm64-osx/include/openssl/dh.h
+npm notice 2.4kB out/arm64-osx/include/openssl/dherr.h
+npm notice 12.5kB out/arm64-osx/include/openssl/dsa.h
+npm notice 1.6kB out/arm64-osx/include/openssl/dsaerr.h
+npm notice 1.5kB out/arm64-osx/include/openssl/dtls1.h
+npm notice 8.8kB out/arm64-osx/include/openssl/e_os2.h
+npm notice 1.0kB out/arm64-osx/include/openssl/ebcdic.h
+npm notice 67.7kB out/arm64-osx/include/openssl/ec.h
+npm notice 361B out/arm64-osx/include/openssl/ecdh.h
+npm notice 361B out/arm64-osx/include/openssl/ecdsa.h
+npm notice 5.4kB out/arm64-osx/include/openssl/ecerr.h
+npm notice 5.5kB out/arm64-osx/include/openssl/encoder.h
+npm notice 791B out/arm64-osx/include/openssl/encodererr.h
+npm notice 38.8kB out/arm64-osx/include/openssl/engine.h
+npm notice 2.8kB out/arm64-osx/include/openssl/engineerr.h
+npm notice 22.0kB out/arm64-osx/include/openssl/err.h
+npm notice 9.0kB out/arm64-osx/include/openssl/ess.h
+npm notice 1.1kB out/arm64-osx/include/openssl/esserr.h
+npm notice 103.9kB out/arm64-osx/include/openssl/evp.h
+npm notice 7.4kB out/arm64-osx/include/openssl/evperr.h
+npm notice 2.3kB out/arm64-osx/include/openssl/fips_names.h
+npm notice 1.0kB out/arm64-osx/include/openssl/fipskey.h
+npm notice 2.1kB out/arm64-osx/include/openssl/hmac.h
+npm notice 5.3kB out/arm64-osx/include/openssl/http.h
+npm notice 2.5kB out/arm64-osx/include/openssl/httperr.h
+npm notice 3.0kB out/arm64-osx/include/openssl/idea.h
+npm notice 5.6kB out/arm64-osx/include/openssl/kdf.h
+npm notice 482B out/arm64-osx/include/openssl/kdferr.h
+npm notice 14.6kB out/arm64-osx/include/openssl/lhash.h
+npm notice 10.7kB out/arm64-osx/include/openssl/macros.h
+npm notice 1.5kB out/arm64-osx/include/openssl/md2.h
+npm notice 1.7kB out/arm64-osx/include/openssl/md4.h
+npm notice 1.7kB out/arm64-osx/include/openssl/md5.h
+npm notice 1.4kB out/arm64-osx/include/openssl/mdc2.h
+npm notice 10.8kB out/arm64-osx/include/openssl/modes.h
+npm notice 228.7kB out/arm64-osx/include/openssl/obj_mac.h
+npm notice 6.8kB out/arm64-osx/include/openssl/objects.h
+npm notice 782B out/arm64-osx/include/openssl/objectserr.h
+npm notice 29.4kB out/arm64-osx/include/openssl/ocsp.h
+npm notice 2.2kB out/arm64-osx/include/openssl/ocsperr.h
+npm notice 515B out/arm64-osx/include/openssl/opensslconf.h
+npm notice 3.2kB out/arm64-osx/include/openssl/opensslv.h
+npm notice 562B out/arm64-osx/include/openssl/ossl_typ.h
+npm notice 2.8kB out/arm64-osx/include/openssl/param_build.h
+npm notice 7.3kB out/arm64-osx/include/openssl/params.h
+npm notice 25.8kB out/arm64-osx/include/openssl/pem.h
+npm notice 531B out/arm64-osx/include/openssl/pem2.h
+npm notice 2.6kB out/arm64-osx/include/openssl/pemerr.h
+npm notice 22.5kB out/arm64-osx/include/openssl/pkcs7.h
+npm notice 3.0kB out/arm64-osx/include/openssl/pkcs7err.h
+npm notice 19.4kB out/arm64-osx/include/openssl/pkcs12.h
+npm notice 1.8kB out/arm64-osx/include/openssl/pkcs12err.h
+npm notice 981B out/arm64-osx/include/openssl/prov_ssl.h
+npm notice 8.3kB out/arm64-osx/include/openssl/proverr.h
+npm notice 2.3kB out/arm64-osx/include/openssl/provider.h
+npm notice 4.0kB out/arm64-osx/include/openssl/rand.h
+npm notice 3.3kB out/arm64-osx/include/openssl/randerr.h
+npm notice 2.4kB out/arm64-osx/include/openssl/rc2.h
+npm notice 1.2kB out/arm64-osx/include/openssl/rc4.h
+npm notice 2.9kB out/arm64-osx/include/openssl/rc5.h
+npm notice 1.7kB out/arm64-osx/include/openssl/ripemd.h
+npm notice 28.3kB out/arm64-osx/include/openssl/rsa.h
+npm notice 5.7kB out/arm64-osx/include/openssl/rsaerr.h
+npm notice 18.5kB out/arm64-osx/include/openssl/safestack.h
+npm notice 4.0kB out/arm64-osx/include/openssl/seed.h
+npm notice 4.1kB out/arm64-osx/include/openssl/self_test.h
+npm notice 4.7kB out/arm64-osx/include/openssl/sha.h
+npm notice 15.5kB out/arm64-osx/include/openssl/srp.h
+npm notice 1.4kB out/arm64-osx/include/openssl/srtp.h
+npm notice 125.0kB out/arm64-osx/include/openssl/ssl.h
+npm notice 658B out/arm64-osx/include/openssl/ssl2.h
+npm notice 14.8kB out/arm64-osx/include/openssl/ssl3.h
+npm notice 27.0kB out/arm64-osx/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/arm64-osx/include/openssl/sslerr.h
+npm notice 3.3kB out/arm64-osx/include/openssl/stack.h
+npm notice 15.2kB out/arm64-osx/include/openssl/store.h
+npm notice 2.1kB out/arm64-osx/include/openssl/storeerr.h
+npm notice 1.3kB out/arm64-osx/include/openssl/symhacks.h
+npm notice 71.3kB out/arm64-osx/include/openssl/tls1.h
+npm notice 10.4kB out/arm64-osx/include/openssl/trace.h
+npm notice 19.8kB out/arm64-osx/include/openssl/ts.h
+npm notice 3.1kB out/arm64-osx/include/openssl/tserr.h
+npm notice 1.8kB out/arm64-osx/include/openssl/txt_db.h
+npm notice 7.3kB out/arm64-osx/include/openssl/types.h
+npm notice 19.3kB out/arm64-osx/include/openssl/ui.h
+npm notice 1.4kB out/arm64-osx/include/openssl/uierr.h
+npm notice 1.9kB out/arm64-osx/include/openssl/whrlpool.h
+npm notice 52.1kB out/arm64-osx/include/openssl/x509_vfy.h
+npm notice 71.6kB out/arm64-osx/include/openssl/x509.h
+npm notice 3.3kB out/arm64-osx/include/openssl/x509err.h
+npm notice 94.1kB out/arm64-osx/include/openssl/x509v3.h
+npm notice 4.8kB out/arm64-osx/include/openssl/x509v3err.h
+npm notice 21.7MB out/arm64-osx/lib/libcrypto.a
+npm notice 3.8MB out/arm64-osx/lib/libssl.a
+npm notice 306B out/arm64-osx/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/arm64-osx/lib/pkgconfig/libssl.pc
+npm notice 232B out/arm64-osx/lib/pkgconfig/openssl.pc
+npm notice 729B out/arm64-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+npm notice 801B out/arm64-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+npm notice 3.8kB out/arm64-windows-static/include/openssl/aes.h
+npm notice 398B out/arm64-windows-static/include/openssl/asn1_mac.h
+npm notice 62.1kB out/arm64-windows-static/include/openssl/asn1.h
+npm notice 7.7kB out/arm64-windows-static/include/openssl/asn1err.h
+npm notice 36.9kB out/arm64-windows-static/include/openssl/asn1t.h
+npm notice 3.2kB out/arm64-windows-static/include/openssl/async.h
+npm notice 842B out/arm64-windows-static/include/openssl/asyncerr.h
+npm notice 40.7kB out/arm64-windows-static/include/openssl/bio.h
+npm notice 3.1kB out/arm64-windows-static/include/openssl/bioerr.h
+npm notice 2.7kB out/arm64-windows-static/include/openssl/blowfish.h
+npm notice 23.8kB out/arm64-windows-static/include/openssl/bn.h
+npm notice 1.9kB out/arm64-windows-static/include/openssl/bnerr.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/buffer.h
+npm notice 594B out/arm64-windows-static/include/openssl/buffererr.h
+npm notice 5.1kB out/arm64-windows-static/include/openssl/camellia.h
+npm notice 2.1kB out/arm64-windows-static/include/openssl/cast.h
+npm notice 1.6kB out/arm64-windows-static/include/openssl/cmac.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/cmp_util.h
+npm notice 41.7kB out/arm64-windows-static/include/openssl/cmp.h
+npm notice 6.2kB out/arm64-windows-static/include/openssl/cmperr.h
+npm notice 34.6kB out/arm64-windows-static/include/openssl/cms.h
+npm notice 6.7kB out/arm64-windows-static/include/openssl/cmserr.h
+npm notice 1.4kB out/arm64-windows-static/include/openssl/comp.h
+npm notice 813B out/arm64-windows-static/include/openssl/comperr.h
+npm notice 1.4kB out/arm64-windows-static/include/openssl/conf_api.h
+npm notice 10.8kB out/arm64-windows-static/include/openssl/conf.h
+npm notice 2.2kB out/arm64-windows-static/include/openssl/conferr.h
+npm notice 3.5kB out/arm64-windows-static/include/openssl/configuration.h
+npm notice 1.2kB out/arm64-windows-static/include/openssl/conftypes.h
+npm notice 48.7kB out/arm64-windows-static/include/openssl/core_dispatch.h
+npm notice 29.4kB out/arm64-windows-static/include/openssl/core_names.h
+npm notice 1.1kB out/arm64-windows-static/include/openssl/core_object.h
+npm notice 8.1kB out/arm64-windows-static/include/openssl/core.h
+npm notice 14.9kB out/arm64-windows-static/include/openssl/crmf.h
+npm notice 2.0kB out/arm64-windows-static/include/openssl/crmferr.h
+npm notice 24.6kB out/arm64-windows-static/include/openssl/crypto.h
+npm notice 80.4kB out/arm64-windows-static/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/arm64-windows-static/include/openssl/cryptoerr.h
+npm notice 23.3kB out/arm64-windows-static/include/openssl/ct.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/cterr.h
+npm notice 5.8kB out/arm64-windows-static/include/openssl/decoder.h
+npm notice 791B out/arm64-windows-static/include/openssl/decodererr.h
+npm notice 8.5kB out/arm64-windows-static/include/openssl/des.h
+npm notice 15.3kB out/arm64-windows-static/include/openssl/dh.h
+npm notice 2.4kB out/arm64-windows-static/include/openssl/dherr.h
+npm notice 12.5kB out/arm64-windows-static/include/openssl/dsa.h
+npm notice 1.6kB out/arm64-windows-static/include/openssl/dsaerr.h
+npm notice 1.5kB out/arm64-windows-static/include/openssl/dtls1.h
+npm notice 8.8kB out/arm64-windows-static/include/openssl/e_os2.h
+npm notice 1.0kB out/arm64-windows-static/include/openssl/ebcdic.h
+npm notice 67.7kB out/arm64-windows-static/include/openssl/ec.h
+npm notice 361B out/arm64-windows-static/include/openssl/ecdh.h
+npm notice 361B out/arm64-windows-static/include/openssl/ecdsa.h
+npm notice 5.4kB out/arm64-windows-static/include/openssl/ecerr.h
+npm notice 5.5kB out/arm64-windows-static/include/openssl/encoder.h
+npm notice 791B out/arm64-windows-static/include/openssl/encodererr.h
+npm notice 38.8kB out/arm64-windows-static/include/openssl/engine.h
+npm notice 2.8kB out/arm64-windows-static/include/openssl/engineerr.h
+npm notice 22.5kB out/arm64-windows-static/include/openssl/err.h
+npm notice 9.1kB out/arm64-windows-static/include/openssl/ess.h
+npm notice 1.1kB out/arm64-windows-static/include/openssl/esserr.h
+npm notice 103.9kB out/arm64-windows-static/include/openssl/evp.h
+npm notice 7.4kB out/arm64-windows-static/include/openssl/evperr.h
+npm notice 2.3kB out/arm64-windows-static/include/openssl/fips_names.h
+npm notice 1.0kB out/arm64-windows-static/include/openssl/fipskey.h
+npm notice 2.1kB out/arm64-windows-static/include/openssl/hmac.h
+npm notice 5.3kB out/arm64-windows-static/include/openssl/http.h
+npm notice 2.5kB out/arm64-windows-static/include/openssl/httperr.h
+npm notice 3.0kB out/arm64-windows-static/include/openssl/idea.h
+npm notice 5.6kB out/arm64-windows-static/include/openssl/kdf.h
+npm notice 482B out/arm64-windows-static/include/openssl/kdferr.h
+npm notice 14.9kB out/arm64-windows-static/include/openssl/lhash.h
+npm notice 10.7kB out/arm64-windows-static/include/openssl/macros.h
+npm notice 1.5kB out/arm64-windows-static/include/openssl/md2.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/md4.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/md5.h
+npm notice 1.4kB out/arm64-windows-static/include/openssl/mdc2.h
+npm notice 10.8kB out/arm64-windows-static/include/openssl/modes.h
+npm notice 228.7kB out/arm64-windows-static/include/openssl/obj_mac.h
+npm notice 6.8kB out/arm64-windows-static/include/openssl/objects.h
+npm notice 782B out/arm64-windows-static/include/openssl/objectserr.h
+npm notice 29.8kB out/arm64-windows-static/include/openssl/ocsp.h
+npm notice 2.2kB out/arm64-windows-static/include/openssl/ocsperr.h
+npm notice 515B out/arm64-windows-static/include/openssl/opensslconf.h
+npm notice 3.3kB out/arm64-windows-static/include/openssl/opensslv.h
+npm notice 562B out/arm64-windows-static/include/openssl/ossl_typ.h
+npm notice 2.8kB out/arm64-windows-static/include/openssl/param_build.h
+npm notice 7.3kB out/arm64-windows-static/include/openssl/params.h
+npm notice 25.8kB out/arm64-windows-static/include/openssl/pem.h
+npm notice 531B out/arm64-windows-static/include/openssl/pem2.h
+npm notice 2.6kB out/arm64-windows-static/include/openssl/pemerr.h
+npm notice 22.9kB out/arm64-windows-static/include/openssl/pkcs7.h
+npm notice 3.0kB out/arm64-windows-static/include/openssl/pkcs7err.h
+npm notice 19.7kB out/arm64-windows-static/include/openssl/pkcs12.h
+npm notice 1.8kB out/arm64-windows-static/include/openssl/pkcs12err.h
+npm notice 981B out/arm64-windows-static/include/openssl/prov_ssl.h
+npm notice 8.3kB out/arm64-windows-static/include/openssl/proverr.h
+npm notice 2.3kB out/arm64-windows-static/include/openssl/provider.h
+npm notice 4.0kB out/arm64-windows-static/include/openssl/rand.h
+npm notice 3.3kB out/arm64-windows-static/include/openssl/randerr.h
+npm notice 2.4kB out/arm64-windows-static/include/openssl/rc2.h
+npm notice 1.2kB out/arm64-windows-static/include/openssl/rc4.h
+npm notice 2.9kB out/arm64-windows-static/include/openssl/rc5.h
+npm notice 1.7kB out/arm64-windows-static/include/openssl/ripemd.h
+npm notice 28.3kB out/arm64-windows-static/include/openssl/rsa.h
+npm notice 5.7kB out/arm64-windows-static/include/openssl/rsaerr.h
+npm notice 18.7kB out/arm64-windows-static/include/openssl/safestack.h
+npm notice 4.0kB out/arm64-windows-static/include/openssl/seed.h
+npm notice 4.1kB out/arm64-windows-static/include/openssl/self_test.h
+npm notice 4.7kB out/arm64-windows-static/include/openssl/sha.h
+npm notice 15.8kB out/arm64-windows-static/include/openssl/srp.h
+npm notice 1.4kB out/arm64-windows-static/include/openssl/srtp.h
+npm notice 127.6kB out/arm64-windows-static/include/openssl/ssl.h
+npm notice 658B out/arm64-windows-static/include/openssl/ssl2.h
+npm notice 14.8kB out/arm64-windows-static/include/openssl/ssl3.h
+npm notice 27.0kB out/arm64-windows-static/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/arm64-windows-static/include/openssl/sslerr.h
+npm notice 3.3kB out/arm64-windows-static/include/openssl/stack.h
+npm notice 15.2kB out/arm64-windows-static/include/openssl/store.h
+npm notice 2.1kB out/arm64-windows-static/include/openssl/storeerr.h
+npm notice 1.3kB out/arm64-windows-static/include/openssl/symhacks.h
+npm notice 71.3kB out/arm64-windows-static/include/openssl/tls1.h
+npm notice 10.4kB out/arm64-windows-static/include/openssl/trace.h
+npm notice 19.8kB out/arm64-windows-static/include/openssl/ts.h
+npm notice 3.1kB out/arm64-windows-static/include/openssl/tserr.h
+npm notice 1.8kB out/arm64-windows-static/include/openssl/txt_db.h
+npm notice 7.3kB out/arm64-windows-static/include/openssl/types.h
+npm notice 19.7kB out/arm64-windows-static/include/openssl/ui.h
+npm notice 1.4kB out/arm64-windows-static/include/openssl/uierr.h
+npm notice 1.9kB out/arm64-windows-static/include/openssl/whrlpool.h
+npm notice 52.9kB out/arm64-windows-static/include/openssl/x509_vfy.h
+npm notice 72.9kB out/arm64-windows-static/include/openssl/x509.h
+npm notice 3.3kB out/arm64-windows-static/include/openssl/x509err.h
+npm notice 95.5kB out/arm64-windows-static/include/openssl/x509v3.h
+npm notice 4.8kB out/arm64-windows-static/include/openssl/x509v3err.h
+npm notice 35.1MB out/arm64-windows-static/lib/libcrypto.lib
+npm notice 5.9MB out/arm64-windows-static/lib/libssl.lib
+npm notice 294B out/arm64-windows-static/lib/pkgconfig/libcrypto.pc
+npm notice 289B out/arm64-windows-static/lib/pkgconfig/libssl.pc
+npm notice 242B out/arm64-windows-static/lib/pkgconfig/openssl.pc
+npm notice 742B out/sbom_vcpkg_openssl/spdx_2.2/bsi.json
+npm notice 11.3kB out/sbom_vcpkg_openssl/spdx_2.2/manifest.cat
+npm notice 1.0MB out/sbom_vcpkg_openssl/spdx_2.2/manifest.spdx.json
+npm notice 64B out/sbom_vcpkg_openssl/spdx_2.2/manifest.spdx.json.sha256
+npm notice 3.8kB out/x64-linux-musl/include/openssl/aes.h
+npm notice 398B out/x64-linux-musl/include/openssl/asn1_mac.h
+npm notice 61.0kB out/x64-linux-musl/include/openssl/asn1.h
+npm notice 7.7kB out/x64-linux-musl/include/openssl/asn1err.h
+npm notice 36.0kB out/x64-linux-musl/include/openssl/asn1t.h
+npm notice 3.2kB out/x64-linux-musl/include/openssl/async.h
+npm notice 842B out/x64-linux-musl/include/openssl/asyncerr.h
+npm notice 39.9kB out/x64-linux-musl/include/openssl/bio.h
+npm notice 3.1kB out/x64-linux-musl/include/openssl/bioerr.h
+npm notice 2.7kB out/x64-linux-musl/include/openssl/blowfish.h
+npm notice 23.8kB out/x64-linux-musl/include/openssl/bn.h
+npm notice 1.9kB out/x64-linux-musl/include/openssl/bnerr.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/buffer.h
+npm notice 594B out/x64-linux-musl/include/openssl/buffererr.h
+npm notice 5.1kB out/x64-linux-musl/include/openssl/camellia.h
+npm notice 2.1kB out/x64-linux-musl/include/openssl/cast.h
+npm notice 1.6kB out/x64-linux-musl/include/openssl/cmac.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/cmp_util.h
+npm notice 41.2kB out/x64-linux-musl/include/openssl/cmp.h
+npm notice 6.2kB out/x64-linux-musl/include/openssl/cmperr.h
+npm notice 34.1kB out/x64-linux-musl/include/openssl/cms.h
+npm notice 6.7kB out/x64-linux-musl/include/openssl/cmserr.h
+npm notice 1.4kB out/x64-linux-musl/include/openssl/comp.h
+npm notice 813B out/x64-linux-musl/include/openssl/comperr.h
+npm notice 1.4kB out/x64-linux-musl/include/openssl/conf_api.h
+npm notice 10.6kB out/x64-linux-musl/include/openssl/conf.h
+npm notice 2.2kB out/x64-linux-musl/include/openssl/conferr.h
+npm notice 3.3kB out/x64-linux-musl/include/openssl/configuration.h
+npm notice 1.2kB out/x64-linux-musl/include/openssl/conftypes.h
+npm notice 48.7kB out/x64-linux-musl/include/openssl/core_dispatch.h
+npm notice 29.4kB out/x64-linux-musl/include/openssl/core_names.h
+npm notice 1.1kB out/x64-linux-musl/include/openssl/core_object.h
+npm notice 8.1kB out/x64-linux-musl/include/openssl/core.h
+npm notice 14.7kB out/x64-linux-musl/include/openssl/crmf.h
+npm notice 2.0kB out/x64-linux-musl/include/openssl/crmferr.h
+npm notice 24.1kB out/x64-linux-musl/include/openssl/crypto.h
+npm notice 80.4kB out/x64-linux-musl/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/x64-linux-musl/include/openssl/cryptoerr.h
+npm notice 22.8kB out/x64-linux-musl/include/openssl/ct.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/cterr.h
+npm notice 5.8kB out/x64-linux-musl/include/openssl/decoder.h
+npm notice 791B out/x64-linux-musl/include/openssl/decodererr.h
+npm notice 8.5kB out/x64-linux-musl/include/openssl/des.h
+npm notice 15.3kB out/x64-linux-musl/include/openssl/dh.h
+npm notice 2.4kB out/x64-linux-musl/include/openssl/dherr.h
+npm notice 12.5kB out/x64-linux-musl/include/openssl/dsa.h
+npm notice 1.6kB out/x64-linux-musl/include/openssl/dsaerr.h
+npm notice 1.5kB out/x64-linux-musl/include/openssl/dtls1.h
+npm notice 8.8kB out/x64-linux-musl/include/openssl/e_os2.h
+npm notice 1.0kB out/x64-linux-musl/include/openssl/ebcdic.h
+npm notice 67.7kB out/x64-linux-musl/include/openssl/ec.h
+npm notice 361B out/x64-linux-musl/include/openssl/ecdh.h
+npm notice 361B out/x64-linux-musl/include/openssl/ecdsa.h
+npm notice 5.4kB out/x64-linux-musl/include/openssl/ecerr.h
+npm notice 5.5kB out/x64-linux-musl/include/openssl/encoder.h
+npm notice 791B out/x64-linux-musl/include/openssl/encodererr.h
+npm notice 38.8kB out/x64-linux-musl/include/openssl/engine.h
+npm notice 2.8kB out/x64-linux-musl/include/openssl/engineerr.h
+npm notice 22.0kB out/x64-linux-musl/include/openssl/err.h
+npm notice 9.0kB out/x64-linux-musl/include/openssl/ess.h
+npm notice 1.1kB out/x64-linux-musl/include/openssl/esserr.h
+npm notice 103.9kB out/x64-linux-musl/include/openssl/evp.h
+npm notice 7.4kB out/x64-linux-musl/include/openssl/evperr.h
+npm notice 2.3kB out/x64-linux-musl/include/openssl/fips_names.h
+npm notice 1.0kB out/x64-linux-musl/include/openssl/fipskey.h
+npm notice 2.1kB out/x64-linux-musl/include/openssl/hmac.h
+npm notice 5.3kB out/x64-linux-musl/include/openssl/http.h
+npm notice 2.5kB out/x64-linux-musl/include/openssl/httperr.h
+npm notice 3.0kB out/x64-linux-musl/include/openssl/idea.h
+npm notice 5.6kB out/x64-linux-musl/include/openssl/kdf.h
+npm notice 482B out/x64-linux-musl/include/openssl/kdferr.h
+npm notice 14.6kB out/x64-linux-musl/include/openssl/lhash.h
+npm notice 10.7kB out/x64-linux-musl/include/openssl/macros.h
+npm notice 1.5kB out/x64-linux-musl/include/openssl/md2.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/md4.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/md5.h
+npm notice 1.4kB out/x64-linux-musl/include/openssl/mdc2.h
+npm notice 10.8kB out/x64-linux-musl/include/openssl/modes.h
+npm notice 228.7kB out/x64-linux-musl/include/openssl/obj_mac.h
+npm notice 6.8kB out/x64-linux-musl/include/openssl/objects.h
+npm notice 782B out/x64-linux-musl/include/openssl/objectserr.h
+npm notice 29.4kB out/x64-linux-musl/include/openssl/ocsp.h
+npm notice 2.2kB out/x64-linux-musl/include/openssl/ocsperr.h
+npm notice 515B out/x64-linux-musl/include/openssl/opensslconf.h
+npm notice 3.2kB out/x64-linux-musl/include/openssl/opensslv.h
+npm notice 562B out/x64-linux-musl/include/openssl/ossl_typ.h
+npm notice 2.8kB out/x64-linux-musl/include/openssl/param_build.h
+npm notice 7.3kB out/x64-linux-musl/include/openssl/params.h
+npm notice 25.8kB out/x64-linux-musl/include/openssl/pem.h
+npm notice 531B out/x64-linux-musl/include/openssl/pem2.h
+npm notice 2.6kB out/x64-linux-musl/include/openssl/pemerr.h
+npm notice 22.5kB out/x64-linux-musl/include/openssl/pkcs7.h
+npm notice 3.0kB out/x64-linux-musl/include/openssl/pkcs7err.h
+npm notice 19.4kB out/x64-linux-musl/include/openssl/pkcs12.h
+npm notice 1.8kB out/x64-linux-musl/include/openssl/pkcs12err.h
+npm notice 981B out/x64-linux-musl/include/openssl/prov_ssl.h
+npm notice 8.3kB out/x64-linux-musl/include/openssl/proverr.h
+npm notice 2.3kB out/x64-linux-musl/include/openssl/provider.h
+npm notice 4.0kB out/x64-linux-musl/include/openssl/rand.h
+npm notice 3.3kB out/x64-linux-musl/include/openssl/randerr.h
+npm notice 2.4kB out/x64-linux-musl/include/openssl/rc2.h
+npm notice 1.2kB out/x64-linux-musl/include/openssl/rc4.h
+npm notice 2.9kB out/x64-linux-musl/include/openssl/rc5.h
+npm notice 1.7kB out/x64-linux-musl/include/openssl/ripemd.h
+npm notice 28.3kB out/x64-linux-musl/include/openssl/rsa.h
+npm notice 5.7kB out/x64-linux-musl/include/openssl/rsaerr.h
+npm notice 18.5kB out/x64-linux-musl/include/openssl/safestack.h
+npm notice 4.0kB out/x64-linux-musl/include/openssl/seed.h
+npm notice 4.1kB out/x64-linux-musl/include/openssl/self_test.h
+npm notice 4.7kB out/x64-linux-musl/include/openssl/sha.h
+npm notice 15.5kB out/x64-linux-musl/include/openssl/srp.h
+npm notice 1.4kB out/x64-linux-musl/include/openssl/srtp.h
+npm notice 125.0kB out/x64-linux-musl/include/openssl/ssl.h
+npm notice 658B out/x64-linux-musl/include/openssl/ssl2.h
+npm notice 14.8kB out/x64-linux-musl/include/openssl/ssl3.h
+npm notice 27.0kB out/x64-linux-musl/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/x64-linux-musl/include/openssl/sslerr.h
+npm notice 3.3kB out/x64-linux-musl/include/openssl/stack.h
+npm notice 15.2kB out/x64-linux-musl/include/openssl/store.h
+npm notice 2.1kB out/x64-linux-musl/include/openssl/storeerr.h
+npm notice 1.3kB out/x64-linux-musl/include/openssl/symhacks.h
+npm notice 71.3kB out/x64-linux-musl/include/openssl/tls1.h
+npm notice 10.4kB out/x64-linux-musl/include/openssl/trace.h
+npm notice 19.8kB out/x64-linux-musl/include/openssl/ts.h
+npm notice 3.1kB out/x64-linux-musl/include/openssl/tserr.h
+npm notice 1.8kB out/x64-linux-musl/include/openssl/txt_db.h
+npm notice 7.3kB out/x64-linux-musl/include/openssl/types.h
+npm notice 19.3kB out/x64-linux-musl/include/openssl/ui.h
+npm notice 1.4kB out/x64-linux-musl/include/openssl/uierr.h
+npm notice 1.9kB out/x64-linux-musl/include/openssl/whrlpool.h
+npm notice 52.1kB out/x64-linux-musl/include/openssl/x509_vfy.h
+npm notice 71.6kB out/x64-linux-musl/include/openssl/x509.h
+npm notice 3.3kB out/x64-linux-musl/include/openssl/x509err.h
+npm notice 94.1kB out/x64-linux-musl/include/openssl/x509v3.h
+npm notice 4.8kB out/x64-linux-musl/include/openssl/x509v3err.h
+npm notice 10.7MB out/x64-linux-musl/lib/libcrypto.a
+npm notice 1.3MB out/x64-linux-musl/lib/libssl.a
+npm notice 320B out/x64-linux-musl/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/x64-linux-musl/lib/pkgconfig/libssl.pc
+npm notice 232B out/x64-linux-musl/lib/pkgconfig/openssl.pc
+npm notice 3.8kB out/x64-linux/include/openssl/aes.h
+npm notice 398B out/x64-linux/include/openssl/asn1_mac.h
+npm notice 61.0kB out/x64-linux/include/openssl/asn1.h
+npm notice 7.7kB out/x64-linux/include/openssl/asn1err.h
+npm notice 36.0kB out/x64-linux/include/openssl/asn1t.h
+npm notice 3.2kB out/x64-linux/include/openssl/async.h
+npm notice 842B out/x64-linux/include/openssl/asyncerr.h
+npm notice 39.9kB out/x64-linux/include/openssl/bio.h
+npm notice 3.1kB out/x64-linux/include/openssl/bioerr.h
+npm notice 2.7kB out/x64-linux/include/openssl/blowfish.h
+npm notice 23.8kB out/x64-linux/include/openssl/bn.h
+npm notice 1.9kB out/x64-linux/include/openssl/bnerr.h
+npm notice 1.7kB out/x64-linux/include/openssl/buffer.h
+npm notice 594B out/x64-linux/include/openssl/buffererr.h
+npm notice 5.1kB out/x64-linux/include/openssl/camellia.h
+npm notice 2.1kB out/x64-linux/include/openssl/cast.h
+npm notice 1.6kB out/x64-linux/include/openssl/cmac.h
+npm notice 1.7kB out/x64-linux/include/openssl/cmp_util.h
+npm notice 41.2kB out/x64-linux/include/openssl/cmp.h
+npm notice 6.2kB out/x64-linux/include/openssl/cmperr.h
+npm notice 34.1kB out/x64-linux/include/openssl/cms.h
+npm notice 6.7kB out/x64-linux/include/openssl/cmserr.h
+npm notice 1.4kB out/x64-linux/include/openssl/comp.h
+npm notice 813B out/x64-linux/include/openssl/comperr.h
+npm notice 1.4kB out/x64-linux/include/openssl/conf_api.h
+npm notice 10.6kB out/x64-linux/include/openssl/conf.h
+npm notice 2.2kB out/x64-linux/include/openssl/conferr.h
+npm notice 3.3kB out/x64-linux/include/openssl/configuration.h
+npm notice 1.2kB out/x64-linux/include/openssl/conftypes.h
+npm notice 48.7kB out/x64-linux/include/openssl/core_dispatch.h
+npm notice 29.4kB out/x64-linux/include/openssl/core_names.h
+npm notice 1.1kB out/x64-linux/include/openssl/core_object.h
+npm notice 8.1kB out/x64-linux/include/openssl/core.h
+npm notice 14.7kB out/x64-linux/include/openssl/crmf.h
+npm notice 2.0kB out/x64-linux/include/openssl/crmferr.h
+npm notice 24.1kB out/x64-linux/include/openssl/crypto.h
+npm notice 80.4kB out/x64-linux/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/x64-linux/include/openssl/cryptoerr.h
+npm notice 22.8kB out/x64-linux/include/openssl/ct.h
+npm notice 1.7kB out/x64-linux/include/openssl/cterr.h
+npm notice 5.8kB out/x64-linux/include/openssl/decoder.h
+npm notice 791B out/x64-linux/include/openssl/decodererr.h
+npm notice 8.5kB out/x64-linux/include/openssl/des.h
+npm notice 15.3kB out/x64-linux/include/openssl/dh.h
+npm notice 2.4kB out/x64-linux/include/openssl/dherr.h
+npm notice 12.5kB out/x64-linux/include/openssl/dsa.h
+npm notice 1.6kB out/x64-linux/include/openssl/dsaerr.h
+npm notice 1.5kB out/x64-linux/include/openssl/dtls1.h
+npm notice 8.8kB out/x64-linux/include/openssl/e_os2.h
+npm notice 1.0kB out/x64-linux/include/openssl/ebcdic.h
+npm notice 67.7kB out/x64-linux/include/openssl/ec.h
+npm notice 361B out/x64-linux/include/openssl/ecdh.h
+npm notice 361B out/x64-linux/include/openssl/ecdsa.h
+npm notice 5.4kB out/x64-linux/include/openssl/ecerr.h
+npm notice 5.5kB out/x64-linux/include/openssl/encoder.h
+npm notice 791B out/x64-linux/include/openssl/encodererr.h
+npm notice 38.8kB out/x64-linux/include/openssl/engine.h
+npm notice 2.8kB out/x64-linux/include/openssl/engineerr.h
+npm notice 22.0kB out/x64-linux/include/openssl/err.h
+npm notice 9.0kB out/x64-linux/include/openssl/ess.h
+npm notice 1.1kB out/x64-linux/include/openssl/esserr.h
+npm notice 103.9kB out/x64-linux/include/openssl/evp.h
+npm notice 7.4kB out/x64-linux/include/openssl/evperr.h
+npm notice 2.3kB out/x64-linux/include/openssl/fips_names.h
+npm notice 1.0kB out/x64-linux/include/openssl/fipskey.h
+npm notice 2.1kB out/x64-linux/include/openssl/hmac.h
+npm notice 5.3kB out/x64-linux/include/openssl/http.h
+npm notice 2.5kB out/x64-linux/include/openssl/httperr.h
+npm notice 3.0kB out/x64-linux/include/openssl/idea.h
+npm notice 5.6kB out/x64-linux/include/openssl/kdf.h
+npm notice 482B out/x64-linux/include/openssl/kdferr.h
+npm notice 14.6kB out/x64-linux/include/openssl/lhash.h
+npm notice 10.7kB out/x64-linux/include/openssl/macros.h
+npm notice 1.5kB out/x64-linux/include/openssl/md2.h
+npm notice 1.7kB out/x64-linux/include/openssl/md4.h
+npm notice 1.7kB out/x64-linux/include/openssl/md5.h
+npm notice 1.4kB out/x64-linux/include/openssl/mdc2.h
+npm notice 10.8kB out/x64-linux/include/openssl/modes.h
+npm notice 228.7kB out/x64-linux/include/openssl/obj_mac.h
+npm notice 6.8kB out/x64-linux/include/openssl/objects.h
+npm notice 782B out/x64-linux/include/openssl/objectserr.h
+npm notice 29.4kB out/x64-linux/include/openssl/ocsp.h
+npm notice 2.2kB out/x64-linux/include/openssl/ocsperr.h
+npm notice 515B out/x64-linux/include/openssl/opensslconf.h
+npm notice 3.2kB out/x64-linux/include/openssl/opensslv.h
+npm notice 562B out/x64-linux/include/openssl/ossl_typ.h
+npm notice 2.8kB out/x64-linux/include/openssl/param_build.h
+npm notice 7.3kB out/x64-linux/include/openssl/params.h
+npm notice 25.8kB out/x64-linux/include/openssl/pem.h
+npm notice 531B out/x64-linux/include/openssl/pem2.h
+npm notice 2.6kB out/x64-linux/include/openssl/pemerr.h
+npm notice 22.5kB out/x64-linux/include/openssl/pkcs7.h
+npm notice 3.0kB out/x64-linux/include/openssl/pkcs7err.h
+npm notice 19.4kB out/x64-linux/include/openssl/pkcs12.h
+npm notice 1.8kB out/x64-linux/include/openssl/pkcs12err.h
+npm notice 981B out/x64-linux/include/openssl/prov_ssl.h
+npm notice 8.3kB out/x64-linux/include/openssl/proverr.h
+npm notice 2.3kB out/x64-linux/include/openssl/provider.h
+npm notice 4.0kB out/x64-linux/include/openssl/rand.h
+npm notice 3.3kB out/x64-linux/include/openssl/randerr.h
+npm notice 2.4kB out/x64-linux/include/openssl/rc2.h
+npm notice 1.2kB out/x64-linux/include/openssl/rc4.h
+npm notice 2.9kB out/x64-linux/include/openssl/rc5.h
+npm notice 1.7kB out/x64-linux/include/openssl/ripemd.h
+npm notice 28.3kB out/x64-linux/include/openssl/rsa.h
+npm notice 5.7kB out/x64-linux/include/openssl/rsaerr.h
+npm notice 18.5kB out/x64-linux/include/openssl/safestack.h
+npm notice 4.0kB out/x64-linux/include/openssl/seed.h
+npm notice 4.1kB out/x64-linux/include/openssl/self_test.h
+npm notice 4.7kB out/x64-linux/include/openssl/sha.h
+npm notice 15.5kB out/x64-linux/include/openssl/srp.h
+npm notice 1.4kB out/x64-linux/include/openssl/srtp.h
+npm notice 125.0kB out/x64-linux/include/openssl/ssl.h
+npm notice 658B out/x64-linux/include/openssl/ssl2.h
+npm notice 14.8kB out/x64-linux/include/openssl/ssl3.h
+npm notice 27.0kB out/x64-linux/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/x64-linux/include/openssl/sslerr.h
+npm notice 3.3kB out/x64-linux/include/openssl/stack.h
+npm notice 15.2kB out/x64-linux/include/openssl/store.h
+npm notice 2.1kB out/x64-linux/include/openssl/storeerr.h
+npm notice 1.3kB out/x64-linux/include/openssl/symhacks.h
+npm notice 71.3kB out/x64-linux/include/openssl/tls1.h
+npm notice 10.4kB out/x64-linux/include/openssl/trace.h
+npm notice 19.8kB out/x64-linux/include/openssl/ts.h
+npm notice 3.1kB out/x64-linux/include/openssl/tserr.h
+npm notice 1.8kB out/x64-linux/include/openssl/txt_db.h
+npm notice 7.3kB out/x64-linux/include/openssl/types.h
+npm notice 19.3kB out/x64-linux/include/openssl/ui.h
+npm notice 1.4kB out/x64-linux/include/openssl/uierr.h
+npm notice 1.9kB out/x64-linux/include/openssl/whrlpool.h
+npm notice 52.1kB out/x64-linux/include/openssl/x509_vfy.h
+npm notice 71.6kB out/x64-linux/include/openssl/x509.h
+npm notice 3.3kB out/x64-linux/include/openssl/x509err.h
+npm notice 94.1kB out/x64-linux/include/openssl/x509v3.h
+npm notice 4.8kB out/x64-linux/include/openssl/x509v3err.h
+npm notice 10.9MB out/x64-linux/lib/libcrypto.a
+npm notice 1.3MB out/x64-linux/lib/libssl.a
+npm notice 320B out/x64-linux/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/x64-linux/lib/pkgconfig/libssl.pc
+npm notice 232B out/x64-linux/lib/pkgconfig/openssl.pc
+npm notice 3.8kB out/x64-osx/include/openssl/aes.h
+npm notice 398B out/x64-osx/include/openssl/asn1_mac.h
+npm notice 61.0kB out/x64-osx/include/openssl/asn1.h
+npm notice 7.7kB out/x64-osx/include/openssl/asn1err.h
+npm notice 36.0kB out/x64-osx/include/openssl/asn1t.h
+npm notice 3.2kB out/x64-osx/include/openssl/async.h
+npm notice 842B out/x64-osx/include/openssl/asyncerr.h
+npm notice 39.9kB out/x64-osx/include/openssl/bio.h
+npm notice 3.1kB out/x64-osx/include/openssl/bioerr.h
+npm notice 2.7kB out/x64-osx/include/openssl/blowfish.h
+npm notice 23.8kB out/x64-osx/include/openssl/bn.h
+npm notice 1.9kB out/x64-osx/include/openssl/bnerr.h
+npm notice 1.7kB out/x64-osx/include/openssl/buffer.h
+npm notice 594B out/x64-osx/include/openssl/buffererr.h
+npm notice 5.1kB out/x64-osx/include/openssl/camellia.h
+npm notice 2.1kB out/x64-osx/include/openssl/cast.h
+npm notice 1.6kB out/x64-osx/include/openssl/cmac.h
+npm notice 1.7kB out/x64-osx/include/openssl/cmp_util.h
+npm notice 41.2kB out/x64-osx/include/openssl/cmp.h
+npm notice 6.2kB out/x64-osx/include/openssl/cmperr.h
+npm notice 34.1kB out/x64-osx/include/openssl/cms.h
+npm notice 6.7kB out/x64-osx/include/openssl/cmserr.h
+npm notice 1.4kB out/x64-osx/include/openssl/comp.h
+npm notice 813B out/x64-osx/include/openssl/comperr.h
+npm notice 1.4kB out/x64-osx/include/openssl/conf_api.h
+npm notice 10.6kB out/x64-osx/include/openssl/conf.h
+npm notice 2.2kB out/x64-osx/include/openssl/conferr.h
+npm notice 3.4kB out/x64-osx/include/openssl/configuration.h
+npm notice 1.2kB out/x64-osx/include/openssl/conftypes.h
+npm notice 48.7kB out/x64-osx/include/openssl/core_dispatch.h
+npm notice 29.4kB out/x64-osx/include/openssl/core_names.h
+npm notice 1.1kB out/x64-osx/include/openssl/core_object.h
+npm notice 8.1kB out/x64-osx/include/openssl/core.h
+npm notice 14.7kB out/x64-osx/include/openssl/crmf.h
+npm notice 2.0kB out/x64-osx/include/openssl/crmferr.h
+npm notice 24.1kB out/x64-osx/include/openssl/crypto.h
+npm notice 80.4kB out/x64-osx/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/x64-osx/include/openssl/cryptoerr.h
+npm notice 22.8kB out/x64-osx/include/openssl/ct.h
+npm notice 1.7kB out/x64-osx/include/openssl/cterr.h
+npm notice 5.8kB out/x64-osx/include/openssl/decoder.h
+npm notice 791B out/x64-osx/include/openssl/decodererr.h
+npm notice 8.5kB out/x64-osx/include/openssl/des.h
+npm notice 15.3kB out/x64-osx/include/openssl/dh.h
+npm notice 2.4kB out/x64-osx/include/openssl/dherr.h
+npm notice 12.5kB out/x64-osx/include/openssl/dsa.h
+npm notice 1.6kB out/x64-osx/include/openssl/dsaerr.h
+npm notice 1.5kB out/x64-osx/include/openssl/dtls1.h
+npm notice 8.8kB out/x64-osx/include/openssl/e_os2.h
+npm notice 1.0kB out/x64-osx/include/openssl/ebcdic.h
+npm notice 67.7kB out/x64-osx/include/openssl/ec.h
+npm notice 361B out/x64-osx/include/openssl/ecdh.h
+npm notice 361B out/x64-osx/include/openssl/ecdsa.h
+npm notice 5.4kB out/x64-osx/include/openssl/ecerr.h
+npm notice 5.5kB out/x64-osx/include/openssl/encoder.h
+npm notice 791B out/x64-osx/include/openssl/encodererr.h
+npm notice 38.8kB out/x64-osx/include/openssl/engine.h
+npm notice 2.8kB out/x64-osx/include/openssl/engineerr.h
+npm notice 22.0kB out/x64-osx/include/openssl/err.h
+npm notice 9.0kB out/x64-osx/include/openssl/ess.h
+npm notice 1.1kB out/x64-osx/include/openssl/esserr.h
+npm notice 103.9kB out/x64-osx/include/openssl/evp.h
+npm notice 7.4kB out/x64-osx/include/openssl/evperr.h
+npm notice 2.3kB out/x64-osx/include/openssl/fips_names.h
+npm notice 1.0kB out/x64-osx/include/openssl/fipskey.h
+npm notice 2.1kB out/x64-osx/include/openssl/hmac.h
+npm notice 5.3kB out/x64-osx/include/openssl/http.h
+npm notice 2.5kB out/x64-osx/include/openssl/httperr.h
+npm notice 3.0kB out/x64-osx/include/openssl/idea.h
+npm notice 5.6kB out/x64-osx/include/openssl/kdf.h
+npm notice 482B out/x64-osx/include/openssl/kdferr.h
+npm notice 14.6kB out/x64-osx/include/openssl/lhash.h
+npm notice 10.7kB out/x64-osx/include/openssl/macros.h
+npm notice 1.5kB out/x64-osx/include/openssl/md2.h
+npm notice 1.7kB out/x64-osx/include/openssl/md4.h
+npm notice 1.7kB out/x64-osx/include/openssl/md5.h
+npm notice 1.4kB out/x64-osx/include/openssl/mdc2.h
+npm notice 10.8kB out/x64-osx/include/openssl/modes.h
+npm notice 228.7kB out/x64-osx/include/openssl/obj_mac.h
+npm notice 6.8kB out/x64-osx/include/openssl/objects.h
+npm notice 782B out/x64-osx/include/openssl/objectserr.h
+npm notice 29.4kB out/x64-osx/include/openssl/ocsp.h
+npm notice 2.2kB out/x64-osx/include/openssl/ocsperr.h
+npm notice 515B out/x64-osx/include/openssl/opensslconf.h
+npm notice 3.2kB out/x64-osx/include/openssl/opensslv.h
+npm notice 562B out/x64-osx/include/openssl/ossl_typ.h
+npm notice 2.8kB out/x64-osx/include/openssl/param_build.h
+npm notice 7.3kB out/x64-osx/include/openssl/params.h
+npm notice 25.8kB out/x64-osx/include/openssl/pem.h
+npm notice 531B out/x64-osx/include/openssl/pem2.h
+npm notice 2.6kB out/x64-osx/include/openssl/pemerr.h
+npm notice 22.5kB out/x64-osx/include/openssl/pkcs7.h
+npm notice 3.0kB out/x64-osx/include/openssl/pkcs7err.h
+npm notice 19.4kB out/x64-osx/include/openssl/pkcs12.h
+npm notice 1.8kB out/x64-osx/include/openssl/pkcs12err.h
+npm notice 981B out/x64-osx/include/openssl/prov_ssl.h
+npm notice 8.3kB out/x64-osx/include/openssl/proverr.h
+npm notice 2.3kB out/x64-osx/include/openssl/provider.h
+npm notice 4.0kB out/x64-osx/include/openssl/rand.h
+npm notice 3.3kB out/x64-osx/include/openssl/randerr.h
+npm notice 2.4kB out/x64-osx/include/openssl/rc2.h
+npm notice 1.2kB out/x64-osx/include/openssl/rc4.h
+npm notice 2.9kB out/x64-osx/include/openssl/rc5.h
+npm notice 1.7kB out/x64-osx/include/openssl/ripemd.h
+npm notice 28.3kB out/x64-osx/include/openssl/rsa.h
+npm notice 5.7kB out/x64-osx/include/openssl/rsaerr.h
+npm notice 18.5kB out/x64-osx/include/openssl/safestack.h
+npm notice 4.0kB out/x64-osx/include/openssl/seed.h
+npm notice 4.1kB out/x64-osx/include/openssl/self_test.h
+npm notice 4.7kB out/x64-osx/include/openssl/sha.h
+npm notice 15.5kB out/x64-osx/include/openssl/srp.h
+npm notice 1.4kB out/x64-osx/include/openssl/srtp.h
+npm notice 125.0kB out/x64-osx/include/openssl/ssl.h
+npm notice 658B out/x64-osx/include/openssl/ssl2.h
+npm notice 14.8kB out/x64-osx/include/openssl/ssl3.h
+npm notice 27.0kB out/x64-osx/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/x64-osx/include/openssl/sslerr.h
+npm notice 3.3kB out/x64-osx/include/openssl/stack.h
+npm notice 15.2kB out/x64-osx/include/openssl/store.h
+npm notice 2.1kB out/x64-osx/include/openssl/storeerr.h
+npm notice 1.3kB out/x64-osx/include/openssl/symhacks.h
+npm notice 71.3kB out/x64-osx/include/openssl/tls1.h
+npm notice 10.4kB out/x64-osx/include/openssl/trace.h
+npm notice 19.8kB out/x64-osx/include/openssl/ts.h
+npm notice 3.1kB out/x64-osx/include/openssl/tserr.h
+npm notice 1.8kB out/x64-osx/include/openssl/txt_db.h
+npm notice 7.3kB out/x64-osx/include/openssl/types.h
+npm notice 19.3kB out/x64-osx/include/openssl/ui.h
+npm notice 1.4kB out/x64-osx/include/openssl/uierr.h
+npm notice 1.9kB out/x64-osx/include/openssl/whrlpool.h
+npm notice 52.1kB out/x64-osx/include/openssl/x509_vfy.h
+npm notice 71.6kB out/x64-osx/include/openssl/x509.h
+npm notice 3.3kB out/x64-osx/include/openssl/x509err.h
+npm notice 94.1kB out/x64-osx/include/openssl/x509v3.h
+npm notice 4.8kB out/x64-osx/include/openssl/x509v3err.h
+npm notice 22.9MB out/x64-osx/lib/libcrypto.a
+npm notice 3.7MB out/x64-osx/lib/libssl.a
+npm notice 306B out/x64-osx/lib/pkgconfig/libcrypto.pc
+npm notice 274B out/x64-osx/lib/pkgconfig/libssl.pc
+npm notice 232B out/x64-osx/lib/pkgconfig/openssl.pc
+npm notice 729B out/x64-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+npm notice 801B out/x64-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+npm notice 3.8kB out/x64-windows-static/include/openssl/aes.h
+npm notice 398B out/x64-windows-static/include/openssl/asn1_mac.h
+npm notice 62.1kB out/x64-windows-static/include/openssl/asn1.h
+npm notice 7.7kB out/x64-windows-static/include/openssl/asn1err.h
+npm notice 36.9kB out/x64-windows-static/include/openssl/asn1t.h
+npm notice 3.2kB out/x64-windows-static/include/openssl/async.h
+npm notice 842B out/x64-windows-static/include/openssl/asyncerr.h
+npm notice 40.7kB out/x64-windows-static/include/openssl/bio.h
+npm notice 3.1kB out/x64-windows-static/include/openssl/bioerr.h
+npm notice 2.7kB out/x64-windows-static/include/openssl/blowfish.h
+npm notice 23.8kB out/x64-windows-static/include/openssl/bn.h
+npm notice 1.9kB out/x64-windows-static/include/openssl/bnerr.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/buffer.h
+npm notice 594B out/x64-windows-static/include/openssl/buffererr.h
+npm notice 5.1kB out/x64-windows-static/include/openssl/camellia.h
+npm notice 2.1kB out/x64-windows-static/include/openssl/cast.h
+npm notice 1.6kB out/x64-windows-static/include/openssl/cmac.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/cmp_util.h
+npm notice 41.7kB out/x64-windows-static/include/openssl/cmp.h
+npm notice 6.2kB out/x64-windows-static/include/openssl/cmperr.h
+npm notice 34.6kB out/x64-windows-static/include/openssl/cms.h
+npm notice 6.7kB out/x64-windows-static/include/openssl/cmserr.h
+npm notice 1.4kB out/x64-windows-static/include/openssl/comp.h
+npm notice 813B out/x64-windows-static/include/openssl/comperr.h
+npm notice 1.4kB out/x64-windows-static/include/openssl/conf_api.h
+npm notice 10.8kB out/x64-windows-static/include/openssl/conf.h
+npm notice 2.2kB out/x64-windows-static/include/openssl/conferr.h
+npm notice 3.5kB out/x64-windows-static/include/openssl/configuration.h
+npm notice 1.2kB out/x64-windows-static/include/openssl/conftypes.h
+npm notice 48.7kB out/x64-windows-static/include/openssl/core_dispatch.h
+npm notice 29.4kB out/x64-windows-static/include/openssl/core_names.h
+npm notice 1.1kB out/x64-windows-static/include/openssl/core_object.h
+npm notice 8.1kB out/x64-windows-static/include/openssl/core.h
+npm notice 14.9kB out/x64-windows-static/include/openssl/crmf.h
+npm notice 2.0kB out/x64-windows-static/include/openssl/crmferr.h
+npm notice 24.6kB out/x64-windows-static/include/openssl/crypto.h
+npm notice 80.4kB out/x64-windows-static/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/x64-windows-static/include/openssl/cryptoerr.h
+npm notice 23.3kB out/x64-windows-static/include/openssl/ct.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/cterr.h
+npm notice 5.8kB out/x64-windows-static/include/openssl/decoder.h
+npm notice 791B out/x64-windows-static/include/openssl/decodererr.h
+npm notice 8.5kB out/x64-windows-static/include/openssl/des.h
+npm notice 15.3kB out/x64-windows-static/include/openssl/dh.h
+npm notice 2.4kB out/x64-windows-static/include/openssl/dherr.h
+npm notice 12.5kB out/x64-windows-static/include/openssl/dsa.h
+npm notice 1.6kB out/x64-windows-static/include/openssl/dsaerr.h
+npm notice 1.5kB out/x64-windows-static/include/openssl/dtls1.h
+npm notice 8.8kB out/x64-windows-static/include/openssl/e_os2.h
+npm notice 1.0kB out/x64-windows-static/include/openssl/ebcdic.h
+npm notice 67.7kB out/x64-windows-static/include/openssl/ec.h
+npm notice 361B out/x64-windows-static/include/openssl/ecdh.h
+npm notice 361B out/x64-windows-static/include/openssl/ecdsa.h
+npm notice 5.4kB out/x64-windows-static/include/openssl/ecerr.h
+npm notice 5.5kB out/x64-windows-static/include/openssl/encoder.h
+npm notice 791B out/x64-windows-static/include/openssl/encodererr.h
+npm notice 38.8kB out/x64-windows-static/include/openssl/engine.h
+npm notice 2.8kB out/x64-windows-static/include/openssl/engineerr.h
+npm notice 22.5kB out/x64-windows-static/include/openssl/err.h
+npm notice 9.1kB out/x64-windows-static/include/openssl/ess.h
+npm notice 1.1kB out/x64-windows-static/include/openssl/esserr.h
+npm notice 103.9kB out/x64-windows-static/include/openssl/evp.h
+npm notice 7.4kB out/x64-windows-static/include/openssl/evperr.h
+npm notice 2.3kB out/x64-windows-static/include/openssl/fips_names.h
+npm notice 1.0kB out/x64-windows-static/include/openssl/fipskey.h
+npm notice 2.1kB out/x64-windows-static/include/openssl/hmac.h
+npm notice 5.3kB out/x64-windows-static/include/openssl/http.h
+npm notice 2.5kB out/x64-windows-static/include/openssl/httperr.h
+npm notice 3.0kB out/x64-windows-static/include/openssl/idea.h
+npm notice 5.6kB out/x64-windows-static/include/openssl/kdf.h
+npm notice 482B out/x64-windows-static/include/openssl/kdferr.h
+npm notice 14.9kB out/x64-windows-static/include/openssl/lhash.h
+npm notice 10.7kB out/x64-windows-static/include/openssl/macros.h
+npm notice 1.5kB out/x64-windows-static/include/openssl/md2.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/md4.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/md5.h
+npm notice 1.4kB out/x64-windows-static/include/openssl/mdc2.h
+npm notice 10.8kB out/x64-windows-static/include/openssl/modes.h
+npm notice 228.7kB out/x64-windows-static/include/openssl/obj_mac.h
+npm notice 6.8kB out/x64-windows-static/include/openssl/objects.h
+npm notice 782B out/x64-windows-static/include/openssl/objectserr.h
+npm notice 29.8kB out/x64-windows-static/include/openssl/ocsp.h
+npm notice 2.2kB out/x64-windows-static/include/openssl/ocsperr.h
+npm notice 515B out/x64-windows-static/include/openssl/opensslconf.h
+npm notice 3.3kB out/x64-windows-static/include/openssl/opensslv.h
+npm notice 562B out/x64-windows-static/include/openssl/ossl_typ.h
+npm notice 2.8kB out/x64-windows-static/include/openssl/param_build.h
+npm notice 7.3kB out/x64-windows-static/include/openssl/params.h
+npm notice 25.8kB out/x64-windows-static/include/openssl/pem.h
+npm notice 531B out/x64-windows-static/include/openssl/pem2.h
+npm notice 2.6kB out/x64-windows-static/include/openssl/pemerr.h
+npm notice 22.9kB out/x64-windows-static/include/openssl/pkcs7.h
+npm notice 3.0kB out/x64-windows-static/include/openssl/pkcs7err.h
+npm notice 19.7kB out/x64-windows-static/include/openssl/pkcs12.h
+npm notice 1.8kB out/x64-windows-static/include/openssl/pkcs12err.h
+npm notice 981B out/x64-windows-static/include/openssl/prov_ssl.h
+npm notice 8.3kB out/x64-windows-static/include/openssl/proverr.h
+npm notice 2.3kB out/x64-windows-static/include/openssl/provider.h
+npm notice 4.0kB out/x64-windows-static/include/openssl/rand.h
+npm notice 3.3kB out/x64-windows-static/include/openssl/randerr.h
+npm notice 2.4kB out/x64-windows-static/include/openssl/rc2.h
+npm notice 1.2kB out/x64-windows-static/include/openssl/rc4.h
+npm notice 2.9kB out/x64-windows-static/include/openssl/rc5.h
+npm notice 1.7kB out/x64-windows-static/include/openssl/ripemd.h
+npm notice 28.3kB out/x64-windows-static/include/openssl/rsa.h
+npm notice 5.7kB out/x64-windows-static/include/openssl/rsaerr.h
+npm notice 18.7kB out/x64-windows-static/include/openssl/safestack.h
+npm notice 4.0kB out/x64-windows-static/include/openssl/seed.h
+npm notice 4.1kB out/x64-windows-static/include/openssl/self_test.h
+npm notice 4.7kB out/x64-windows-static/include/openssl/sha.h
+npm notice 15.8kB out/x64-windows-static/include/openssl/srp.h
+npm notice 1.4kB out/x64-windows-static/include/openssl/srtp.h
+npm notice 127.6kB out/x64-windows-static/include/openssl/ssl.h
+npm notice 658B out/x64-windows-static/include/openssl/ssl2.h
+npm notice 14.8kB out/x64-windows-static/include/openssl/ssl3.h
+npm notice 27.0kB out/x64-windows-static/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/x64-windows-static/include/openssl/sslerr.h
+npm notice 3.3kB out/x64-windows-static/include/openssl/stack.h
+npm notice 15.2kB out/x64-windows-static/include/openssl/store.h
+npm notice 2.1kB out/x64-windows-static/include/openssl/storeerr.h
+npm notice 1.3kB out/x64-windows-static/include/openssl/symhacks.h
+npm notice 71.3kB out/x64-windows-static/include/openssl/tls1.h
+npm notice 10.4kB out/x64-windows-static/include/openssl/trace.h
+npm notice 19.8kB out/x64-windows-static/include/openssl/ts.h
+npm notice 3.1kB out/x64-windows-static/include/openssl/tserr.h
+npm notice 1.8kB out/x64-windows-static/include/openssl/txt_db.h
+npm notice 7.3kB out/x64-windows-static/include/openssl/types.h
+npm notice 19.7kB out/x64-windows-static/include/openssl/ui.h
+npm notice 1.4kB out/x64-windows-static/include/openssl/uierr.h
+npm notice 1.9kB out/x64-windows-static/include/openssl/whrlpool.h
+npm notice 52.9kB out/x64-windows-static/include/openssl/x509_vfy.h
+npm notice 72.9kB out/x64-windows-static/include/openssl/x509.h
+npm notice 3.3kB out/x64-windows-static/include/openssl/x509err.h
+npm notice 95.5kB out/x64-windows-static/include/openssl/x509v3.h
+npm notice 4.8kB out/x64-windows-static/include/openssl/x509v3err.h
+npm notice 39.0MB out/x64-windows-static/lib/libcrypto.lib
+npm notice 5.8MB out/x64-windows-static/lib/libssl.lib
+npm notice 294B out/x64-windows-static/lib/pkgconfig/libcrypto.pc
+npm notice 289B out/x64-windows-static/lib/pkgconfig/libssl.pc
+npm notice 242B out/x64-windows-static/lib/pkgconfig/openssl.pc
+npm notice 729B out/x86-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+npm notice 801B out/x86-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+npm notice 3.8kB out/x86-windows-static/include/openssl/aes.h
+npm notice 398B out/x86-windows-static/include/openssl/asn1_mac.h
+npm notice 62.1kB out/x86-windows-static/include/openssl/asn1.h
+npm notice 7.7kB out/x86-windows-static/include/openssl/asn1err.h
+npm notice 36.9kB out/x86-windows-static/include/openssl/asn1t.h
+npm notice 3.2kB out/x86-windows-static/include/openssl/async.h
+npm notice 842B out/x86-windows-static/include/openssl/asyncerr.h
+npm notice 40.7kB out/x86-windows-static/include/openssl/bio.h
+npm notice 3.1kB out/x86-windows-static/include/openssl/bioerr.h
+npm notice 2.7kB out/x86-windows-static/include/openssl/blowfish.h
+npm notice 23.8kB out/x86-windows-static/include/openssl/bn.h
+npm notice 1.9kB out/x86-windows-static/include/openssl/bnerr.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/buffer.h
+npm notice 594B out/x86-windows-static/include/openssl/buffererr.h
+npm notice 5.1kB out/x86-windows-static/include/openssl/camellia.h
+npm notice 2.1kB out/x86-windows-static/include/openssl/cast.h
+npm notice 1.6kB out/x86-windows-static/include/openssl/cmac.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/cmp_util.h
+npm notice 41.7kB out/x86-windows-static/include/openssl/cmp.h
+npm notice 6.2kB out/x86-windows-static/include/openssl/cmperr.h
+npm notice 34.6kB out/x86-windows-static/include/openssl/cms.h
+npm notice 6.7kB out/x86-windows-static/include/openssl/cmserr.h
+npm notice 1.4kB out/x86-windows-static/include/openssl/comp.h
+npm notice 813B out/x86-windows-static/include/openssl/comperr.h
+npm notice 1.4kB out/x86-windows-static/include/openssl/conf_api.h
+npm notice 10.8kB out/x86-windows-static/include/openssl/conf.h
+npm notice 2.2kB out/x86-windows-static/include/openssl/conferr.h
+npm notice 3.5kB out/x86-windows-static/include/openssl/configuration.h
+npm notice 1.2kB out/x86-windows-static/include/openssl/conftypes.h
+npm notice 48.7kB out/x86-windows-static/include/openssl/core_dispatch.h
+npm notice 29.4kB out/x86-windows-static/include/openssl/core_names.h
+npm notice 1.1kB out/x86-windows-static/include/openssl/core_object.h
+npm notice 8.1kB out/x86-windows-static/include/openssl/core.h
+npm notice 14.9kB out/x86-windows-static/include/openssl/crmf.h
+npm notice 2.0kB out/x86-windows-static/include/openssl/crmferr.h
+npm notice 24.6kB out/x86-windows-static/include/openssl/crypto.h
+npm notice 80.4kB out/x86-windows-static/include/openssl/cryptoerr_legacy.h
+npm notice 2.5kB out/x86-windows-static/include/openssl/cryptoerr.h
+npm notice 23.3kB out/x86-windows-static/include/openssl/ct.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/cterr.h
+npm notice 5.8kB out/x86-windows-static/include/openssl/decoder.h
+npm notice 791B out/x86-windows-static/include/openssl/decodererr.h
+npm notice 8.5kB out/x86-windows-static/include/openssl/des.h
+npm notice 15.3kB out/x86-windows-static/include/openssl/dh.h
+npm notice 2.4kB out/x86-windows-static/include/openssl/dherr.h
+npm notice 12.5kB out/x86-windows-static/include/openssl/dsa.h
+npm notice 1.6kB out/x86-windows-static/include/openssl/dsaerr.h
+npm notice 1.5kB out/x86-windows-static/include/openssl/dtls1.h
+npm notice 8.8kB out/x86-windows-static/include/openssl/e_os2.h
+npm notice 1.0kB out/x86-windows-static/include/openssl/ebcdic.h
+npm notice 67.7kB out/x86-windows-static/include/openssl/ec.h
+npm notice 361B out/x86-windows-static/include/openssl/ecdh.h
+npm notice 361B out/x86-windows-static/include/openssl/ecdsa.h
+npm notice 5.4kB out/x86-windows-static/include/openssl/ecerr.h
+npm notice 5.5kB out/x86-windows-static/include/openssl/encoder.h
+npm notice 791B out/x86-windows-static/include/openssl/encodererr.h
+npm notice 38.8kB out/x86-windows-static/include/openssl/engine.h
+npm notice 2.8kB out/x86-windows-static/include/openssl/engineerr.h
+npm notice 22.5kB out/x86-windows-static/include/openssl/err.h
+npm notice 9.1kB out/x86-windows-static/include/openssl/ess.h
+npm notice 1.1kB out/x86-windows-static/include/openssl/esserr.h
+npm notice 103.9kB out/x86-windows-static/include/openssl/evp.h
+npm notice 7.4kB out/x86-windows-static/include/openssl/evperr.h
+npm notice 2.3kB out/x86-windows-static/include/openssl/fips_names.h
+npm notice 1.0kB out/x86-windows-static/include/openssl/fipskey.h
+npm notice 2.1kB out/x86-windows-static/include/openssl/hmac.h
+npm notice 5.3kB out/x86-windows-static/include/openssl/http.h
+npm notice 2.5kB out/x86-windows-static/include/openssl/httperr.h
+npm notice 3.0kB out/x86-windows-static/include/openssl/idea.h
+npm notice 5.6kB out/x86-windows-static/include/openssl/kdf.h
+npm notice 482B out/x86-windows-static/include/openssl/kdferr.h
+npm notice 14.9kB out/x86-windows-static/include/openssl/lhash.h
+npm notice 10.7kB out/x86-windows-static/include/openssl/macros.h
+npm notice 1.5kB out/x86-windows-static/include/openssl/md2.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/md4.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/md5.h
+npm notice 1.4kB out/x86-windows-static/include/openssl/mdc2.h
+npm notice 10.8kB out/x86-windows-static/include/openssl/modes.h
+npm notice 228.7kB out/x86-windows-static/include/openssl/obj_mac.h
+npm notice 6.8kB out/x86-windows-static/include/openssl/objects.h
+npm notice 782B out/x86-windows-static/include/openssl/objectserr.h
+npm notice 29.8kB out/x86-windows-static/include/openssl/ocsp.h
+npm notice 2.2kB out/x86-windows-static/include/openssl/ocsperr.h
+npm notice 515B out/x86-windows-static/include/openssl/opensslconf.h
+npm notice 3.3kB out/x86-windows-static/include/openssl/opensslv.h
+npm notice 562B out/x86-windows-static/include/openssl/ossl_typ.h
+npm notice 2.8kB out/x86-windows-static/include/openssl/param_build.h
+npm notice 7.3kB out/x86-windows-static/include/openssl/params.h
+npm notice 25.8kB out/x86-windows-static/include/openssl/pem.h
+npm notice 531B out/x86-windows-static/include/openssl/pem2.h
+npm notice 2.6kB out/x86-windows-static/include/openssl/pemerr.h
+npm notice 22.9kB out/x86-windows-static/include/openssl/pkcs7.h
+npm notice 3.0kB out/x86-windows-static/include/openssl/pkcs7err.h
+npm notice 19.7kB out/x86-windows-static/include/openssl/pkcs12.h
+npm notice 1.8kB out/x86-windows-static/include/openssl/pkcs12err.h
+npm notice 981B out/x86-windows-static/include/openssl/prov_ssl.h
+npm notice 8.3kB out/x86-windows-static/include/openssl/proverr.h
+npm notice 2.3kB out/x86-windows-static/include/openssl/provider.h
+npm notice 4.0kB out/x86-windows-static/include/openssl/rand.h
+npm notice 3.3kB out/x86-windows-static/include/openssl/randerr.h
+npm notice 2.4kB out/x86-windows-static/include/openssl/rc2.h
+npm notice 1.2kB out/x86-windows-static/include/openssl/rc4.h
+npm notice 2.9kB out/x86-windows-static/include/openssl/rc5.h
+npm notice 1.7kB out/x86-windows-static/include/openssl/ripemd.h
+npm notice 28.3kB out/x86-windows-static/include/openssl/rsa.h
+npm notice 5.7kB out/x86-windows-static/include/openssl/rsaerr.h
+npm notice 18.7kB out/x86-windows-static/include/openssl/safestack.h
+npm notice 4.0kB out/x86-windows-static/include/openssl/seed.h
+npm notice 4.1kB out/x86-windows-static/include/openssl/self_test.h
+npm notice 4.7kB out/x86-windows-static/include/openssl/sha.h
+npm notice 15.8kB out/x86-windows-static/include/openssl/srp.h
+npm notice 1.4kB out/x86-windows-static/include/openssl/srtp.h
+npm notice 127.6kB out/x86-windows-static/include/openssl/ssl.h
+npm notice 658B out/x86-windows-static/include/openssl/ssl2.h
+npm notice 14.8kB out/x86-windows-static/include/openssl/ssl3.h
+npm notice 27.0kB out/x86-windows-static/include/openssl/sslerr_legacy.h
+npm notice 20.4kB out/x86-windows-static/include/openssl/sslerr.h
+npm notice 3.3kB out/x86-windows-static/include/openssl/stack.h
+npm notice 15.2kB out/x86-windows-static/include/openssl/store.h
+npm notice 2.1kB out/x86-windows-static/include/openssl/storeerr.h
+npm notice 1.3kB out/x86-windows-static/include/openssl/symhacks.h
+npm notice 71.3kB out/x86-windows-static/include/openssl/tls1.h
+npm notice 10.4kB out/x86-windows-static/include/openssl/trace.h
+npm notice 19.8kB out/x86-windows-static/include/openssl/ts.h
+npm notice 3.1kB out/x86-windows-static/include/openssl/tserr.h
+npm notice 1.8kB out/x86-windows-static/include/openssl/txt_db.h
+npm notice 7.3kB out/x86-windows-static/include/openssl/types.h
+npm notice 19.7kB out/x86-windows-static/include/openssl/ui.h
+npm notice 1.4kB out/x86-windows-static/include/openssl/uierr.h
+npm notice 1.9kB out/x86-windows-static/include/openssl/whrlpool.h
+npm notice 52.9kB out/x86-windows-static/include/openssl/x509_vfy.h
+npm notice 72.9kB out/x86-windows-static/include/openssl/x509.h
+npm notice 3.3kB out/x86-windows-static/include/openssl/x509err.h
+npm notice 95.5kB out/x86-windows-static/include/openssl/x509v3.h
+npm notice 4.8kB out/x86-windows-static/include/openssl/x509v3err.h
+npm notice 32.6MB out/x86-windows-static/lib/libcrypto.lib
+npm notice 5.5MB out/x86-windows-static/lib/libssl.lib
+npm notice 294B out/x86-windows-static/lib/pkgconfig/libcrypto.pc
+npm notice 289B out/x86-windows-static/lib/pkgconfig/libssl.pc
+npm notice 242B out/x86-windows-static/lib/pkgconfig/openssl.pc
+npm notice 568B package.json
+npm notice Tarball Details
+npm notice name: @vscode/openssl-prebuilt
+npm notice version: 0.0.11
+npm notice filename: vscode-openssl-prebuilt-0.0.11.tgz
+npm notice package size: 71.3 MB
+npm notice unpacked size: 250.3 MB
+npm notice shasum: 53e09dc85289515317eb486d53ab53897ea4fc49
+npm notice integrity: sha512-rjiSXtuQFN9zv[...]QlI7k842HidkA==
+npm notice total files: 1413
+npm notice
+vscode-openssl-prebuilt-0.0.11.tgz
+++ mkdir openssl
+++ tar -xvzf vscode-openssl-prebuilt-0.0.11.tgz --strip-components=1 --directory=openssl
+package/LICENSE
+package/out/arm-linux/lib/libcrypto.a
+package/out/arm64-linux-musl/lib/libcrypto.a
+package/out/arm64-linux/lib/libcrypto.a
+package/out/arm64-osx/lib/libcrypto.a
+package/out/x64-linux-musl/lib/libcrypto.a
+package/out/x64-linux/lib/libcrypto.a
+package/out/x64-osx/lib/libcrypto.a
+package/out/arm-linux/lib/libssl.a
+package/out/arm64-linux-musl/lib/libssl.a
+package/out/arm64-linux/lib/libssl.a
+package/out/arm64-osx/lib/libssl.a
+package/out/x64-linux-musl/lib/libssl.a
+package/out/x64-linux/lib/libssl.a
+package/out/x64-osx/lib/libssl.a
+package/out/sbom_vcpkg_openssl/spdx_2.2/manifest.cat
+package/out/arm64-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+package/out/x64-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+package/out/x86-windows-static/include/openssl/__DECC_INCLUDE_EPILOGUE.H
+package/out/arm64-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+package/out/x64-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+package/out/x86-windows-static/include/openssl/__DECC_INCLUDE_PROLOGUE.H
+package/out/arm-linux/include/openssl/aes.h
+package/out/arm64-linux-musl/include/openssl/aes.h
+package/out/arm64-linux/include/openssl/aes.h
+package/out/arm64-osx/include/openssl/aes.h
+package/out/arm64-windows-static/include/openssl/aes.h
+package/out/x64-linux-musl/include/openssl/aes.h
+package/out/x64-linux/include/openssl/aes.h
+package/out/x64-osx/include/openssl/aes.h
+package/out/x64-windows-static/include/openssl/aes.h
+package/out/x86-windows-static/include/openssl/aes.h
+package/out/arm-linux/include/openssl/asn1_mac.h
+package/out/arm64-linux-musl/include/openssl/asn1_mac.h
+package/out/arm64-linux/include/openssl/asn1_mac.h
+package/out/arm64-osx/include/openssl/asn1_mac.h
+package/out/arm64-windows-static/include/openssl/asn1_mac.h
+package/out/x64-linux-musl/include/openssl/asn1_mac.h
+package/out/x64-linux/include/openssl/asn1_mac.h
+package/out/x64-osx/include/openssl/asn1_mac.h
+package/out/x64-windows-static/include/openssl/asn1_mac.h
+package/out/x86-windows-static/include/openssl/asn1_mac.h
+package/out/arm-linux/include/openssl/asn1.h
+package/out/arm64-linux-musl/include/openssl/asn1.h
+package/out/arm64-linux/include/openssl/asn1.h
+package/out/arm64-osx/include/openssl/asn1.h
+package/out/arm64-windows-static/include/openssl/asn1.h
+package/out/x64-linux-musl/include/openssl/asn1.h
+package/out/x64-linux/include/openssl/asn1.h
+package/out/x64-osx/include/openssl/asn1.h
+package/out/x64-windows-static/include/openssl/asn1.h
+package/out/x86-windows-static/include/openssl/asn1.h
+package/out/arm-linux/include/openssl/asn1err.h
+package/out/arm64-linux-musl/include/openssl/asn1err.h
+package/out/arm64-linux/include/openssl/asn1err.h
+package/out/arm64-osx/include/openssl/asn1err.h
+package/out/arm64-windows-static/include/openssl/asn1err.h
+package/out/x64-linux-musl/include/openssl/asn1err.h
+package/out/x64-linux/include/openssl/asn1err.h
+package/out/x64-osx/include/openssl/asn1err.h
+package/out/x64-windows-static/include/openssl/asn1err.h
+package/out/x86-windows-static/include/openssl/asn1err.h
+package/out/arm-linux/include/openssl/asn1t.h
+package/out/arm64-linux-musl/include/openssl/asn1t.h
+package/out/arm64-linux/include/openssl/asn1t.h
+package/out/arm64-osx/include/openssl/asn1t.h
+package/out/arm64-windows-static/include/openssl/asn1t.h
+package/out/x64-linux-musl/include/openssl/asn1t.h
+package/out/x64-linux/include/openssl/asn1t.h
+package/out/x64-osx/include/openssl/asn1t.h
+package/out/x64-windows-static/include/openssl/asn1t.h
+package/out/x86-windows-static/include/openssl/asn1t.h
+package/out/arm-linux/include/openssl/async.h
+package/out/arm64-linux-musl/include/openssl/async.h
+package/out/arm64-linux/include/openssl/async.h
+package/out/arm64-osx/include/openssl/async.h
+package/out/arm64-windows-static/include/openssl/async.h
+package/out/x64-linux-musl/include/openssl/async.h
+package/out/x64-linux/include/openssl/async.h
+package/out/x64-osx/include/openssl/async.h
+package/out/x64-windows-static/include/openssl/async.h
+package/out/x86-windows-static/include/openssl/async.h
+package/out/arm-linux/include/openssl/asyncerr.h
+package/out/arm64-linux-musl/include/openssl/asyncerr.h
+package/out/arm64-linux/include/openssl/asyncerr.h
+package/out/arm64-osx/include/openssl/asyncerr.h
+package/out/arm64-windows-static/include/openssl/asyncerr.h
+package/out/x64-linux-musl/include/openssl/asyncerr.h
+package/out/x64-linux/include/openssl/asyncerr.h
+package/out/x64-osx/include/openssl/asyncerr.h
+package/out/x64-windows-static/include/openssl/asyncerr.h
+package/out/x86-windows-static/include/openssl/asyncerr.h
+package/out/arm-linux/include/openssl/bio.h
+package/out/arm64-linux-musl/include/openssl/bio.h
+package/out/arm64-linux/include/openssl/bio.h
+package/out/arm64-osx/include/openssl/bio.h
+package/out/arm64-windows-static/include/openssl/bio.h
+package/out/x64-linux-musl/include/openssl/bio.h
+package/out/x64-linux/include/openssl/bio.h
+package/out/x64-osx/include/openssl/bio.h
+package/out/x64-windows-static/include/openssl/bio.h
+package/out/x86-windows-static/include/openssl/bio.h
+package/out/arm-linux/include/openssl/bioerr.h
+package/out/arm64-linux-musl/include/openssl/bioerr.h
+package/out/arm64-linux/include/openssl/bioerr.h
+package/out/arm64-osx/include/openssl/bioerr.h
+package/out/arm64-windows-static/include/openssl/bioerr.h
+package/out/x64-linux-musl/include/openssl/bioerr.h
+package/out/x64-linux/include/openssl/bioerr.h
+package/out/x64-osx/include/openssl/bioerr.h
+package/out/x64-windows-static/include/openssl/bioerr.h
+package/out/x86-windows-static/include/openssl/bioerr.h
+package/out/arm-linux/include/openssl/blowfish.h
+package/out/arm64-linux-musl/include/openssl/blowfish.h
+package/out/arm64-linux/include/openssl/blowfish.h
+package/out/arm64-osx/include/openssl/blowfish.h
+package/out/arm64-windows-static/include/openssl/blowfish.h
+package/out/x64-linux-musl/include/openssl/blowfish.h
+package/out/x64-linux/include/openssl/blowfish.h
+package/out/x64-osx/include/openssl/blowfish.h
+package/out/x64-windows-static/include/openssl/blowfish.h
+package/out/x86-windows-static/include/openssl/blowfish.h
+package/out/arm-linux/include/openssl/bn.h
+package/out/arm64-linux-musl/include/openssl/bn.h
+package/out/arm64-linux/include/openssl/bn.h
+package/out/arm64-osx/include/openssl/bn.h
+package/out/arm64-windows-static/include/openssl/bn.h
+package/out/x64-linux-musl/include/openssl/bn.h
+package/out/x64-linux/include/openssl/bn.h
+package/out/x64-osx/include/openssl/bn.h
+package/out/x64-windows-static/include/openssl/bn.h
+package/out/x86-windows-static/include/openssl/bn.h
+package/out/arm-linux/include/openssl/bnerr.h
+package/out/arm64-linux-musl/include/openssl/bnerr.h
+package/out/arm64-linux/include/openssl/bnerr.h
+package/out/arm64-osx/include/openssl/bnerr.h
+package/out/arm64-windows-static/include/openssl/bnerr.h
+package/out/x64-linux-musl/include/openssl/bnerr.h
+package/out/x64-linux/include/openssl/bnerr.h
+package/out/x64-osx/include/openssl/bnerr.h
+package/out/x64-windows-static/include/openssl/bnerr.h
+package/out/x86-windows-static/include/openssl/bnerr.h
+package/out/arm-linux/include/openssl/buffer.h
+package/out/arm64-linux-musl/include/openssl/buffer.h
+package/out/arm64-linux/include/openssl/buffer.h
+package/out/arm64-osx/include/openssl/buffer.h
+package/out/arm64-windows-static/include/openssl/buffer.h
+package/out/x64-linux-musl/include/openssl/buffer.h
+package/out/x64-linux/include/openssl/buffer.h
+package/out/x64-osx/include/openssl/buffer.h
+package/out/x64-windows-static/include/openssl/buffer.h
+package/out/x86-windows-static/include/openssl/buffer.h
+package/out/arm-linux/include/openssl/buffererr.h
+package/out/arm64-linux-musl/include/openssl/buffererr.h
+package/out/arm64-linux/include/openssl/buffererr.h
+package/out/arm64-osx/include/openssl/buffererr.h
+package/out/arm64-windows-static/include/openssl/buffererr.h
+package/out/x64-linux-musl/include/openssl/buffererr.h
+package/out/x64-linux/include/openssl/buffererr.h
+package/out/x64-osx/include/openssl/buffererr.h
+package/out/x64-windows-static/include/openssl/buffererr.h
+package/out/x86-windows-static/include/openssl/buffererr.h
+package/out/arm-linux/include/openssl/camellia.h
+package/out/arm64-linux-musl/include/openssl/camellia.h
+package/out/arm64-linux/include/openssl/camellia.h
+package/out/arm64-osx/include/openssl/camellia.h
+package/out/arm64-windows-static/include/openssl/camellia.h
+package/out/x64-linux-musl/include/openssl/camellia.h
+package/out/x64-linux/include/openssl/camellia.h
+package/out/x64-osx/include/openssl/camellia.h
+package/out/x64-windows-static/include/openssl/camellia.h
+package/out/x86-windows-static/include/openssl/camellia.h
+package/out/arm-linux/include/openssl/cast.h
+package/out/arm64-linux-musl/include/openssl/cast.h
+package/out/arm64-linux/include/openssl/cast.h
+package/out/arm64-osx/include/openssl/cast.h
+package/out/arm64-windows-static/include/openssl/cast.h
+package/out/x64-linux-musl/include/openssl/cast.h
+package/out/x64-linux/include/openssl/cast.h
+package/out/x64-osx/include/openssl/cast.h
+package/out/x64-windows-static/include/openssl/cast.h
+package/out/x86-windows-static/include/openssl/cast.h
+package/out/arm-linux/include/openssl/cmac.h
+package/out/arm64-linux-musl/include/openssl/cmac.h
+package/out/arm64-linux/include/openssl/cmac.h
+package/out/arm64-osx/include/openssl/cmac.h
+package/out/arm64-windows-static/include/openssl/cmac.h
+package/out/x64-linux-musl/include/openssl/cmac.h
+package/out/x64-linux/include/openssl/cmac.h
+package/out/x64-osx/include/openssl/cmac.h
+package/out/x64-windows-static/include/openssl/cmac.h
+package/out/x86-windows-static/include/openssl/cmac.h
+package/out/arm-linux/include/openssl/cmp_util.h
+package/out/arm64-linux-musl/include/openssl/cmp_util.h
+package/out/arm64-linux/include/openssl/cmp_util.h
+package/out/arm64-osx/include/openssl/cmp_util.h
+package/out/arm64-windows-static/include/openssl/cmp_util.h
+package/out/x64-linux-musl/include/openssl/cmp_util.h
+package/out/x64-linux/include/openssl/cmp_util.h
+package/out/x64-osx/include/openssl/cmp_util.h
+package/out/x64-windows-static/include/openssl/cmp_util.h
+package/out/x86-windows-static/include/openssl/cmp_util.h
+package/out/arm-linux/include/openssl/cmp.h
+package/out/arm64-linux-musl/include/openssl/cmp.h
+package/out/arm64-linux/include/openssl/cmp.h
+package/out/arm64-osx/include/openssl/cmp.h
+package/out/arm64-windows-static/include/openssl/cmp.h
+package/out/x64-linux-musl/include/openssl/cmp.h
+package/out/x64-linux/include/openssl/cmp.h
+package/out/x64-osx/include/openssl/cmp.h
+package/out/x64-windows-static/include/openssl/cmp.h
+package/out/x86-windows-static/include/openssl/cmp.h
+package/out/arm-linux/include/openssl/cmperr.h
+package/out/arm64-linux-musl/include/openssl/cmperr.h
+package/out/arm64-linux/include/openssl/cmperr.h
+package/out/arm64-osx/include/openssl/cmperr.h
+package/out/arm64-windows-static/include/openssl/cmperr.h
+package/out/x64-linux-musl/include/openssl/cmperr.h
+package/out/x64-linux/include/openssl/cmperr.h
+package/out/x64-osx/include/openssl/cmperr.h
+package/out/x64-windows-static/include/openssl/cmperr.h
+package/out/x86-windows-static/include/openssl/cmperr.h
+package/out/arm-linux/include/openssl/cms.h
+package/out/arm64-linux-musl/include/openssl/cms.h
+package/out/arm64-linux/include/openssl/cms.h
+package/out/arm64-osx/include/openssl/cms.h
+package/out/arm64-windows-static/include/openssl/cms.h
+package/out/x64-linux-musl/include/openssl/cms.h
+package/out/x64-linux/include/openssl/cms.h
+package/out/x64-osx/include/openssl/cms.h
+package/out/x64-windows-static/include/openssl/cms.h
+package/out/x86-windows-static/include/openssl/cms.h
+package/out/arm-linux/include/openssl/cmserr.h
+package/out/arm64-linux-musl/include/openssl/cmserr.h
+package/out/arm64-linux/include/openssl/cmserr.h
+package/out/arm64-osx/include/openssl/cmserr.h
+package/out/arm64-windows-static/include/openssl/cmserr.h
+package/out/x64-linux-musl/include/openssl/cmserr.h
+package/out/x64-linux/include/openssl/cmserr.h
+package/out/x64-osx/include/openssl/cmserr.h
+package/out/x64-windows-static/include/openssl/cmserr.h
+package/out/x86-windows-static/include/openssl/cmserr.h
+package/out/arm-linux/include/openssl/comp.h
+package/out/arm64-linux-musl/include/openssl/comp.h
+package/out/arm64-linux/include/openssl/comp.h
+package/out/arm64-osx/include/openssl/comp.h
+package/out/arm64-windows-static/include/openssl/comp.h
+package/out/x64-linux-musl/include/openssl/comp.h
+package/out/x64-linux/include/openssl/comp.h
+package/out/x64-osx/include/openssl/comp.h
+package/out/x64-windows-static/include/openssl/comp.h
+package/out/x86-windows-static/include/openssl/comp.h
+package/out/arm-linux/include/openssl/comperr.h
+package/out/arm64-linux-musl/include/openssl/comperr.h
+package/out/arm64-linux/include/openssl/comperr.h
+package/out/arm64-osx/include/openssl/comperr.h
+package/out/arm64-windows-static/include/openssl/comperr.h
+package/out/x64-linux-musl/include/openssl/comperr.h
+package/out/x64-linux/include/openssl/comperr.h
+package/out/x64-osx/include/openssl/comperr.h
+package/out/x64-windows-static/include/openssl/comperr.h
+package/out/x86-windows-static/include/openssl/comperr.h
+package/out/arm-linux/include/openssl/conf_api.h
+package/out/arm64-linux-musl/include/openssl/conf_api.h
+package/out/arm64-linux/include/openssl/conf_api.h
+package/out/arm64-osx/include/openssl/conf_api.h
+package/out/arm64-windows-static/include/openssl/conf_api.h
+package/out/x64-linux-musl/include/openssl/conf_api.h
+package/out/x64-linux/include/openssl/conf_api.h
+package/out/x64-osx/include/openssl/conf_api.h
+package/out/x64-windows-static/include/openssl/conf_api.h
+package/out/x86-windows-static/include/openssl/conf_api.h
+package/out/arm-linux/include/openssl/conf.h
+package/out/arm64-linux-musl/include/openssl/conf.h
+package/out/arm64-linux/include/openssl/conf.h
+package/out/arm64-osx/include/openssl/conf.h
+package/out/arm64-windows-static/include/openssl/conf.h
+package/out/x64-linux-musl/include/openssl/conf.h
+package/out/x64-linux/include/openssl/conf.h
+package/out/x64-osx/include/openssl/conf.h
+package/out/x64-windows-static/include/openssl/conf.h
+package/out/x86-windows-static/include/openssl/conf.h
+package/out/arm-linux/include/openssl/conferr.h
+package/out/arm64-linux-musl/include/openssl/conferr.h
+package/out/arm64-linux/include/openssl/conferr.h
+package/out/arm64-osx/include/openssl/conferr.h
+package/out/arm64-windows-static/include/openssl/conferr.h
+package/out/x64-linux-musl/include/openssl/conferr.h
+package/out/x64-linux/include/openssl/conferr.h
+package/out/x64-osx/include/openssl/conferr.h
+package/out/x64-windows-static/include/openssl/conferr.h
+package/out/x86-windows-static/include/openssl/conferr.h
+package/out/arm-linux/include/openssl/configuration.h
+package/out/arm64-linux-musl/include/openssl/configuration.h
+package/out/arm64-linux/include/openssl/configuration.h
+package/out/arm64-osx/include/openssl/configuration.h
+package/out/arm64-windows-static/include/openssl/configuration.h
+package/out/x64-linux-musl/include/openssl/configuration.h
+package/out/x64-linux/include/openssl/configuration.h
+package/out/x64-osx/include/openssl/configuration.h
+package/out/x64-windows-static/include/openssl/configuration.h
+package/out/x86-windows-static/include/openssl/configuration.h
+package/out/arm-linux/include/openssl/conftypes.h
+package/out/arm64-linux-musl/include/openssl/conftypes.h
+package/out/arm64-linux/include/openssl/conftypes.h
+package/out/arm64-osx/include/openssl/conftypes.h
+package/out/arm64-windows-static/include/openssl/conftypes.h
+package/out/x64-linux-musl/include/openssl/conftypes.h
+package/out/x64-linux/include/openssl/conftypes.h
+package/out/x64-osx/include/openssl/conftypes.h
+package/out/x64-windows-static/include/openssl/conftypes.h
+package/out/x86-windows-static/include/openssl/conftypes.h
+package/out/arm-linux/include/openssl/core_dispatch.h
+package/out/arm64-linux-musl/include/openssl/core_dispatch.h
+package/out/arm64-linux/include/openssl/core_dispatch.h
+package/out/arm64-osx/include/openssl/core_dispatch.h
+package/out/arm64-windows-static/include/openssl/core_dispatch.h
+package/out/x64-linux-musl/include/openssl/core_dispatch.h
+package/out/x64-linux/include/openssl/core_dispatch.h
+package/out/x64-osx/include/openssl/core_dispatch.h
+package/out/x64-windows-static/include/openssl/core_dispatch.h
+package/out/x86-windows-static/include/openssl/core_dispatch.h
+package/out/arm-linux/include/openssl/core_names.h
+package/out/arm64-linux-musl/include/openssl/core_names.h
+package/out/arm64-linux/include/openssl/core_names.h
+package/out/arm64-osx/include/openssl/core_names.h
+package/out/arm64-windows-static/include/openssl/core_names.h
+package/out/x64-linux-musl/include/openssl/core_names.h
+package/out/x64-linux/include/openssl/core_names.h
+package/out/x64-osx/include/openssl/core_names.h
+package/out/x64-windows-static/include/openssl/core_names.h
+package/out/x86-windows-static/include/openssl/core_names.h
+package/out/arm-linux/include/openssl/core_object.h
+package/out/arm64-linux-musl/include/openssl/core_object.h
+package/out/arm64-linux/include/openssl/core_object.h
+package/out/arm64-osx/include/openssl/core_object.h
+package/out/arm64-windows-static/include/openssl/core_object.h
+package/out/x64-linux-musl/include/openssl/core_object.h
+package/out/x64-linux/include/openssl/core_object.h
+package/out/x64-osx/include/openssl/core_object.h
+package/out/x64-windows-static/include/openssl/core_object.h
+package/out/x86-windows-static/include/openssl/core_object.h
+package/out/arm-linux/include/openssl/core.h
+package/out/arm64-linux-musl/include/openssl/core.h
+package/out/arm64-linux/include/openssl/core.h
+package/out/arm64-osx/include/openssl/core.h
+package/out/arm64-windows-static/include/openssl/core.h
+package/out/x64-linux-musl/include/openssl/core.h
+package/out/x64-linux/include/openssl/core.h
+package/out/x64-osx/include/openssl/core.h
+package/out/x64-windows-static/include/openssl/core.h
+package/out/x86-windows-static/include/openssl/core.h
+package/out/arm-linux/include/openssl/crmf.h
+package/out/arm64-linux-musl/include/openssl/crmf.h
+package/out/arm64-linux/include/openssl/crmf.h
+package/out/arm64-osx/include/openssl/crmf.h
+package/out/arm64-windows-static/include/openssl/crmf.h
+package/out/x64-linux-musl/include/openssl/crmf.h
+package/out/x64-linux/include/openssl/crmf.h
+package/out/x64-osx/include/openssl/crmf.h
+package/out/x64-windows-static/include/openssl/crmf.h
+package/out/x86-windows-static/include/openssl/crmf.h
+package/out/arm-linux/include/openssl/crmferr.h
+package/out/arm64-linux-musl/include/openssl/crmferr.h
+package/out/arm64-linux/include/openssl/crmferr.h
+package/out/arm64-osx/include/openssl/crmferr.h
+package/out/arm64-windows-static/include/openssl/crmferr.h
+package/out/x64-linux-musl/include/openssl/crmferr.h
+package/out/x64-linux/include/openssl/crmferr.h
+package/out/x64-osx/include/openssl/crmferr.h
+package/out/x64-windows-static/include/openssl/crmferr.h
+package/out/x86-windows-static/include/openssl/crmferr.h
+package/out/arm-linux/include/openssl/crypto.h
+package/out/arm64-linux-musl/include/openssl/crypto.h
+package/out/arm64-linux/include/openssl/crypto.h
+package/out/arm64-osx/include/openssl/crypto.h
+package/out/arm64-windows-static/include/openssl/crypto.h
+package/out/x64-linux-musl/include/openssl/crypto.h
+package/out/x64-linux/include/openssl/crypto.h
+package/out/x64-osx/include/openssl/crypto.h
+package/out/x64-windows-static/include/openssl/crypto.h
+package/out/x86-windows-static/include/openssl/crypto.h
+package/out/arm-linux/include/openssl/cryptoerr_legacy.h
+package/out/arm64-linux-musl/include/openssl/cryptoerr_legacy.h
+package/out/arm64-linux/include/openssl/cryptoerr_legacy.h
+package/out/arm64-osx/include/openssl/cryptoerr_legacy.h
+package/out/arm64-windows-static/include/openssl/cryptoerr_legacy.h
+package/out/x64-linux-musl/include/openssl/cryptoerr_legacy.h
+package/out/x64-linux/include/openssl/cryptoerr_legacy.h
+package/out/x64-osx/include/openssl/cryptoerr_legacy.h
+package/out/x64-windows-static/include/openssl/cryptoerr_legacy.h
+package/out/x86-windows-static/include/openssl/cryptoerr_legacy.h
+package/out/arm-linux/include/openssl/cryptoerr.h
+package/out/arm64-linux-musl/include/openssl/cryptoerr.h
+package/out/arm64-linux/include/openssl/cryptoerr.h
+package/out/arm64-osx/include/openssl/cryptoerr.h
+package/out/arm64-windows-static/include/openssl/cryptoerr.h
+package/out/x64-linux-musl/include/openssl/cryptoerr.h
+package/out/x64-linux/include/openssl/cryptoerr.h
+package/out/x64-osx/include/openssl/cryptoerr.h
+package/out/x64-windows-static/include/openssl/cryptoerr.h
+package/out/x86-windows-static/include/openssl/cryptoerr.h
+package/out/arm-linux/include/openssl/ct.h
+package/out/arm64-linux-musl/include/openssl/ct.h
+package/out/arm64-linux/include/openssl/ct.h
+package/out/arm64-osx/include/openssl/ct.h
+package/out/arm64-windows-static/include/openssl/ct.h
+package/out/x64-linux-musl/include/openssl/ct.h
+package/out/x64-linux/include/openssl/ct.h
+package/out/x64-osx/include/openssl/ct.h
+package/out/x64-windows-static/include/openssl/ct.h
+package/out/x86-windows-static/include/openssl/ct.h
+package/out/arm-linux/include/openssl/cterr.h
+package/out/arm64-linux-musl/include/openssl/cterr.h
+package/out/arm64-linux/include/openssl/cterr.h
+package/out/arm64-osx/include/openssl/cterr.h
+package/out/arm64-windows-static/include/openssl/cterr.h
+package/out/x64-linux-musl/include/openssl/cterr.h
+package/out/x64-linux/include/openssl/cterr.h
+package/out/x64-osx/include/openssl/cterr.h
+package/out/x64-windows-static/include/openssl/cterr.h
+package/out/x86-windows-static/include/openssl/cterr.h
+package/out/arm-linux/include/openssl/decoder.h
+package/out/arm64-linux-musl/include/openssl/decoder.h
+package/out/arm64-linux/include/openssl/decoder.h
+package/out/arm64-osx/include/openssl/decoder.h
+package/out/arm64-windows-static/include/openssl/decoder.h
+package/out/x64-linux-musl/include/openssl/decoder.h
+package/out/x64-linux/include/openssl/decoder.h
+package/out/x64-osx/include/openssl/decoder.h
+package/out/x64-windows-static/include/openssl/decoder.h
+package/out/x86-windows-static/include/openssl/decoder.h
+package/out/arm-linux/include/openssl/decodererr.h
+package/out/arm64-linux-musl/include/openssl/decodererr.h
+package/out/arm64-linux/include/openssl/decodererr.h
+package/out/arm64-osx/include/openssl/decodererr.h
+package/out/arm64-windows-static/include/openssl/decodererr.h
+package/out/x64-linux-musl/include/openssl/decodererr.h
+package/out/x64-linux/include/openssl/decodererr.h
+package/out/x64-osx/include/openssl/decodererr.h
+package/out/x64-windows-static/include/openssl/decodererr.h
+package/out/x86-windows-static/include/openssl/decodererr.h
+package/out/arm-linux/include/openssl/des.h
+package/out/arm64-linux-musl/include/openssl/des.h
+package/out/arm64-linux/include/openssl/des.h
+package/out/arm64-osx/include/openssl/des.h
+package/out/arm64-windows-static/include/openssl/des.h
+package/out/x64-linux-musl/include/openssl/des.h
+package/out/x64-linux/include/openssl/des.h
+package/out/x64-osx/include/openssl/des.h
+package/out/x64-windows-static/include/openssl/des.h
+package/out/x86-windows-static/include/openssl/des.h
+package/out/arm-linux/include/openssl/dh.h
+package/out/arm64-linux-musl/include/openssl/dh.h
+package/out/arm64-linux/include/openssl/dh.h
+package/out/arm64-osx/include/openssl/dh.h
+package/out/arm64-windows-static/include/openssl/dh.h
+package/out/x64-linux-musl/include/openssl/dh.h
+package/out/x64-linux/include/openssl/dh.h
+package/out/x64-osx/include/openssl/dh.h
+package/out/x64-windows-static/include/openssl/dh.h
+package/out/x86-windows-static/include/openssl/dh.h
+package/out/arm-linux/include/openssl/dherr.h
+package/out/arm64-linux-musl/include/openssl/dherr.h
+package/out/arm64-linux/include/openssl/dherr.h
+package/out/arm64-osx/include/openssl/dherr.h
+package/out/arm64-windows-static/include/openssl/dherr.h
+package/out/x64-linux-musl/include/openssl/dherr.h
+package/out/x64-linux/include/openssl/dherr.h
+package/out/x64-osx/include/openssl/dherr.h
+package/out/x64-windows-static/include/openssl/dherr.h
+package/out/x86-windows-static/include/openssl/dherr.h
+package/out/arm-linux/include/openssl/dsa.h
+package/out/arm64-linux-musl/include/openssl/dsa.h
+package/out/arm64-linux/include/openssl/dsa.h
+package/out/arm64-osx/include/openssl/dsa.h
+package/out/arm64-windows-static/include/openssl/dsa.h
+package/out/x64-linux-musl/include/openssl/dsa.h
+package/out/x64-linux/include/openssl/dsa.h
+package/out/x64-osx/include/openssl/dsa.h
+package/out/x64-windows-static/include/openssl/dsa.h
+package/out/x86-windows-static/include/openssl/dsa.h
+package/out/arm-linux/include/openssl/dsaerr.h
+package/out/arm64-linux-musl/include/openssl/dsaerr.h
+package/out/arm64-linux/include/openssl/dsaerr.h
+package/out/arm64-osx/include/openssl/dsaerr.h
+package/out/arm64-windows-static/include/openssl/dsaerr.h
+package/out/x64-linux-musl/include/openssl/dsaerr.h
+package/out/x64-linux/include/openssl/dsaerr.h
+package/out/x64-osx/include/openssl/dsaerr.h
+package/out/x64-windows-static/include/openssl/dsaerr.h
+package/out/x86-windows-static/include/openssl/dsaerr.h
+package/out/arm-linux/include/openssl/dtls1.h
+package/out/arm64-linux-musl/include/openssl/dtls1.h
+package/out/arm64-linux/include/openssl/dtls1.h
+package/out/arm64-osx/include/openssl/dtls1.h
+package/out/arm64-windows-static/include/openssl/dtls1.h
+package/out/x64-linux-musl/include/openssl/dtls1.h
+package/out/x64-linux/include/openssl/dtls1.h
+package/out/x64-osx/include/openssl/dtls1.h
+package/out/x64-windows-static/include/openssl/dtls1.h
+package/out/x86-windows-static/include/openssl/dtls1.h
+package/out/arm-linux/include/openssl/e_os2.h
+package/out/arm64-linux-musl/include/openssl/e_os2.h
+package/out/arm64-linux/include/openssl/e_os2.h
+package/out/arm64-osx/include/openssl/e_os2.h
+package/out/arm64-windows-static/include/openssl/e_os2.h
+package/out/x64-linux-musl/include/openssl/e_os2.h
+package/out/x64-linux/include/openssl/e_os2.h
+package/out/x64-osx/include/openssl/e_os2.h
+package/out/x64-windows-static/include/openssl/e_os2.h
+package/out/x86-windows-static/include/openssl/e_os2.h
+package/out/arm-linux/include/openssl/ebcdic.h
+package/out/arm64-linux-musl/include/openssl/ebcdic.h
+package/out/arm64-linux/include/openssl/ebcdic.h
+package/out/arm64-osx/include/openssl/ebcdic.h
+package/out/arm64-windows-static/include/openssl/ebcdic.h
+package/out/x64-linux-musl/include/openssl/ebcdic.h
+package/out/x64-linux/include/openssl/ebcdic.h
+package/out/x64-osx/include/openssl/ebcdic.h
+package/out/x64-windows-static/include/openssl/ebcdic.h
+package/out/x86-windows-static/include/openssl/ebcdic.h
+package/out/arm-linux/include/openssl/ec.h
+package/out/arm64-linux-musl/include/openssl/ec.h
+package/out/arm64-linux/include/openssl/ec.h
+package/out/arm64-osx/include/openssl/ec.h
+package/out/arm64-windows-static/include/openssl/ec.h
+package/out/x64-linux-musl/include/openssl/ec.h
+package/out/x64-linux/include/openssl/ec.h
+package/out/x64-osx/include/openssl/ec.h
+package/out/x64-windows-static/include/openssl/ec.h
+package/out/x86-windows-static/include/openssl/ec.h
+package/out/arm-linux/include/openssl/ecdh.h
+package/out/arm64-linux-musl/include/openssl/ecdh.h
+package/out/arm64-linux/include/openssl/ecdh.h
+package/out/arm64-osx/include/openssl/ecdh.h
+package/out/arm64-windows-static/include/openssl/ecdh.h
+package/out/x64-linux-musl/include/openssl/ecdh.h
+package/out/x64-linux/include/openssl/ecdh.h
+package/out/x64-osx/include/openssl/ecdh.h
+package/out/x64-windows-static/include/openssl/ecdh.h
+package/out/x86-windows-static/include/openssl/ecdh.h
+package/out/arm-linux/include/openssl/ecdsa.h
+package/out/arm64-linux-musl/include/openssl/ecdsa.h
+package/out/arm64-linux/include/openssl/ecdsa.h
+package/out/arm64-osx/include/openssl/ecdsa.h
+package/out/arm64-windows-static/include/openssl/ecdsa.h
+package/out/x64-linux-musl/include/openssl/ecdsa.h
+package/out/x64-linux/include/openssl/ecdsa.h
+package/out/x64-osx/include/openssl/ecdsa.h
+package/out/x64-windows-static/include/openssl/ecdsa.h
+package/out/x86-windows-static/include/openssl/ecdsa.h
+package/out/arm-linux/include/openssl/ecerr.h
+package/out/arm64-linux-musl/include/openssl/ecerr.h
+package/out/arm64-linux/include/openssl/ecerr.h
+package/out/arm64-osx/include/openssl/ecerr.h
+package/out/arm64-windows-static/include/openssl/ecerr.h
+package/out/x64-linux-musl/include/openssl/ecerr.h
+package/out/x64-linux/include/openssl/ecerr.h
+package/out/x64-osx/include/openssl/ecerr.h
+package/out/x64-windows-static/include/openssl/ecerr.h
+package/out/x86-windows-static/include/openssl/ecerr.h
+package/out/arm-linux/include/openssl/encoder.h
+package/out/arm64-linux-musl/include/openssl/encoder.h
+package/out/arm64-linux/include/openssl/encoder.h
+package/out/arm64-osx/include/openssl/encoder.h
+package/out/arm64-windows-static/include/openssl/encoder.h
+package/out/x64-linux-musl/include/openssl/encoder.h
+package/out/x64-linux/include/openssl/encoder.h
+package/out/x64-osx/include/openssl/encoder.h
+package/out/x64-windows-static/include/openssl/encoder.h
+package/out/x86-windows-static/include/openssl/encoder.h
+package/out/arm-linux/include/openssl/encodererr.h
+package/out/arm64-linux-musl/include/openssl/encodererr.h
+package/out/arm64-linux/include/openssl/encodererr.h
+package/out/arm64-osx/include/openssl/encodererr.h
+package/out/arm64-windows-static/include/openssl/encodererr.h
+package/out/x64-linux-musl/include/openssl/encodererr.h
+package/out/x64-linux/include/openssl/encodererr.h
+package/out/x64-osx/include/openssl/encodererr.h
+package/out/x64-windows-static/include/openssl/encodererr.h
+package/out/x86-windows-static/include/openssl/encodererr.h
+package/out/arm-linux/include/openssl/engine.h
+package/out/arm64-linux-musl/include/openssl/engine.h
+package/out/arm64-linux/include/openssl/engine.h
+package/out/arm64-osx/include/openssl/engine.h
+package/out/arm64-windows-static/include/openssl/engine.h
+package/out/x64-linux-musl/include/openssl/engine.h
+package/out/x64-linux/include/openssl/engine.h
+package/out/x64-osx/include/openssl/engine.h
+package/out/x64-windows-static/include/openssl/engine.h
+package/out/x86-windows-static/include/openssl/engine.h
+package/out/arm-linux/include/openssl/engineerr.h
+package/out/arm64-linux-musl/include/openssl/engineerr.h
+package/out/arm64-linux/include/openssl/engineerr.h
+package/out/arm64-osx/include/openssl/engineerr.h
+package/out/arm64-windows-static/include/openssl/engineerr.h
+package/out/x64-linux-musl/include/openssl/engineerr.h
+package/out/x64-linux/include/openssl/engineerr.h
+package/out/x64-osx/include/openssl/engineerr.h
+package/out/x64-windows-static/include/openssl/engineerr.h
+package/out/x86-windows-static/include/openssl/engineerr.h
+package/out/arm-linux/include/openssl/err.h
+package/out/arm64-linux-musl/include/openssl/err.h
+package/out/arm64-linux/include/openssl/err.h
+package/out/arm64-osx/include/openssl/err.h
+package/out/arm64-windows-static/include/openssl/err.h
+package/out/x64-linux-musl/include/openssl/err.h
+package/out/x64-linux/include/openssl/err.h
+package/out/x64-osx/include/openssl/err.h
+package/out/x64-windows-static/include/openssl/err.h
+package/out/x86-windows-static/include/openssl/err.h
+package/out/arm-linux/include/openssl/ess.h
+package/out/arm64-linux-musl/include/openssl/ess.h
+package/out/arm64-linux/include/openssl/ess.h
+package/out/arm64-osx/include/openssl/ess.h
+package/out/arm64-windows-static/include/openssl/ess.h
+package/out/x64-linux-musl/include/openssl/ess.h
+package/out/x64-linux/include/openssl/ess.h
+package/out/x64-osx/include/openssl/ess.h
+package/out/x64-windows-static/include/openssl/ess.h
+package/out/x86-windows-static/include/openssl/ess.h
+package/out/arm-linux/include/openssl/esserr.h
+package/out/arm64-linux-musl/include/openssl/esserr.h
+package/out/arm64-linux/include/openssl/esserr.h
+package/out/arm64-osx/include/openssl/esserr.h
+package/out/arm64-windows-static/include/openssl/esserr.h
+package/out/x64-linux-musl/include/openssl/esserr.h
+package/out/x64-linux/include/openssl/esserr.h
+package/out/x64-osx/include/openssl/esserr.h
+package/out/x64-windows-static/include/openssl/esserr.h
+package/out/x86-windows-static/include/openssl/esserr.h
+package/out/arm-linux/include/openssl/evp.h
+package/out/arm64-linux-musl/include/openssl/evp.h
+package/out/arm64-linux/include/openssl/evp.h
+package/out/arm64-osx/include/openssl/evp.h
+package/out/arm64-windows-static/include/openssl/evp.h
+package/out/x64-linux-musl/include/openssl/evp.h
+package/out/x64-linux/include/openssl/evp.h
+package/out/x64-osx/include/openssl/evp.h
+package/out/x64-windows-static/include/openssl/evp.h
+package/out/x86-windows-static/include/openssl/evp.h
+package/out/arm-linux/include/openssl/evperr.h
+package/out/arm64-linux-musl/include/openssl/evperr.h
+package/out/arm64-linux/include/openssl/evperr.h
+package/out/arm64-osx/include/openssl/evperr.h
+package/out/arm64-windows-static/include/openssl/evperr.h
+package/out/x64-linux-musl/include/openssl/evperr.h
+package/out/x64-linux/include/openssl/evperr.h
+package/out/x64-osx/include/openssl/evperr.h
+package/out/x64-windows-static/include/openssl/evperr.h
+package/out/x86-windows-static/include/openssl/evperr.h
+package/out/arm-linux/include/openssl/fips_names.h
+package/out/arm64-linux-musl/include/openssl/fips_names.h
+package/out/arm64-linux/include/openssl/fips_names.h
+package/out/arm64-osx/include/openssl/fips_names.h
+package/out/arm64-windows-static/include/openssl/fips_names.h
+package/out/x64-linux-musl/include/openssl/fips_names.h
+package/out/x64-linux/include/openssl/fips_names.h
+package/out/x64-osx/include/openssl/fips_names.h
+package/out/x64-windows-static/include/openssl/fips_names.h
+package/out/x86-windows-static/include/openssl/fips_names.h
+package/out/arm-linux/include/openssl/fipskey.h
+package/out/arm64-linux-musl/include/openssl/fipskey.h
+package/out/arm64-linux/include/openssl/fipskey.h
+package/out/arm64-osx/include/openssl/fipskey.h
+package/out/arm64-windows-static/include/openssl/fipskey.h
+package/out/x64-linux-musl/include/openssl/fipskey.h
+package/out/x64-linux/include/openssl/fipskey.h
+package/out/x64-osx/include/openssl/fipskey.h
+package/out/x64-windows-static/include/openssl/fipskey.h
+package/out/x86-windows-static/include/openssl/fipskey.h
+package/out/arm-linux/include/openssl/hmac.h
+package/out/arm64-linux-musl/include/openssl/hmac.h
+package/out/arm64-linux/include/openssl/hmac.h
+package/out/arm64-osx/include/openssl/hmac.h
+package/out/arm64-windows-static/include/openssl/hmac.h
+package/out/x64-linux-musl/include/openssl/hmac.h
+package/out/x64-linux/include/openssl/hmac.h
+package/out/x64-osx/include/openssl/hmac.h
+package/out/x64-windows-static/include/openssl/hmac.h
+package/out/x86-windows-static/include/openssl/hmac.h
+package/out/arm-linux/include/openssl/http.h
+package/out/arm64-linux-musl/include/openssl/http.h
+package/out/arm64-linux/include/openssl/http.h
+package/out/arm64-osx/include/openssl/http.h
+package/out/arm64-windows-static/include/openssl/http.h
+package/out/x64-linux-musl/include/openssl/http.h
+package/out/x64-linux/include/openssl/http.h
+package/out/x64-osx/include/openssl/http.h
+package/out/x64-windows-static/include/openssl/http.h
+package/out/x86-windows-static/include/openssl/http.h
+package/out/arm-linux/include/openssl/httperr.h
+package/out/arm64-linux-musl/include/openssl/httperr.h
+package/out/arm64-linux/include/openssl/httperr.h
+package/out/arm64-osx/include/openssl/httperr.h
+package/out/arm64-windows-static/include/openssl/httperr.h
+package/out/x64-linux-musl/include/openssl/httperr.h
+package/out/x64-linux/include/openssl/httperr.h
+package/out/x64-osx/include/openssl/httperr.h
+package/out/x64-windows-static/include/openssl/httperr.h
+package/out/x86-windows-static/include/openssl/httperr.h
+package/out/arm-linux/include/openssl/idea.h
+package/out/arm64-linux-musl/include/openssl/idea.h
+package/out/arm64-linux/include/openssl/idea.h
+package/out/arm64-osx/include/openssl/idea.h
+package/out/arm64-windows-static/include/openssl/idea.h
+package/out/x64-linux-musl/include/openssl/idea.h
+package/out/x64-linux/include/openssl/idea.h
+package/out/x64-osx/include/openssl/idea.h
+package/out/x64-windows-static/include/openssl/idea.h
+package/out/x86-windows-static/include/openssl/idea.h
+package/out/arm-linux/include/openssl/kdf.h
+package/out/arm64-linux-musl/include/openssl/kdf.h
+package/out/arm64-linux/include/openssl/kdf.h
+package/out/arm64-osx/include/openssl/kdf.h
+package/out/arm64-windows-static/include/openssl/kdf.h
+package/out/x64-linux-musl/include/openssl/kdf.h
+package/out/x64-linux/include/openssl/kdf.h
+package/out/x64-osx/include/openssl/kdf.h
+package/out/x64-windows-static/include/openssl/kdf.h
+package/out/x86-windows-static/include/openssl/kdf.h
+package/out/arm-linux/include/openssl/kdferr.h
+package/out/arm64-linux-musl/include/openssl/kdferr.h
+package/out/arm64-linux/include/openssl/kdferr.h
+package/out/arm64-osx/include/openssl/kdferr.h
+package/out/arm64-windows-static/include/openssl/kdferr.h
+package/out/x64-linux-musl/include/openssl/kdferr.h
+package/out/x64-linux/include/openssl/kdferr.h
+package/out/x64-osx/include/openssl/kdferr.h
+package/out/x64-windows-static/include/openssl/kdferr.h
+package/out/x86-windows-static/include/openssl/kdferr.h
+package/out/arm-linux/include/openssl/lhash.h
+package/out/arm64-linux-musl/include/openssl/lhash.h
+package/out/arm64-linux/include/openssl/lhash.h
+package/out/arm64-osx/include/openssl/lhash.h
+package/out/arm64-windows-static/include/openssl/lhash.h
+package/out/x64-linux-musl/include/openssl/lhash.h
+package/out/x64-linux/include/openssl/lhash.h
+package/out/x64-osx/include/openssl/lhash.h
+package/out/x64-windows-static/include/openssl/lhash.h
+package/out/x86-windows-static/include/openssl/lhash.h
+package/out/arm-linux/include/openssl/macros.h
+package/out/arm64-linux-musl/include/openssl/macros.h
+package/out/arm64-linux/include/openssl/macros.h
+package/out/arm64-osx/include/openssl/macros.h
+package/out/arm64-windows-static/include/openssl/macros.h
+package/out/x64-linux-musl/include/openssl/macros.h
+package/out/x64-linux/include/openssl/macros.h
+package/out/x64-osx/include/openssl/macros.h
+package/out/x64-windows-static/include/openssl/macros.h
+package/out/x86-windows-static/include/openssl/macros.h
+package/out/arm-linux/include/openssl/md2.h
+package/out/arm64-linux-musl/include/openssl/md2.h
+package/out/arm64-linux/include/openssl/md2.h
+package/out/arm64-osx/include/openssl/md2.h
+package/out/arm64-windows-static/include/openssl/md2.h
+package/out/x64-linux-musl/include/openssl/md2.h
+package/out/x64-linux/include/openssl/md2.h
+package/out/x64-osx/include/openssl/md2.h
+package/out/x64-windows-static/include/openssl/md2.h
+package/out/x86-windows-static/include/openssl/md2.h
+package/out/arm-linux/include/openssl/md4.h
+package/out/arm64-linux-musl/include/openssl/md4.h
+package/out/arm64-linux/include/openssl/md4.h
+package/out/arm64-osx/include/openssl/md4.h
+package/out/arm64-windows-static/include/openssl/md4.h
+package/out/x64-linux-musl/include/openssl/md4.h
+package/out/x64-linux/include/openssl/md4.h
+package/out/x64-osx/include/openssl/md4.h
+package/out/x64-windows-static/include/openssl/md4.h
+package/out/x86-windows-static/include/openssl/md4.h
+package/out/arm-linux/include/openssl/md5.h
+package/out/arm64-linux-musl/include/openssl/md5.h
+package/out/arm64-linux/include/openssl/md5.h
+package/out/arm64-osx/include/openssl/md5.h
+package/out/arm64-windows-static/include/openssl/md5.h
+package/out/x64-linux-musl/include/openssl/md5.h
+package/out/x64-linux/include/openssl/md5.h
+package/out/x64-osx/include/openssl/md5.h
+package/out/x64-windows-static/include/openssl/md5.h
+package/out/x86-windows-static/include/openssl/md5.h
+package/out/arm-linux/include/openssl/mdc2.h
+package/out/arm64-linux-musl/include/openssl/mdc2.h
+package/out/arm64-linux/include/openssl/mdc2.h
+package/out/arm64-osx/include/openssl/mdc2.h
+package/out/arm64-windows-static/include/openssl/mdc2.h
+package/out/x64-linux-musl/include/openssl/mdc2.h
+package/out/x64-linux/include/openssl/mdc2.h
+package/out/x64-osx/include/openssl/mdc2.h
+package/out/x64-windows-static/include/openssl/mdc2.h
+package/out/x86-windows-static/include/openssl/mdc2.h
+package/out/arm-linux/include/openssl/modes.h
+package/out/arm64-linux-musl/include/openssl/modes.h
+package/out/arm64-linux/include/openssl/modes.h
+package/out/arm64-osx/include/openssl/modes.h
+package/out/arm64-windows-static/include/openssl/modes.h
+package/out/x64-linux-musl/include/openssl/modes.h
+package/out/x64-linux/include/openssl/modes.h
+package/out/x64-osx/include/openssl/modes.h
+package/out/x64-windows-static/include/openssl/modes.h
+package/out/x86-windows-static/include/openssl/modes.h
+package/out/arm-linux/include/openssl/obj_mac.h
+package/out/arm64-linux-musl/include/openssl/obj_mac.h
+package/out/arm64-linux/include/openssl/obj_mac.h
+package/out/arm64-osx/include/openssl/obj_mac.h
+package/out/arm64-windows-static/include/openssl/obj_mac.h
+package/out/x64-linux-musl/include/openssl/obj_mac.h
+package/out/x64-linux/include/openssl/obj_mac.h
+package/out/x64-osx/include/openssl/obj_mac.h
+package/out/x64-windows-static/include/openssl/obj_mac.h
+package/out/x86-windows-static/include/openssl/obj_mac.h
+package/out/arm-linux/include/openssl/objects.h
+package/out/arm64-linux-musl/include/openssl/objects.h
+package/out/arm64-linux/include/openssl/objects.h
+package/out/arm64-osx/include/openssl/objects.h
+package/out/arm64-windows-static/include/openssl/objects.h
+package/out/x64-linux-musl/include/openssl/objects.h
+package/out/x64-linux/include/openssl/objects.h
+package/out/x64-osx/include/openssl/objects.h
+package/out/x64-windows-static/include/openssl/objects.h
+package/out/x86-windows-static/include/openssl/objects.h
+package/out/arm-linux/include/openssl/objectserr.h
+package/out/arm64-linux-musl/include/openssl/objectserr.h
+package/out/arm64-linux/include/openssl/objectserr.h
+package/out/arm64-osx/include/openssl/objectserr.h
+package/out/arm64-windows-static/include/openssl/objectserr.h
+package/out/x64-linux-musl/include/openssl/objectserr.h
+package/out/x64-linux/include/openssl/objectserr.h
+package/out/x64-osx/include/openssl/objectserr.h
+package/out/x64-windows-static/include/openssl/objectserr.h
+package/out/x86-windows-static/include/openssl/objectserr.h
+package/out/arm-linux/include/openssl/ocsp.h
+package/out/arm64-linux-musl/include/openssl/ocsp.h
+package/out/arm64-linux/include/openssl/ocsp.h
+package/out/arm64-osx/include/openssl/ocsp.h
+package/out/arm64-windows-static/include/openssl/ocsp.h
+package/out/x64-linux-musl/include/openssl/ocsp.h
+package/out/x64-linux/include/openssl/ocsp.h
+package/out/x64-osx/include/openssl/ocsp.h
+package/out/x64-windows-static/include/openssl/ocsp.h
+package/out/x86-windows-static/include/openssl/ocsp.h
+package/out/arm-linux/include/openssl/ocsperr.h
+package/out/arm64-linux-musl/include/openssl/ocsperr.h
+package/out/arm64-linux/include/openssl/ocsperr.h
+package/out/arm64-osx/include/openssl/ocsperr.h
+package/out/arm64-windows-static/include/openssl/ocsperr.h
+package/out/x64-linux-musl/include/openssl/ocsperr.h
+package/out/x64-linux/include/openssl/ocsperr.h
+package/out/x64-osx/include/openssl/ocsperr.h
+package/out/x64-windows-static/include/openssl/ocsperr.h
+package/out/x86-windows-static/include/openssl/ocsperr.h
+package/out/arm-linux/include/openssl/opensslconf.h
+package/out/arm64-linux-musl/include/openssl/opensslconf.h
+package/out/arm64-linux/include/openssl/opensslconf.h
+package/out/arm64-osx/include/openssl/opensslconf.h
+package/out/arm64-windows-static/include/openssl/opensslconf.h
+package/out/x64-linux-musl/include/openssl/opensslconf.h
+package/out/x64-linux/include/openssl/opensslconf.h
+package/out/x64-osx/include/openssl/opensslconf.h
+package/out/x64-windows-static/include/openssl/opensslconf.h
+package/out/x86-windows-static/include/openssl/opensslconf.h
+package/out/arm-linux/include/openssl/opensslv.h
+package/out/arm64-linux-musl/include/openssl/opensslv.h
+package/out/arm64-linux/include/openssl/opensslv.h
+package/out/arm64-osx/include/openssl/opensslv.h
+package/out/arm64-windows-static/include/openssl/opensslv.h
+package/out/x64-linux-musl/include/openssl/opensslv.h
+package/out/x64-linux/include/openssl/opensslv.h
+package/out/x64-osx/include/openssl/opensslv.h
+package/out/x64-windows-static/include/openssl/opensslv.h
+package/out/x86-windows-static/include/openssl/opensslv.h
+package/out/arm-linux/include/openssl/ossl_typ.h
+package/out/arm64-linux-musl/include/openssl/ossl_typ.h
+package/out/arm64-linux/include/openssl/ossl_typ.h
+package/out/arm64-osx/include/openssl/ossl_typ.h
+package/out/arm64-windows-static/include/openssl/ossl_typ.h
+package/out/x64-linux-musl/include/openssl/ossl_typ.h
+package/out/x64-linux/include/openssl/ossl_typ.h
+package/out/x64-osx/include/openssl/ossl_typ.h
+package/out/x64-windows-static/include/openssl/ossl_typ.h
+package/out/x86-windows-static/include/openssl/ossl_typ.h
+package/out/arm-linux/include/openssl/param_build.h
+package/out/arm64-linux-musl/include/openssl/param_build.h
+package/out/arm64-linux/include/openssl/param_build.h
+package/out/arm64-osx/include/openssl/param_build.h
+package/out/arm64-windows-static/include/openssl/param_build.h
+package/out/x64-linux-musl/include/openssl/param_build.h
+package/out/x64-linux/include/openssl/param_build.h
+package/out/x64-osx/include/openssl/param_build.h
+package/out/x64-windows-static/include/openssl/param_build.h
+package/out/x86-windows-static/include/openssl/param_build.h
+package/out/arm-linux/include/openssl/params.h
+package/out/arm64-linux-musl/include/openssl/params.h
+package/out/arm64-linux/include/openssl/params.h
+package/out/arm64-osx/include/openssl/params.h
+package/out/arm64-windows-static/include/openssl/params.h
+package/out/x64-linux-musl/include/openssl/params.h
+package/out/x64-linux/include/openssl/params.h
+package/out/x64-osx/include/openssl/params.h
+package/out/x64-windows-static/include/openssl/params.h
+package/out/x86-windows-static/include/openssl/params.h
+package/out/arm-linux/include/openssl/pem.h
+package/out/arm64-linux-musl/include/openssl/pem.h
+package/out/arm64-linux/include/openssl/pem.h
+package/out/arm64-osx/include/openssl/pem.h
+package/out/arm64-windows-static/include/openssl/pem.h
+package/out/x64-linux-musl/include/openssl/pem.h
+package/out/x64-linux/include/openssl/pem.h
+package/out/x64-osx/include/openssl/pem.h
+package/out/x64-windows-static/include/openssl/pem.h
+package/out/x86-windows-static/include/openssl/pem.h
+package/out/arm-linux/include/openssl/pem2.h
+package/out/arm64-linux-musl/include/openssl/pem2.h
+package/out/arm64-linux/include/openssl/pem2.h
+package/out/arm64-osx/include/openssl/pem2.h
+package/out/arm64-windows-static/include/openssl/pem2.h
+package/out/x64-linux-musl/include/openssl/pem2.h
+package/out/x64-linux/include/openssl/pem2.h
+package/out/x64-osx/include/openssl/pem2.h
+package/out/x64-windows-static/include/openssl/pem2.h
+package/out/x86-windows-static/include/openssl/pem2.h
+package/out/arm-linux/include/openssl/pemerr.h
+package/out/arm64-linux-musl/include/openssl/pemerr.h
+package/out/arm64-linux/include/openssl/pemerr.h
+package/out/arm64-osx/include/openssl/pemerr.h
+package/out/arm64-windows-static/include/openssl/pemerr.h
+package/out/x64-linux-musl/include/openssl/pemerr.h
+package/out/x64-linux/include/openssl/pemerr.h
+package/out/x64-osx/include/openssl/pemerr.h
+package/out/x64-windows-static/include/openssl/pemerr.h
+package/out/x86-windows-static/include/openssl/pemerr.h
+package/out/arm-linux/include/openssl/pkcs12.h
+package/out/arm64-linux-musl/include/openssl/pkcs12.h
+package/out/arm64-linux/include/openssl/pkcs12.h
+package/out/arm64-osx/include/openssl/pkcs12.h
+package/out/arm64-windows-static/include/openssl/pkcs12.h
+package/out/x64-linux-musl/include/openssl/pkcs12.h
+package/out/x64-linux/include/openssl/pkcs12.h
+package/out/x64-osx/include/openssl/pkcs12.h
+package/out/x64-windows-static/include/openssl/pkcs12.h
+package/out/x86-windows-static/include/openssl/pkcs12.h
+package/out/arm-linux/include/openssl/pkcs12err.h
+package/out/arm64-linux-musl/include/openssl/pkcs12err.h
+package/out/arm64-linux/include/openssl/pkcs12err.h
+package/out/arm64-osx/include/openssl/pkcs12err.h
+package/out/arm64-windows-static/include/openssl/pkcs12err.h
+package/out/x64-linux-musl/include/openssl/pkcs12err.h
+package/out/x64-linux/include/openssl/pkcs12err.h
+package/out/x64-osx/include/openssl/pkcs12err.h
+package/out/x64-windows-static/include/openssl/pkcs12err.h
+package/out/x86-windows-static/include/openssl/pkcs12err.h
+package/out/arm-linux/include/openssl/pkcs7.h
+package/out/arm64-linux-musl/include/openssl/pkcs7.h
+package/out/arm64-linux/include/openssl/pkcs7.h
+package/out/arm64-osx/include/openssl/pkcs7.h
+package/out/arm64-windows-static/include/openssl/pkcs7.h
+package/out/x64-linux-musl/include/openssl/pkcs7.h
+package/out/x64-linux/include/openssl/pkcs7.h
+package/out/x64-osx/include/openssl/pkcs7.h
+package/out/x64-windows-static/include/openssl/pkcs7.h
+package/out/x86-windows-static/include/openssl/pkcs7.h
+package/out/arm-linux/include/openssl/pkcs7err.h
+package/out/arm64-linux-musl/include/openssl/pkcs7err.h
+package/out/arm64-linux/include/openssl/pkcs7err.h
+package/out/arm64-osx/include/openssl/pkcs7err.h
+package/out/arm64-windows-static/include/openssl/pkcs7err.h
+package/out/x64-linux-musl/include/openssl/pkcs7err.h
+package/out/x64-linux/include/openssl/pkcs7err.h
+package/out/x64-osx/include/openssl/pkcs7err.h
+package/out/x64-windows-static/include/openssl/pkcs7err.h
+package/out/x86-windows-static/include/openssl/pkcs7err.h
+package/out/arm-linux/include/openssl/prov_ssl.h
+package/out/arm64-linux-musl/include/openssl/prov_ssl.h
+package/out/arm64-linux/include/openssl/prov_ssl.h
+package/out/arm64-osx/include/openssl/prov_ssl.h
+package/out/arm64-windows-static/include/openssl/prov_ssl.h
+package/out/x64-linux-musl/include/openssl/prov_ssl.h
+package/out/x64-linux/include/openssl/prov_ssl.h
+package/out/x64-osx/include/openssl/prov_ssl.h
+package/out/x64-windows-static/include/openssl/prov_ssl.h
+package/out/x86-windows-static/include/openssl/prov_ssl.h
+package/out/arm-linux/include/openssl/proverr.h
+package/out/arm64-linux-musl/include/openssl/proverr.h
+package/out/arm64-linux/include/openssl/proverr.h
+package/out/arm64-osx/include/openssl/proverr.h
+package/out/arm64-windows-static/include/openssl/proverr.h
+package/out/x64-linux-musl/include/openssl/proverr.h
+package/out/x64-linux/include/openssl/proverr.h
+package/out/x64-osx/include/openssl/proverr.h
+package/out/x64-windows-static/include/openssl/proverr.h
+package/out/x86-windows-static/include/openssl/proverr.h
+package/out/arm-linux/include/openssl/provider.h
+package/out/arm64-linux-musl/include/openssl/provider.h
+package/out/arm64-linux/include/openssl/provider.h
+package/out/arm64-osx/include/openssl/provider.h
+package/out/arm64-windows-static/include/openssl/provider.h
+package/out/x64-linux-musl/include/openssl/provider.h
+package/out/x64-linux/include/openssl/provider.h
+package/out/x64-osx/include/openssl/provider.h
+package/out/x64-windows-static/include/openssl/provider.h
+package/out/x86-windows-static/include/openssl/provider.h
+package/out/arm-linux/include/openssl/rand.h
+package/out/arm64-linux-musl/include/openssl/rand.h
+package/out/arm64-linux/include/openssl/rand.h
+package/out/arm64-osx/include/openssl/rand.h
+package/out/arm64-windows-static/include/openssl/rand.h
+package/out/x64-linux-musl/include/openssl/rand.h
+package/out/x64-linux/include/openssl/rand.h
+package/out/x64-osx/include/openssl/rand.h
+package/out/x64-windows-static/include/openssl/rand.h
+package/out/x86-windows-static/include/openssl/rand.h
+package/out/arm-linux/include/openssl/randerr.h
+package/out/arm64-linux-musl/include/openssl/randerr.h
+package/out/arm64-linux/include/openssl/randerr.h
+package/out/arm64-osx/include/openssl/randerr.h
+package/out/arm64-windows-static/include/openssl/randerr.h
+package/out/x64-linux-musl/include/openssl/randerr.h
+package/out/x64-linux/include/openssl/randerr.h
+package/out/x64-osx/include/openssl/randerr.h
+package/out/x64-windows-static/include/openssl/randerr.h
+package/out/x86-windows-static/include/openssl/randerr.h
+package/out/arm-linux/include/openssl/rc2.h
+package/out/arm64-linux-musl/include/openssl/rc2.h
+package/out/arm64-linux/include/openssl/rc2.h
+package/out/arm64-osx/include/openssl/rc2.h
+package/out/arm64-windows-static/include/openssl/rc2.h
+package/out/x64-linux-musl/include/openssl/rc2.h
+package/out/x64-linux/include/openssl/rc2.h
+package/out/x64-osx/include/openssl/rc2.h
+package/out/x64-windows-static/include/openssl/rc2.h
+package/out/x86-windows-static/include/openssl/rc2.h
+package/out/arm-linux/include/openssl/rc4.h
+package/out/arm64-linux-musl/include/openssl/rc4.h
+package/out/arm64-linux/include/openssl/rc4.h
+package/out/arm64-osx/include/openssl/rc4.h
+package/out/arm64-windows-static/include/openssl/rc4.h
+package/out/x64-linux-musl/include/openssl/rc4.h
+package/out/x64-linux/include/openssl/rc4.h
+package/out/x64-osx/include/openssl/rc4.h
+package/out/x64-windows-static/include/openssl/rc4.h
+package/out/x86-windows-static/include/openssl/rc4.h
+package/out/arm-linux/include/openssl/rc5.h
+package/out/arm64-linux-musl/include/openssl/rc5.h
+package/out/arm64-linux/include/openssl/rc5.h
+package/out/arm64-osx/include/openssl/rc5.h
+package/out/arm64-windows-static/include/openssl/rc5.h
+package/out/x64-linux-musl/include/openssl/rc5.h
+package/out/x64-linux/include/openssl/rc5.h
+package/out/x64-osx/include/openssl/rc5.h
+package/out/x64-windows-static/include/openssl/rc5.h
+package/out/x86-windows-static/include/openssl/rc5.h
+package/out/arm-linux/include/openssl/ripemd.h
+package/out/arm64-linux-musl/include/openssl/ripemd.h
+package/out/arm64-linux/include/openssl/ripemd.h
+package/out/arm64-osx/include/openssl/ripemd.h
+package/out/arm64-windows-static/include/openssl/ripemd.h
+package/out/x64-linux-musl/include/openssl/ripemd.h
+package/out/x64-linux/include/openssl/ripemd.h
+package/out/x64-osx/include/openssl/ripemd.h
+package/out/x64-windows-static/include/openssl/ripemd.h
+package/out/x86-windows-static/include/openssl/ripemd.h
+package/out/arm-linux/include/openssl/rsa.h
+package/out/arm64-linux-musl/include/openssl/rsa.h
+package/out/arm64-linux/include/openssl/rsa.h
+package/out/arm64-osx/include/openssl/rsa.h
+package/out/arm64-windows-static/include/openssl/rsa.h
+package/out/x64-linux-musl/include/openssl/rsa.h
+package/out/x64-linux/include/openssl/rsa.h
+package/out/x64-osx/include/openssl/rsa.h
+package/out/x64-windows-static/include/openssl/rsa.h
+package/out/x86-windows-static/include/openssl/rsa.h
+package/out/arm-linux/include/openssl/rsaerr.h
+package/out/arm64-linux-musl/include/openssl/rsaerr.h
+package/out/arm64-linux/include/openssl/rsaerr.h
+package/out/arm64-osx/include/openssl/rsaerr.h
+package/out/arm64-windows-static/include/openssl/rsaerr.h
+package/out/x64-linux-musl/include/openssl/rsaerr.h
+package/out/x64-linux/include/openssl/rsaerr.h
+package/out/x64-osx/include/openssl/rsaerr.h
+package/out/x64-windows-static/include/openssl/rsaerr.h
+package/out/x86-windows-static/include/openssl/rsaerr.h
+package/out/arm-linux/include/openssl/safestack.h
+package/out/arm64-linux-musl/include/openssl/safestack.h
+package/out/arm64-linux/include/openssl/safestack.h
+package/out/arm64-osx/include/openssl/safestack.h
+package/out/arm64-windows-static/include/openssl/safestack.h
+package/out/x64-linux-musl/include/openssl/safestack.h
+package/out/x64-linux/include/openssl/safestack.h
+package/out/x64-osx/include/openssl/safestack.h
+package/out/x64-windows-static/include/openssl/safestack.h
+package/out/x86-windows-static/include/openssl/safestack.h
+package/out/arm-linux/include/openssl/seed.h
+package/out/arm64-linux-musl/include/openssl/seed.h
+package/out/arm64-linux/include/openssl/seed.h
+package/out/arm64-osx/include/openssl/seed.h
+package/out/arm64-windows-static/include/openssl/seed.h
+package/out/x64-linux-musl/include/openssl/seed.h
+package/out/x64-linux/include/openssl/seed.h
+package/out/x64-osx/include/openssl/seed.h
+package/out/x64-windows-static/include/openssl/seed.h
+package/out/x86-windows-static/include/openssl/seed.h
+package/out/arm-linux/include/openssl/self_test.h
+package/out/arm64-linux-musl/include/openssl/self_test.h
+package/out/arm64-linux/include/openssl/self_test.h
+package/out/arm64-osx/include/openssl/self_test.h
+package/out/arm64-windows-static/include/openssl/self_test.h
+package/out/x64-linux-musl/include/openssl/self_test.h
+package/out/x64-linux/include/openssl/self_test.h
+package/out/x64-osx/include/openssl/self_test.h
+package/out/x64-windows-static/include/openssl/self_test.h
+package/out/x86-windows-static/include/openssl/self_test.h
+package/out/arm-linux/include/openssl/sha.h
+package/out/arm64-linux-musl/include/openssl/sha.h
+package/out/arm64-linux/include/openssl/sha.h
+package/out/arm64-osx/include/openssl/sha.h
+package/out/arm64-windows-static/include/openssl/sha.h
+package/out/x64-linux-musl/include/openssl/sha.h
+package/out/x64-linux/include/openssl/sha.h
+package/out/x64-osx/include/openssl/sha.h
+package/out/x64-windows-static/include/openssl/sha.h
+package/out/x86-windows-static/include/openssl/sha.h
+package/out/arm-linux/include/openssl/srp.h
+package/out/arm64-linux-musl/include/openssl/srp.h
+package/out/arm64-linux/include/openssl/srp.h
+package/out/arm64-osx/include/openssl/srp.h
+package/out/arm64-windows-static/include/openssl/srp.h
+package/out/x64-linux-musl/include/openssl/srp.h
+package/out/x64-linux/include/openssl/srp.h
+package/out/x64-osx/include/openssl/srp.h
+package/out/x64-windows-static/include/openssl/srp.h
+package/out/x86-windows-static/include/openssl/srp.h
+package/out/arm-linux/include/openssl/srtp.h
+package/out/arm64-linux-musl/include/openssl/srtp.h
+package/out/arm64-linux/include/openssl/srtp.h
+package/out/arm64-osx/include/openssl/srtp.h
+package/out/arm64-windows-static/include/openssl/srtp.h
+package/out/x64-linux-musl/include/openssl/srtp.h
+package/out/x64-linux/include/openssl/srtp.h
+package/out/x64-osx/include/openssl/srtp.h
+package/out/x64-windows-static/include/openssl/srtp.h
+package/out/x86-windows-static/include/openssl/srtp.h
+package/out/arm-linux/include/openssl/ssl.h
+package/out/arm64-linux-musl/include/openssl/ssl.h
+package/out/arm64-linux/include/openssl/ssl.h
+package/out/arm64-osx/include/openssl/ssl.h
+package/out/arm64-windows-static/include/openssl/ssl.h
+package/out/x64-linux-musl/include/openssl/ssl.h
+package/out/x64-linux/include/openssl/ssl.h
+package/out/x64-osx/include/openssl/ssl.h
+package/out/x64-windows-static/include/openssl/ssl.h
+package/out/x86-windows-static/include/openssl/ssl.h
+package/out/arm-linux/include/openssl/ssl2.h
+package/out/arm64-linux-musl/include/openssl/ssl2.h
+package/out/arm64-linux/include/openssl/ssl2.h
+package/out/arm64-osx/include/openssl/ssl2.h
+package/out/arm64-windows-static/include/openssl/ssl2.h
+package/out/x64-linux-musl/include/openssl/ssl2.h
+package/out/x64-linux/include/openssl/ssl2.h
+package/out/x64-osx/include/openssl/ssl2.h
+package/out/x64-windows-static/include/openssl/ssl2.h
+package/out/x86-windows-static/include/openssl/ssl2.h
+package/out/arm-linux/include/openssl/ssl3.h
+package/out/arm64-linux-musl/include/openssl/ssl3.h
+package/out/arm64-linux/include/openssl/ssl3.h
+package/out/arm64-osx/include/openssl/ssl3.h
+package/out/arm64-windows-static/include/openssl/ssl3.h
+package/out/x64-linux-musl/include/openssl/ssl3.h
+package/out/x64-linux/include/openssl/ssl3.h
+package/out/x64-osx/include/openssl/ssl3.h
+package/out/x64-windows-static/include/openssl/ssl3.h
+package/out/x86-windows-static/include/openssl/ssl3.h
+package/out/arm-linux/include/openssl/sslerr_legacy.h
+package/out/arm64-linux-musl/include/openssl/sslerr_legacy.h
+package/out/arm64-linux/include/openssl/sslerr_legacy.h
+package/out/arm64-osx/include/openssl/sslerr_legacy.h
+package/out/arm64-windows-static/include/openssl/sslerr_legacy.h
+package/out/x64-linux-musl/include/openssl/sslerr_legacy.h
+package/out/x64-linux/include/openssl/sslerr_legacy.h
+package/out/x64-osx/include/openssl/sslerr_legacy.h
+package/out/x64-windows-static/include/openssl/sslerr_legacy.h
+package/out/x86-windows-static/include/openssl/sslerr_legacy.h
+package/out/arm-linux/include/openssl/sslerr.h
+package/out/arm64-linux-musl/include/openssl/sslerr.h
+package/out/arm64-linux/include/openssl/sslerr.h
+package/out/arm64-osx/include/openssl/sslerr.h
+package/out/arm64-windows-static/include/openssl/sslerr.h
+package/out/x64-linux-musl/include/openssl/sslerr.h
+package/out/x64-linux/include/openssl/sslerr.h
+package/out/x64-osx/include/openssl/sslerr.h
+package/out/x64-windows-static/include/openssl/sslerr.h
+package/out/x86-windows-static/include/openssl/sslerr.h
+package/out/arm-linux/include/openssl/stack.h
+package/out/arm64-linux-musl/include/openssl/stack.h
+package/out/arm64-linux/include/openssl/stack.h
+package/out/arm64-osx/include/openssl/stack.h
+package/out/arm64-windows-static/include/openssl/stack.h
+package/out/x64-linux-musl/include/openssl/stack.h
+package/out/x64-linux/include/openssl/stack.h
+package/out/x64-osx/include/openssl/stack.h
+package/out/x64-windows-static/include/openssl/stack.h
+package/out/x86-windows-static/include/openssl/stack.h
+package/out/arm-linux/include/openssl/store.h
+package/out/arm64-linux-musl/include/openssl/store.h
+package/out/arm64-linux/include/openssl/store.h
+package/out/arm64-osx/include/openssl/store.h
+package/out/arm64-windows-static/include/openssl/store.h
+package/out/x64-linux-musl/include/openssl/store.h
+package/out/x64-linux/include/openssl/store.h
+package/out/x64-osx/include/openssl/store.h
+package/out/x64-windows-static/include/openssl/store.h
+package/out/x86-windows-static/include/openssl/store.h
+package/out/arm-linux/include/openssl/storeerr.h
+package/out/arm64-linux-musl/include/openssl/storeerr.h
+package/out/arm64-linux/include/openssl/storeerr.h
+package/out/arm64-osx/include/openssl/storeerr.h
+package/out/arm64-windows-static/include/openssl/storeerr.h
+package/out/x64-linux-musl/include/openssl/storeerr.h
+package/out/x64-linux/include/openssl/storeerr.h
+package/out/x64-osx/include/openssl/storeerr.h
+package/out/x64-windows-static/include/openssl/storeerr.h
+package/out/x86-windows-static/include/openssl/storeerr.h
+package/out/arm-linux/include/openssl/symhacks.h
+package/out/arm64-linux-musl/include/openssl/symhacks.h
+package/out/arm64-linux/include/openssl/symhacks.h
+package/out/arm64-osx/include/openssl/symhacks.h
+package/out/arm64-windows-static/include/openssl/symhacks.h
+package/out/x64-linux-musl/include/openssl/symhacks.h
+package/out/x64-linux/include/openssl/symhacks.h
+package/out/x64-osx/include/openssl/symhacks.h
+package/out/x64-windows-static/include/openssl/symhacks.h
+package/out/x86-windows-static/include/openssl/symhacks.h
+package/out/arm-linux/include/openssl/tls1.h
+package/out/arm64-linux-musl/include/openssl/tls1.h
+package/out/arm64-linux/include/openssl/tls1.h
+package/out/arm64-osx/include/openssl/tls1.h
+package/out/arm64-windows-static/include/openssl/tls1.h
+package/out/x64-linux-musl/include/openssl/tls1.h
+package/out/x64-linux/include/openssl/tls1.h
+package/out/x64-osx/include/openssl/tls1.h
+package/out/x64-windows-static/include/openssl/tls1.h
+package/out/x86-windows-static/include/openssl/tls1.h
+package/out/arm-linux/include/openssl/trace.h
+package/out/arm64-linux-musl/include/openssl/trace.h
+package/out/arm64-linux/include/openssl/trace.h
+package/out/arm64-osx/include/openssl/trace.h
+package/out/arm64-windows-static/include/openssl/trace.h
+package/out/x64-linux-musl/include/openssl/trace.h
+package/out/x64-linux/include/openssl/trace.h
+package/out/x64-osx/include/openssl/trace.h
+package/out/x64-windows-static/include/openssl/trace.h
+package/out/x86-windows-static/include/openssl/trace.h
+package/out/arm-linux/include/openssl/ts.h
+package/out/arm64-linux-musl/include/openssl/ts.h
+package/out/arm64-linux/include/openssl/ts.h
+package/out/arm64-osx/include/openssl/ts.h
+package/out/arm64-windows-static/include/openssl/ts.h
+package/out/x64-linux-musl/include/openssl/ts.h
+package/out/x64-linux/include/openssl/ts.h
+package/out/x64-osx/include/openssl/ts.h
+package/out/x64-windows-static/include/openssl/ts.h
+package/out/x86-windows-static/include/openssl/ts.h
+package/out/arm-linux/include/openssl/tserr.h
+package/out/arm64-linux-musl/include/openssl/tserr.h
+package/out/arm64-linux/include/openssl/tserr.h
+package/out/arm64-osx/include/openssl/tserr.h
+package/out/arm64-windows-static/include/openssl/tserr.h
+package/out/x64-linux-musl/include/openssl/tserr.h
+package/out/x64-linux/include/openssl/tserr.h
+package/out/x64-osx/include/openssl/tserr.h
+package/out/x64-windows-static/include/openssl/tserr.h
+package/out/x86-windows-static/include/openssl/tserr.h
+package/out/arm-linux/include/openssl/txt_db.h
+package/out/arm64-linux-musl/include/openssl/txt_db.h
+package/out/arm64-linux/include/openssl/txt_db.h
+package/out/arm64-osx/include/openssl/txt_db.h
+package/out/arm64-windows-static/include/openssl/txt_db.h
+package/out/x64-linux-musl/include/openssl/txt_db.h
+package/out/x64-linux/include/openssl/txt_db.h
+package/out/x64-osx/include/openssl/txt_db.h
+package/out/x64-windows-static/include/openssl/txt_db.h
+package/out/x86-windows-static/include/openssl/txt_db.h
+package/out/arm-linux/include/openssl/types.h
+package/out/arm64-linux-musl/include/openssl/types.h
+package/out/arm64-linux/include/openssl/types.h
+package/out/arm64-osx/include/openssl/types.h
+package/out/arm64-windows-static/include/openssl/types.h
+package/out/x64-linux-musl/include/openssl/types.h
+package/out/x64-linux/include/openssl/types.h
+package/out/x64-osx/include/openssl/types.h
+package/out/x64-windows-static/include/openssl/types.h
+package/out/x86-windows-static/include/openssl/types.h
+package/out/arm-linux/include/openssl/ui.h
+package/out/arm64-linux-musl/include/openssl/ui.h
+package/out/arm64-linux/include/openssl/ui.h
+package/out/arm64-osx/include/openssl/ui.h
+package/out/arm64-windows-static/include/openssl/ui.h
+package/out/x64-linux-musl/include/openssl/ui.h
+package/out/x64-linux/include/openssl/ui.h
+package/out/x64-osx/include/openssl/ui.h
+package/out/x64-windows-static/include/openssl/ui.h
+package/out/x86-windows-static/include/openssl/ui.h
+package/out/arm-linux/include/openssl/uierr.h
+package/out/arm64-linux-musl/include/openssl/uierr.h
+package/out/arm64-linux/include/openssl/uierr.h
+package/out/arm64-osx/include/openssl/uierr.h
+package/out/arm64-windows-static/include/openssl/uierr.h
+package/out/x64-linux-musl/include/openssl/uierr.h
+package/out/x64-linux/include/openssl/uierr.h
+package/out/x64-osx/include/openssl/uierr.h
+package/out/x64-windows-static/include/openssl/uierr.h
+package/out/x86-windows-static/include/openssl/uierr.h
+package/out/arm-linux/include/openssl/whrlpool.h
+package/out/arm64-linux-musl/include/openssl/whrlpool.h
+package/out/arm64-linux/include/openssl/whrlpool.h
+package/out/arm64-osx/include/openssl/whrlpool.h
+package/out/arm64-windows-static/include/openssl/whrlpool.h
+package/out/x64-linux-musl/include/openssl/whrlpool.h
+package/out/x64-linux/include/openssl/whrlpool.h
+package/out/x64-osx/include/openssl/whrlpool.h
+package/out/x64-windows-static/include/openssl/whrlpool.h
+package/out/x86-windows-static/include/openssl/whrlpool.h
+package/out/arm-linux/include/openssl/x509_vfy.h
+package/out/arm64-linux-musl/include/openssl/x509_vfy.h
+package/out/arm64-linux/include/openssl/x509_vfy.h
+package/out/arm64-osx/include/openssl/x509_vfy.h
+package/out/arm64-windows-static/include/openssl/x509_vfy.h
+package/out/x64-linux-musl/include/openssl/x509_vfy.h
+package/out/x64-linux/include/openssl/x509_vfy.h
+package/out/x64-osx/include/openssl/x509_vfy.h
+package/out/x64-windows-static/include/openssl/x509_vfy.h
+package/out/x86-windows-static/include/openssl/x509_vfy.h
+package/out/arm-linux/include/openssl/x509.h
+package/out/arm64-linux-musl/include/openssl/x509.h
+package/out/arm64-linux/include/openssl/x509.h
+package/out/arm64-osx/include/openssl/x509.h
+package/out/arm64-windows-static/include/openssl/x509.h
+package/out/x64-linux-musl/include/openssl/x509.h
+package/out/x64-linux/include/openssl/x509.h
+package/out/x64-osx/include/openssl/x509.h
+package/out/x64-windows-static/include/openssl/x509.h
+package/out/x86-windows-static/include/openssl/x509.h
+package/out/arm-linux/include/openssl/x509err.h
+package/out/arm64-linux-musl/include/openssl/x509err.h
+package/out/arm64-linux/include/openssl/x509err.h
+package/out/arm64-osx/include/openssl/x509err.h
+package/out/arm64-windows-static/include/openssl/x509err.h
+package/out/x64-linux-musl/include/openssl/x509err.h
+package/out/x64-linux/include/openssl/x509err.h
+package/out/x64-osx/include/openssl/x509err.h
+package/out/x64-windows-static/include/openssl/x509err.h
+package/out/x86-windows-static/include/openssl/x509err.h
+package/out/arm-linux/include/openssl/x509v3.h
+package/out/arm64-linux-musl/include/openssl/x509v3.h
+package/out/arm64-linux/include/openssl/x509v3.h
+package/out/arm64-osx/include/openssl/x509v3.h
+package/out/arm64-windows-static/include/openssl/x509v3.h
+package/out/x64-linux-musl/include/openssl/x509v3.h
+package/out/x64-linux/include/openssl/x509v3.h
+package/out/x64-osx/include/openssl/x509v3.h
+package/out/x64-windows-static/include/openssl/x509v3.h
+package/out/x86-windows-static/include/openssl/x509v3.h
+package/out/arm-linux/include/openssl/x509v3err.h
+package/out/arm64-linux-musl/include/openssl/x509v3err.h
+package/out/arm64-linux/include/openssl/x509v3err.h
+package/out/arm64-osx/include/openssl/x509v3err.h
+package/out/arm64-windows-static/include/openssl/x509v3err.h
+package/out/x64-linux-musl/include/openssl/x509v3err.h
+package/out/x64-linux/include/openssl/x509v3err.h
+package/out/x64-osx/include/openssl/x509v3err.h
+package/out/x64-windows-static/include/openssl/x509v3err.h
+package/out/x86-windows-static/include/openssl/x509v3err.h
+package/out/sbom_vcpkg_openssl/spdx_2.2/bsi.json
+package/out/sbom_vcpkg_openssl/spdx_2.2/manifest.spdx.json
+package/package.json
+package/out/arm64-windows-static/lib/libcrypto.lib
+package/out/x64-windows-static/lib/libcrypto.lib
+package/out/x86-windows-static/lib/libcrypto.lib
+package/out/arm64-windows-static/lib/libssl.lib
+package/out/x64-windows-static/lib/libssl.lib
+package/out/x86-windows-static/lib/libssl.lib
+package/README.md
+package/out/arm-linux/lib/pkgconfig/libcrypto.pc
+package/out/arm64-linux-musl/lib/pkgconfig/libcrypto.pc
+package/out/arm64-linux/lib/pkgconfig/libcrypto.pc
+package/out/arm64-osx/lib/pkgconfig/libcrypto.pc
+package/out/arm64-windows-static/lib/pkgconfig/libcrypto.pc
+package/out/x64-linux-musl/lib/pkgconfig/libcrypto.pc
+package/out/x64-linux/lib/pkgconfig/libcrypto.pc
+package/out/x64-osx/lib/pkgconfig/libcrypto.pc
+package/out/x64-windows-static/lib/pkgconfig/libcrypto.pc
+package/out/x86-windows-static/lib/pkgconfig/libcrypto.pc
+package/out/arm-linux/lib/pkgconfig/libssl.pc
+package/out/arm64-linux-musl/lib/pkgconfig/libssl.pc
+package/out/arm64-linux/lib/pkgconfig/libssl.pc
+package/out/arm64-osx/lib/pkgconfig/libssl.pc
+package/out/arm64-windows-static/lib/pkgconfig/libssl.pc
+package/out/x64-linux-musl/lib/pkgconfig/libssl.pc
+package/out/x64-linux/lib/pkgconfig/libssl.pc
+package/out/x64-osx/lib/pkgconfig/libssl.pc
+package/out/x64-windows-static/lib/pkgconfig/libssl.pc
+package/out/x86-windows-static/lib/pkgconfig/libssl.pc
+package/out/arm-linux/lib/pkgconfig/openssl.pc
+package/out/arm64-linux-musl/lib/pkgconfig/openssl.pc
+package/out/arm64-linux/lib/pkgconfig/openssl.pc
+package/out/arm64-osx/lib/pkgconfig/openssl.pc
+package/out/arm64-windows-static/lib/pkgconfig/openssl.pc
+package/out/x64-linux-musl/lib/pkgconfig/openssl.pc
+package/out/x64-linux/lib/pkgconfig/openssl.pc
+package/out/x64-osx/lib/pkgconfig/openssl.pc
+package/out/x64-windows-static/lib/pkgconfig/openssl.pc
+package/out/x86-windows-static/lib/pkgconfig/openssl.pc
+package/out/sbom_vcpkg_openssl/spdx_2.2/manifest.spdx.json.sha256
+++ [[ windows == \o\s\x ]]
+++ [[ windows == \w\i\n\d\o\w\s ]]
+++ [[ x64 == \a\r\m\6\4 ]]
+++ VSCODE_CLI_TARGET=x86_64-pc-windows-msvc
+++ export 'VSCODE_CLI_RUSTFLAGS=-Ctarget-feature=+crt-static -Clink-args=/guard:cf -Clink-args=/CETCOMPAT'
+++ VSCODE_CLI_RUSTFLAGS='-Ctarget-feature=+crt-static -Clink-args=/guard:cf -Clink-args=/CETCOMPAT'
+++ export 'VSCODE_CLI_CFLAGS=/guard:cf /Qspectre'
+++ VSCODE_CLI_CFLAGS='/guard:cf /Qspectre'
++++ pwd
+++ export OPENSSL_LIB_DIR=/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide/vscode/cli/openssl/out/x64-windows-static/lib
+++ OPENSSL_LIB_DIR=/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide/vscode/cli/openssl/out/x64-windows-static/lib
++++ pwd
+++ export OPENSSL_INCLUDE_DIR=/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide/vscode/cli/openssl/out/x64-windows-static/include
+++ OPENSSL_INCLUDE_DIR=/c/Users/AdrianTurion/devprojects/2-auraia/auraia-ide/vscode/cli/openssl/out/x64-windows-static/include
+++ rustup target add x86_64-pc-windows-msvc
+../build_cli.sh: line 53: rustup: command not found
